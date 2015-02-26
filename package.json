@@ -1,0 +1,35 @@
+{
+  "name": "hapi-auth-jsonwebtoken",
+  "version": "1.0.0",
+  "description": "Hapi.js Authentication Plugin/Scheme using JSON Web Tokens (JWT)",
+  "main": "index.js",
+  "scripts": {
+    "test": "tape"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ideaq/hapi-auth-jwt.git"
+  },
+  "keywords": [
+    "Hapi.js",
+    "Auth",
+    "JWT"
+  ],
+  "author": "@nelsonic <contact.nelsonic@gmail.com> (https://github.com/nelsonic)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ideaq/hapi-auth-jwt/issues"
+  },
+  "homepage": "https://github.com/ideaq/hapi-auth-jwt",
+  "dependencies": {
+    "boom": "2.x.x",
+    "hoek": "2.x.x",
+    "jsonwebtoken": "3.2.x"
+  },
+  "peerDependencies": {
+    "hapi": ">=8.x.x"
+  },
+  "engines": {
+    "node": ">=0.10.x"
+  }
+}
