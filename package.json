@@ -3,16 +3,15 @@
   "version": "1.0.0",
   "description": "Hapi.js Authentication Plugin/Scheme using JSON Web Tokens (JWT)",
   "main": "index.js",
-  "scripts": {
-    "test": "tape"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/ideaq/hapi-auth-jwt.git"
   },
   "keywords": [
     "Hapi.js",
+    "Authentication",
     "Auth",
+    "JSON Web Tokens",
     "JWT"
   ],
   "author": "@nelsonic <contact.nelsonic@gmail.com> (https://github.com/nelsonic)",
@@ -29,7 +28,24 @@
   "peerDependencies": {
     "hapi": ">=8.x.x"
   },
-  "engines": {
-    "node": ">=0.10.x"
-  }
+  "devDependencies": {
+    "codeclimate-test-reporter": "0.0.4",
+    "istanbul": "^0.3.6",
+    "pre-commit": "^1.0.5",
+    "tape": "^3.5.0"
+  },  "engines": {
+      "node": ">=0.10.x"
+  },
+  "scripts": {
+    "quick": "./node_modules/tape/bin/tape ./test/*.js",
+    "test": "./node_modules/.bin/istanbul cover ./node_modules/tape/bin/tape ./test/*.js",
+    "coverage": "./node_modules/.bin/istanbul cover ./node_modules/tape/bin/tape ./test/*.js && ./node_modules/.bin/istanbul check-coverage --statements 100 --functions 100 --lines 100 --branches 100",
+    "jshint": "./node_modules/jshint/bin/jshint -c .jshintrc --exclude-path .gitignore .",
+    "codeclimate": "CODECLIMATE_REPO_TOKEN=7d6a9a77660c9a52f34d752740c30a5e1617e672ff6fdb99c92a63b2f67787d0 ./node_modules/codeclimate-test-reporter/bin/codeclimate.js < ./coverage/lcov.info"
+  },
+  "pre-commit": [
+    "jshint",
+    "coverage",
+    "codeclimate"
+  ]
 }
