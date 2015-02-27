@@ -1,2 +1,4 @@
-# hapi-auth-jwt
-A stateless authentication scheme for Hapi.js applications using JSON Web Tokens.
+# Hapi.js Auth using JSON Web Tokens (JWT)
+
+A stateless authentication scheme/plugin for
+[Hapi.js](http://hapijs.com/) apps using JSON Web Tokens.
