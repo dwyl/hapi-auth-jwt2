@@ -22,6 +22,7 @@
   "homepage": "https://github.com/ideaq/hapi-auth-jwt",
   "dependencies": {
     "boom": "2.x.x",
+    "hapi": "^8.2.0",
     "hoek": "2.x.x",
     "jsonwebtoken": "3.2.x"
   },
@@ -31,10 +32,12 @@
   "devDependencies": {
     "codeclimate-test-reporter": "0.0.4",
     "istanbul": "^0.3.6",
+    "jshint": "^2.6.3",
     "pre-commit": "^1.0.5",
     "tape": "^3.5.0"
-  },  "engines": {
-      "node": ">=0.10.x"
+  },
+  "engines": {
+    "node": ">=0.10.x"
   },
   "scripts": {
     "quick": "./node_modules/tape/bin/tape ./test/*.js",
