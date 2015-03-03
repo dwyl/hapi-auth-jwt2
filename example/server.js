@@ -3,34 +3,25 @@ var hapiAuthJWT = require('../lib/');
 var jwt         = require('jsonwebtoken');
 var port        = process.env.PORT || 8000;
 
-// console.log(hapiAuthJWT);
-
 var secret = 'NeverShareThisYourSecret'; // Never Share This! even in private GitHub repos!
 
-var accounts = {
-    123: {
-      id: 123,
-      user: 'john',
-      fullName: 'John Q Public'
+var people = {
+    1: {
+      id: 1,
+      name: 'Anthony Valid User'
     }
 };
 
 // use the token as the 'authorization' header in requests
-var token = jwt.sign({ id: 123 }, secret);
+var token = jwt.sign(people[1], secret);
 
-console.log('Token: ' + token);
-//
-var validate = function (decodedToken, callback) {
+// defining our own validate function lets us do something
+// useful/custom with the decodedToken before reply(ing)
+var validate = function (decoded, callback) {
 
-    console.log(decodedToken);  // should be {id : 123}.
+    console.log(decoded);
 
-    if (decodedToken) {
-      console.log(decodedToken.id);
-    }
-
-    var account = accounts[decodedToken.id];
-
-    if (!account) {
+    if (!people[decoded.id]) { // invalid person
       return callback(null, false);
     }
 
@@ -47,18 +38,18 @@ server.register(hapiAuthJWT, function (err) {
     }
 
     // see: http://hapijs.com/api#serverauthschemename-scheme
-    server.auth.strategy('token', 'jwt', true, { key: secret,  validateFunc: validate });
+    server.auth.strategy('jwt', 'jwt', true, { key: secret,  validateFunc: validate });
 
     server.route({
       // GET http://localhost:8000/private (Auth Token Required)
       // curl -H "Authorization: <TOKEN>" http://localhost:8000/private
-      /**
-curl -v -H "Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTIzLCJpYXQiOjE0MjU0MDQwNzh9.wJDTj0eVxY860UPmRS8oU48qRcAjK8WsC3NzdmwEsBQ" \
+      /** example:
+curl -v -H "Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6IkFudGhvbnkgVmFsaWQgVXNlciIsImlhdCI6MTQyNTQxMTA0Nn0.HUlnTh_LMQSJmfBB3OVqThypm0nnyQjm5jbrAKDgOhI" \
 http://localhost:8000/private
       */
       method: 'GET',
       path: '/private',
-      config: { auth: 'token' },
+      config: { auth: 'jwt' },
       handler: function(request, reply) {
         var replyObj = {
           text: 'You used a Token! :-)'
