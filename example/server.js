@@ -19,7 +19,7 @@ var token = jwt.sign(people[1], secret);
 // useful/custom with the decodedToken before reply(ing)
 var validate = function (decoded, callback) {
 
-    console.log(decoded);
+    console.log(decoded); //
 
     if (!people[decoded.id]) { // invalid person
       return callback(null, false);
@@ -70,7 +70,6 @@ http://localhost:8000/private
         reply(replyObj);
       }
     });
-
 });
 
 server.start();
