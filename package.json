@@ -1,6 +1,6 @@
 {
   "name": "hapi-auth-jwt2",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Hapi.js Authentication Plugin/Scheme using JSON Web Tokens (JWT)",
   "main": "lib/index.js",
   "repository": {
@@ -44,7 +44,7 @@
     "test": "./node_modules/.bin/istanbul cover ./node_modules/tape/bin/tape ./test/*.js",
     "coverage": "./node_modules/.bin/istanbul cover ./node_modules/tape/bin/tape ./test/*.js && ./node_modules/.bin/istanbul check-coverage --statements 100 --functions 100 --lines 100 --branches 100",
     "jshint": "./node_modules/jshint/bin/jshint -c .jshintrc --exclude-path .gitignore .",
-    "codeclimate": "CODECLIMATE_REPO_TOKEN=7d6a9a77660c9a52f34d752740c30a5e1617e672ff6fdb99c92a63b2f67787d0 ./node_modules/codeclimate-test-reporter/bin/codeclimate.js < ./coverage/lcov.info"
+    "codeclimate": "CODECLIMATE_REPO_TOKEN=1f00e2891b3e24ed11bb9b22a8a4793c55c5470d60e859389a0c3dd24220df46 ./node_modules/codeclimate-test-reporter/bin/codeclimate.js < ./coverage/lcov.info"
   },
   "pre-commit": [
     "jshint",
