@@ -1,5 +1,5 @@
 {
-  "name": "hapi-auth-jsonwebtoken",
+  "name": "hapi-auth-jwt2",
   "version": "1.0.1",
   "description": "Hapi.js Authentication Plugin/Scheme using JSON Web Tokens (JWT)",
   "main": "lib/index.js",
