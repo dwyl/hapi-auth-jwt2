@@ -7,6 +7,7 @@ A stateless authentication scheme/plugin for
 [![Build Status](https://travis-ci.org/ideaq/hapi-auth-jwt2.svg)](https://travis-ci.org/ideaq/hapi-auth-jwt2)
 [![Code Climate](https://codeclimate.com/github/ideaq/hapi-auth-jwt2/badges/gpa.svg)](https://codeclimate.com/github/ideaq/hapi-auth-jwt2)
 [![Test Coverage](https://codeclimate.com/github/ideaq/hapi-auth-jwt2/badges/coverage.svg)](https://codeclimate.com/github/ideaq/hapi-auth-jwt2)
+[![Dependency Status](https://david-dm.org/ideaq/hapi-auth-jwt2.svg)](https://david-dm.org/ideaq/hapi-auth-jwt2)
 
 ## Background Research
 
