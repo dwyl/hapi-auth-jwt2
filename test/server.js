@@ -20,10 +20,7 @@ var validate = function (decoded, callback) {
 };
 
 var home = function(req, reply) {
-    // console.log(req);
-    // need to define exactly what the API should return on home page.
-    // e.g: please register at timerzzz.com
-    reply('Hello!');
+    reply('Hai!');
 }
 
 var privado = function(req, reply) {
@@ -40,7 +37,6 @@ server.register(require('../'), function (err) {
     { method: 'POST', path: '/privado', handler: privado, config: { auth: 'jwt' } },
     // // { method: 'POST', path: '/optional', handler: privado, config: { auth: { mode: 'optional' } } },
     // { method: 'POST', path: '/logout', handler: tokenHandler, config: { auth: 'jwt' } },
-
   ]);
 
 });
