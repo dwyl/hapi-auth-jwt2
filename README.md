@@ -27,7 +27,7 @@ var Hapi        = require('hapi');
 var JWT         = require('jsonwebtoken');  // used to sign our content
 var port        = process.env.PORT || 8000; // allow port to be set
 
-var secret = 'NeverShareYourSecret'; // Never Share This! even in private GitHub repos!
+var secret = 'NeverShareYourSecret'; // Never Share!
 
 var people = { // our "users databse"
     1: {
@@ -62,7 +62,8 @@ server.register(require('hapi-auth-jwt2'), function (err) {
       console.log(err);
     }
     // see: http://hapijs.com/api#serverauthschemename-scheme
-    server.auth.strategy('jwt', 'jwt', true, { key: secret,  validateFunc: validate });
+    server.auth.strategy('jwt', 'jwt', true,
+    { key: secret,  validateFunc: validate });
 
     server.route([
       {
@@ -74,7 +75,8 @@ server.register(require('hapi-auth-jwt2'), function (err) {
       {
         method: 'GET', path: '/restricted', config: { auth: 'jwt' },
         handler: function(request, reply) {
-          reply({text: 'You used a Token!'}).header("Authorization", request.headers.authorization);
+          reply({text: 'You used a Token!'})
+          .header("Authorization", request.headers.authorization);
         }
       }
     ]);

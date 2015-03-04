@@ -38,7 +38,8 @@ server.register(hapiAuthJWT, function (err) {
       console.log(err);
     }
     // see: http://hapijs.com/api#serverauthschemename-scheme
-    server.auth.strategy('jwt', 'jwt', true, { key: secret,  validateFunc: validate });
+    server.auth.strategy('jwt', 'jwt', true,
+    { key: secret,  validateFunc: validate });
 
     server.route([
       {
@@ -50,7 +51,8 @@ server.register(hapiAuthJWT, function (err) {
       {
         method: 'GET', path: '/restricted', config: { auth: 'jwt' },
         handler: function(request, reply) {
-          reply({text: 'You used a Token!'}).header("Authorization", request.headers.authorization);
+          reply({text: 'You used a Token!'})
+          .header("Authorization", request.headers.authorization);
         }
       }
     ]);
