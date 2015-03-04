@@ -2,7 +2,6 @@
 
 The ***simplest*** authentication scheme/plugin for
 [Hapi.js](http://hapijs.com/) apps using JSON Web Tokens.
-[![contributions welcome](https://img.shields.io/badge/Authorization-JWT-brightgreen.svg?style=flat)](https://github.com/ideaq/hapi-auth-jwt)
 
 [![Node.js Version][node-version-image]][node-version-url]
 [![NPM Version][npm-image]][npm-url]
@@ -21,11 +20,7 @@ npm install hapi-auth-jwt2 --save
 
 ### Example
 
-There is a an example in the /**example** directory of this repo
-and we are preparing a more  [real-world](https://github.com/ideaq/hapi-auth-jwt2/issues/9)
-example you can drop into your app and go!
-
-But here are the basic usage to get started:
+basic usage example to get started:
 
 ```javascript
 var Hapi        = require('hapi');
@@ -120,13 +115,12 @@ That's it.
 Write your own `validateFunc` with what ever checks you want to perform
 on the **decoded** token before allowing the visitor to proceed.
 
-
 ## Documentation
 
-- `validateFunc` - (required) a the function which is run once the Token has been decoded
+- `validateFunc` - (***required***) a the function which is run once the Token has been decoded
  signature `function(decoded, callback)` where:
     - `decoded` - is the ***decoded*** JWT received from the client in **request.headers.authorization**
-    - `callback` - a callback function with the signature `function(err, isValid)` where:
+    - `callback` - (***required***) a callback function with the signature `function(err, isValid)` where:
         - `err` - an internal error.
         - `valid` - `true` if the JWT was valid, otherwise `false`.
 
