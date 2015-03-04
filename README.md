@@ -121,6 +121,16 @@ Write your own `validateFunc` with what ever checks you want to perform
 on the **decoded** token before allowing the visitor to proceed.
 
 
+## Documentation
+
+- `validateFunc` - (required) a the function which is run once the Token has been decoded
+ signature `function(decoded, callback)` where:
+    - `decoded` - is the ***decoded*** JWT received from the client in **request.headers.authorization**
+    - `callback` - a callback function with the signature `function(err, isValid)` where:
+        - `err` - an internal error.
+        - `valid` - `true` if the JWT was valid, otherwise `false`.
+
+
 - - -
 
 ## Motivation
@@ -142,7 +152,7 @@ So we decided to write our own addressing all these issues.
 ### *Guiding Principal*
 
 > "* **perfection** is **attained** not when there is nothing more to add,  
-> but when there is **nothing more to remove*** " ~
+> but when there is **nothing more to remove** * " ~
 [Antoine de Saint-Exupéry](http://en.wikiquote.org/wiki/Antoine_de_Saint_Exup%C3%A9ry)
 
 
