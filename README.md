@@ -11,7 +11,117 @@ The ***simplest*** authentication scheme/plugin for
 [![Code Climate](https://codeclimate.com/github/ideaq/hapi-auth-jwt2/badges/gpa.svg)](https://codeclimate.com/github/ideaq/hapi-auth-jwt2)
 [![Dependency Status](https://david-dm.org/ideaq/hapi-auth-jwt2.svg)](https://david-dm.org/ideaq/hapi-auth-jwt2)
 
+## Usage
 
+### Install from NPM
+
+```sh
+npm install hapi-auth-jwt2 --save
+```
+
+### Example
+
+There is a an example in the /**example** directory of this repo
+and we are preparing a more  [real-world](https://github.com/ideaq/hapi-auth-jwt2/issues/9)
+example you can drop into your app and go!
+
+But here are the basic usage to get started:
+
+```javascript
+var Hapi        = require('hapi');
+var JWT         = require('jsonwebtoken');  // used to sign our content
+var port        = process.env.PORT || 8000; // allow port to be set
+
+var secret = 'NeverShareYourSecret'; // Never Share This! even in private GitHub repos!
+
+var people = { // our "users databse"
+    1: {
+      id: 1,
+      name: 'Anthony Valid User'
+    }
+};
+
+// use the token as the 'authorization' header in requests
+var token = JWT.sign(people[1], secret); // synchronous
+
+// bring your own validation function
+var validate = function (decoded, callback) {
+
+    console.log(decoded);
+
+    // do your checks to see if the person is valid
+    if (!people[decoded.id]) {
+      return callback(null, false);
+    }
+    else {
+      return callback(null, true);
+    }
+};
+
+var server = new Hapi.Server();
+server.connection({ port: port });
+        // include our module here ↓↓
+server.register(require('hapi-auth-jwt2'), function (err) {
+
+    if(err){
+      console.log(err);
+    }
+    // see: http://hapijs.com/api#serverauthschemename-scheme
+    server.auth.strategy('jwt', 'jwt', true, { key: secret,  validateFunc: validate });
+
+    server.route([
+      {
+        method: "GET", path: "/", config: { auth: false },
+        handler: function(request, reply) {
+          reply({text: 'Token not required'});
+        }
+      },
+      {
+        method: 'GET', path: '/restricted', config: { auth: 'jwt' },
+        handler: function(request, reply) {
+          reply({text: 'You used a Token!'}).header("Authorization", request.headers.authorization);
+        }
+      }
+    ]);
+});
+
+server.start();
+```
+
+Run the server with: `node example/server.js`
+
+Now use **curl** to access the two routes:
+
+#### No Token Required
+
+```sh
+curl -v http://localhost:8000/
+```
+
+#### Token Required
+
+Try to access the /*restricted* content *without* supplying a Token
+(*expect* to see a ***401 error***):
+```sh
+curl -v http://localhost:8000/restricted
+```
+
+Now access the url using the following format:
+`curl -H "Authorization: <TOKEN>" http://localhost:8000/restricted`
+
+A here's a *valid* token you can use (*copy-paste* this command):
+```sh
+curl -v -H "Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6IkFudGhvbnkgVmFsaWQgVXNlciIsImlhdCI6MTQyNTQ3MzUzNX0.KA68l60mjiC8EXaC2odnjFwdIDxE__iDu5RwLdN1F2A" \
+http://localhost:8000/restricted
+```
+
+That's it.
+
+Write your own `validateFunc` with what ever checks you want to perform
+on the **decoded** token before allowing the visitor to proceed.
+
+
+- - -
 
 ## Motivation
 
@@ -23,9 +133,9 @@ We did a *extensive* [research](https://www.npmjs.com/search?q=hapi+auth+jwt)
 into *existing* modules that *might* solve our problem; there are *many* on NPM:
 ![npm search for hapi+jwt](http://i.imgur.com/xIj3Xpa.png)
 
-but they invariably were ***way too complicated***, poorly documented and
+but they were invariably ***too complicated***, poorly documented and
 had *useless* (non-real-world) "examples"!  
-So we decided to write our own.
+So we decided to write our own addressing all these issues.
 
 *Don't take our word for it, do your own homework and decide which module you prefer.*
 

@@ -1,6 +1,6 @@
 var Hapi   = require('hapi');
 var JWT    = require('jsonwebtoken');
-var secret = 'NeverShareThisYourSecret';
+var secret = 'NeverShareYourSecret';
 
 // for debug options see: http://hapijs.com/tutorials/logging
 var server = new Hapi.Server({ debug: false })

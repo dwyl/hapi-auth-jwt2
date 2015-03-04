@@ -1,6 +1,6 @@
 var test   = require('tape');
 var JWT    = require('jsonwebtoken');
-var secret = 'NeverShareThisYourSecret';
+var secret = 'NeverShareYourSecret';
 
 var server = require('./server'); // test server which in turn loads our module
 
@@ -58,9 +58,9 @@ test("Attempt to access restricted content (with an inVALID Token)", function(t)
   });
 });
 
-test("Access restricted content (with an VALID Token)", function(t) {
+test("Access restricted content (with VALID Token)", function(t) {
   // use the token as the 'authorization' header in requests
-  var token = JWT.sign({ id:1,"name":"Old Greg" }, secret);
+  var token = JWT.sign({ id:1,"name":"Charlie" }, secret);
   var options = {
     method: "POST",
     url: "/privado",
@@ -68,7 +68,8 @@ test("Access restricted content (with an VALID Token)", function(t) {
   };
   // server.inject lets us similate an http request
   server.inject(options, function(response) {
-    t.equal(response.statusCode, 200, "INVALID Token should fail");
+    t.equal(response.statusCode, 200, "VALID Token should succeed!");
+
     t.end();
   });
 });
