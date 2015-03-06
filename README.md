@@ -23,9 +23,9 @@ npm install hapi-auth-jwt2 --save
 basic usage example to get started:
 
 ```javascript
-var Hapi        = require('hapi');
-var JWT         = require('jsonwebtoken');  // used to sign our content
-var port        = process.env.PORT || 8000; // allow port to be set
+var Hapi = require('hapi');
+var JWT  = require('jsonwebtoken');  // used to sign our content
+var port = process.env.PORT || 8000; // allow port to be set
 
 var secret = 'NeverShareYourSecret'; // Never Share!
 
@@ -155,8 +155,8 @@ So we decided to write our own addressing all these issues.
 
 ## Why hapi-auth-jwt2 ?
 
-The name we wanted was taken.  
-Think of our module as the "***new and simplified version***" :wink:
+The name we wanted was taken.
+Think of our module as the "***new and simplified version***"
 
 ## Useful Links
 
@@ -171,7 +171,6 @@ We borrowed code from the following:
 + https://github.com/hapijs/hapi-auth-basic
 + https://github.com/hapijs/hapi-auth-cookie
 + https://github.com/hapijs/hapi-auth-hawk
-
 
 
 [npm-image]: https://img.shields.io/npm/v/hapi-auth-jwt2.svg?style=flat
