@@ -16,9 +16,13 @@ var people = {
 var token = JWT.sign(people[1], secret); // synchronous
 console.log(token);
 // bring your own validation function
-var validate = function (decoded, callback) {
-
+var validate = function (decoded, request, callback) {
+    console.log(" - - - - - - - decoded token:");
     console.log(decoded);
+    console.log(" - - - - - - - request info:");
+    console.log(request.info);
+    console.log(" - - - - - - - user agent:");
+    console.log(request.headers['user-agent']);
 
     // do your checks to see if the person is valid
     if (!people[decoded.id]) {

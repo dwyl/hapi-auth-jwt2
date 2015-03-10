@@ -40,7 +40,7 @@ var people = { // our "users databse"
 var token = JWT.sign(people[1], secret); // synchronous
 
 // bring your own validation function
-var validate = function (decoded, callback) {
+var validate = function (decoded, request, callback) {
 
     console.log(decoded);
 
@@ -120,8 +120,9 @@ on the **decoded** token before allowing the visitor to proceed.
 ## Documentation
 
 - `validateFunc` - (***required***) a the function which is run once the Token has been decoded
- signature `function(decoded, callback)` where:
-    - `decoded` - is the ***decoded*** JWT received from the client in **request.headers.authorization**
+ signature `function(decoded, request, callback)` where:
+    - `decoded` - (***required***) is the ***decoded*** JWT received from the client in **request.headers.authorization**
+    - `request` - (***required***) is the original ***request*** received from the client  
     - `callback` - (***required***) a callback function with the signature `function(err, isValid)` where:
         - `err` - an internal error.
         - `valid` - `true` if the JWT was valid, otherwise `false`.
@@ -141,14 +142,18 @@ into *existing* modules that *might* solve our problem; there are *many* on NPM:
 
 but they were invariably ***too complicated***, poorly documented and
 had *useless* (non-real-world) "examples"!  
-So we decided to write our own addressing all these issues.
+
+Also, none of the *existing* modules exposed the **request** object
+to the **validateFunc** which we thought might be handy.
+
+So we decided to write our own module addressing all these issues.
 
 *Don't take our word for it, do your own homework and decide which module you prefer.*
 
 ### *Guiding Principal*
 
-> "* **perfection** is **attained** not when there is nothing more to add,  
-> but when there is **nothing more to remove** * " ~
+> *"**perfection** is **attained** not when there is nothing more to add,  
+> but when there is **nothing more to remove**"* ~
 [Antoine de Saint-Exupéry](http://en.wikiquote.org/wiki/Antoine_de_Saint_Exup%C3%A9ry)
 
 
@@ -171,6 +176,7 @@ We borrowed code from the following:
 + https://github.com/hapijs/hapi-auth-basic
 + https://github.com/hapijs/hapi-auth-cookie
 + https://github.com/hapijs/hapi-auth-hawk
++ https://github.com/ryanfitz/hapi-auth-jwt (good starting point)
 
 
 [npm-image]: https://img.shields.io/npm/v/hapi-auth-jwt2.svg?style=flat
