@@ -6,21 +6,27 @@ var secret = 'NeverShareYourSecret';
 var server = new Hapi.Server({ debug: false })
 server.connection();
 
+var db = {
+  "123" : { allowed: true,  "name":"Charlie"  },
+  "321" : { allowed: false, "name":"Old Gregg"}
+ }
+
 // defining our own validate function lets us do something
 // useful/custom with the decodedToken before reply(ing)
 var validate = function (decoded, request, callback) {
 
-  console.log(" - - - - - - - decoded token:");
-  console.log(decoded);
-  console.log(" - - - - - - - request info:");
-  console.log(request.info);
-  console.log(" - - - - - - - user agent: " + request.headers['user-agent']);
+  // console.log(" - - - - - - - decoded token:");
+  // console.log(decoded);
+  // console.log(" - - - - - - - request info:");
+  // console.log(request.info);
+  // console.log(" - - - - - - - user agent: " + request.headers['user-agent']);
 
-    if (!decoded.id) { // has no id
+    if (db[decoded.id].allowed) {
+      return callback(null, true);
+    } 
+    else {
       return callback(null, false);
     }
-
-    return callback(null, true);
 };
 
 var home = function(req, reply) {

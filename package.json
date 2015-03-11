@@ -34,13 +34,14 @@
     "istanbul": "^0.3.6",
     "jshint": "^2.6.3",
     "pre-commit": "^1.0.5",
+    "tap-spec": "^2.2.1",
     "tape": "^3.5.0"
   },
   "engines": {
     "node": ">=0.10"
   },
   "scripts": {
-    "quick": "./node_modules/tape/bin/tape ./test/*.js",
+    "quick": "./node_modules/tape/bin/tape ./test/*.js | node_modules/tap-spec/bin/cmd.js",
     "test": "./node_modules/.bin/istanbul cover ./node_modules/tape/bin/tape ./test/*.js",
     "coverage": "./node_modules/.bin/istanbul cover ./node_modules/tape/bin/tape ./test/*.js && ./node_modules/.bin/istanbul check-coverage --statements 100 --functions 100 --lines 100 --branches 100",
     "jshint": "./node_modules/jshint/bin/jshint -c .jshintrc --exclude-path .gitignore .",
