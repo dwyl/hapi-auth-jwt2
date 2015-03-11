@@ -1,6 +1,6 @@
 {
   "name": "hapi-auth-jwt2",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "description": "Hapi.js Authentication Plugin/Scheme using JSON Web Tokens (JWT)",
   "main": "lib/index.js",
   "repository": {
@@ -23,7 +23,7 @@
   "dependencies": {
     "boom": "2.x.x",
     "hoek": "2.x.x",
-    "jsonwebtoken": "^4.0.0"
+    "jsonwebtoken": "^4.1.0"
   },
   "peerDependencies": {
     "hapi": ">=8.x.x"
