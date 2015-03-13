@@ -53,14 +53,17 @@ test("Malformed JWT", function(t) {
   };
   // server.inject lets us similate an http request
   server.inject(options, function(response) {
+    console.log(response.result);
+    console.log(' '); // blank line
     t.equal(response.statusCode, 401, "INVALID Token should fail");
+    // t.equal(JSON.parse(response.result).msg, 'Invalid Token', "INVALID Token should fail");
     t.end();
   });
 });
 
 test("Try using an incorrect secret to sign the JWT", function(t) {
   // use the token as the 'authorization' header in requests
-  var token = JWT.sign({ id:123,"name":"Charlie" }, 'incorrectSecret'); 
+  var token = JWT.sign({ id:123,"name":"Charlie" }, 'incorrectSecret');
   console.log(" - - - - - - token  - - - - -")
   console.log(token);
   var options = {
