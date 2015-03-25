@@ -14,16 +14,9 @@ var db = {
 // defining our own validate function lets us do something
 // useful/custom with the decodedToken before reply(ing)
 var validate = function (decoded, request, callback) {
-
-  // console.log(" - - - - - - - decoded token:");
-  // console.log(decoded);
-  // console.log(" - - - - - - - request info:");
-  // console.log(request.info);
-  // console.log(" - - - - - - - user agent: " + request.headers['user-agent']);
-
     if (db[decoded.id].allowed) {
       return callback(null, true);
-    } 
+    }
     else {
       return callback(null, false);
     }
@@ -43,10 +36,7 @@ server.register(require('../'), function (err) {
 
   server.route([
     { method: 'GET',  path: '/', handler: home, config:{ auth: false } },
-    // { method: 'POST', path: '/login', handler: login, config:{ auth: false } },
     { method: 'POST', path: '/privado', handler: privado, config: { auth: 'jwt' } },
-    // // { method: 'POST', path: '/optional', handler: privado, config: { auth: { mode: 'optional' } } },
-    // { method: 'POST', path: '/logout', handler: tokenHandler, config: { auth: 'jwt' } },
   ]);
 
 });

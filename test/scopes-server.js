@@ -19,13 +19,7 @@ var scopesDb = {
 // defining our own validate function lets us do something
 // useful/custom with the decodedToken before reply(ing)
 var validate = function (decoded, request, callback) {
-
-  // console.log(" - - - - - - - decoded token:");
-  // console.log(decoded);
-  // console.log(" - - - - - - - request info:");
-  // console.log(request.info);
-  // console.log(" - - - - - - - user agent: " + request.headers['user-agent']);
-
+  
     if (db[decoded.id].allowed) {
       var credentials = db[decoded.id];
       credentials.scope = scopesDb[decoded.id];

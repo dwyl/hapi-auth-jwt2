@@ -1,20 +1,8 @@
 var test   = require('tape');
 var JWT    = require('jsonwebtoken');
-var secret = 'NeverShareYourSecret';
-
+var secret = 'NeverShareYourSecret'; // set by ENV Variable
 var server = require('./scopes-server'); // test server which in turn loads our module
 
-test("Warm Up the Engine", function(t) {
-  var options = {
-    method: "GET",
-    url: "/"
-  };
-  // server.inject lets us simulate an http request
-  server.inject(options, function(response) {
-    t.equal(response.statusCode, 200, "Welcome to Timer Land");
-    t.end();
-  });
-});
 
 test("Access restricted content using scopes (with VALID Token and VALID scope)", function(t) {
   // use the token as the 'authorization' header in requests
@@ -47,7 +35,6 @@ test("Access restricted content using scopes (with VALID Token and INVALID scope
     console.log(" - - - - RESPONSE: ")
     console.log(response.result);
     t.equal(response.statusCode, 401, "Denied");
-
     t.end();
   });
 });
