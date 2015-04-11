@@ -152,16 +152,16 @@ So we decided to write our own module addressing all these issues.
 
 ### *Guiding Principal*
 
-> *"**perfection** is **attained** not when there is nothing more to add,  
-> but when there is **nothing more to remove**"* ~
+> "***perfection*** *is* ***attained*** *not when there is nothing more to add,  
+> but when there is* ***nothing more to remove***" ~
 [Antoine de Saint-Exupéry](http://en.wikiquote.org/wiki/Antoine_de_Saint_Exup%C3%A9ry)
 
 
 
 ## Why hapi-auth-jwt2 ?
 
-The name we wanted was taken.
-Think of our module as the "***new and simplified version***"
+The name we wanted was taken.  
+Think of our module as the "***new, simplified and actively maintained version***"
 
 ## Useful Links
 
