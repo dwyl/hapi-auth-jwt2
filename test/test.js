@@ -112,3 +112,22 @@ test("Access restricted content (with VALID Token)", function(t) {
     t.end();
   });
 });
+
+// see: https://github.com/ideaq/hapi-auth-jwt2/issues/28
+test("Request with undefined auth header should 401", function(t) {
+  // use the token as the 'authorization' header in requests
+  var token = JWT.sign({ id:123,"name":"Charlie" }, secret);
+  var options = {
+    method: "POST",
+    url: "/privado",
+    headers: { authorization: "Bearer " }
+  };
+  // server.inject lets us similate an http request
+  server.inject(options, function(response) {
+    console.log(" - - - - RESPONSE: ")
+    console.log(response.result);
+    t.equal(response.statusCode, 401, "VALID Token should succeed!");
+
+    t.end();
+  });
+});

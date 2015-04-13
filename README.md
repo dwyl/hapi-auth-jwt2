@@ -36,7 +36,7 @@ var people = { // our "users databse"
     }
 };
 
-// use the token as the 'authorization' header in requests
+// use the token as the 'authorization' header for your requests
 var token = JWT.sign(people[1], secret); // synchronous
 
 // bring your own validation function
@@ -61,9 +61,16 @@ server.register(require('hapi-auth-jwt2'), function (err) {
     if(err){
       console.log(err);
     }
-    // see: http://hapijs.com/api#serverauthschemename-scheme
+
+    var verifyOptions = {
+
+    }
+
     server.auth.strategy('jwt', 'jwt', true,
-    { key: secret,  validateFunc: validate });
+    { key: secret,  
+      validateFunc: validate,
+      verifyOptions: { ignoreExpiration: true }
+    });
 
     server.route([
       {
@@ -127,6 +134,22 @@ on the **decoded** token before allowing the visitor to proceed.
         - `err` - an internal error.
         - `valid` - `true` if the JWT was valid, otherwise `false`.
 
+### verifyOptions let you define how to Verify the Tokens
+
+While registering the **hapi-auth-jwt2** plugin you can define
+the following **verifyOptions**:
+
+*  `ignoreExpiration` - ignore expired tokens
+*  `audience` - do not enforce token [*audience*](http://self-issued.info/docs/draft-ietf-oauth-json-web-token.html#audDef)
+*  `issuer` - do not require the issuer to be valid
+
+See: [jsonwebtoken verify options]( https://github.com/auth0/node-jsonwebtoken#jwtverifytoken-secretorpublickey-options-callback)
+
+If you prefer *not* to use any of these verifyOptions simply
+do not set them when registering the plugin with your app;
+they are all optional.
+
++ Original feature request: [issues/29](https://github.com/ideaq/hapi-auth-jwt2/issues/29)
 
 - - -
 
