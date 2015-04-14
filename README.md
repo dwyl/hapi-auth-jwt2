@@ -196,7 +196,7 @@ This feature was requested in: [issues/29](https://github.com/ideaq/hapi-auth-jw
 node module from NPM with `npm install jsonwebtoken --save` if you want to ***sign*** JWTs in your app.  
 Even though **hapi-auth-jwt2** includes it
 as a **dependency** your app does not know where to find it in the **node_modules** tree for your project.  
-unless you include it via ***relative path*** e.g:
+Unless you include it via ***relative path*** e.g:
 `var JWT = require('./node_modules/hapi-auth-jwt2/node_modules/jsonwebtoken');`  
 we *recommend* including it in your **package.json** ***explicitly*** as a **dependency** for your project.
 
