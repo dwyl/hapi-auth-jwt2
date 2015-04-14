@@ -3,14 +3,31 @@
 The ***simplest*** authentication scheme/plugin for
 [Hapi.js](http://hapijs.com/) apps using JSON Web Tokens.
 
-[![Node.js Version][node-version-image]][node-version-url]
-[![NPM Version][npm-image]][npm-url]
-[![Build Status](https://travis-ci.org/ideaq/hapi-auth-jwt2.svg)](https://travis-ci.org/ideaq/hapi-auth-jwt2)
-[![Test Coverage](https://codeclimate.com/github/ideaq/hapi-auth-jwt2/badges/coverage.svg)](https://codeclimate.com/github/ideaq/hapi-auth-jwt2)
-[![Code Climate](https://codeclimate.com/github/ideaq/hapi-auth-jwt2/badges/gpa.svg)](https://codeclimate.com/github/ideaq/hapi-auth-jwt2)
-[![Dependency Status](https://david-dm.org/ideaq/hapi-auth-jwt2.svg)](https://david-dm.org/ideaq/hapi-auth-jwt2)
+[![Build Status](https://travis-ci.org/ideaq/hapi-auth-jwt2.svg "Build Status = Tests Passing")](https://travis-ci.org/ideaq/hapi-auth-jwt2)
+[![Test Coverage](https://codeclimate.com/github/ideaq/hapi-auth-jwt2/badges/coverage.svg "All Lines Tested")](https://codeclimate.com/github/ideaq/hapi-auth-jwt2)
+[![Code Climate](https://codeclimate.com/github/ideaq/hapi-auth-jwt2/badges/gpa.svg "No Nasty Code")](https://codeclimate.com/github/ideaq/hapi-auth-jwt2)
+[![Dependency Status](https://david-dm.org/ideaq/hapi-auth-jwt2.svg "Dependencies Checked & Updated Regularly (Security is Important!)")](https://david-dm.org/ideaq/hapi-auth-jwt2)
+[![Node.js Version](https://img.shields.io/node/v/hapi-auth-jwt2.svg?style=flat "Node.js 10 & 12 and io.js latest both supported")](http://nodejs.org/download/)
+[![NPM Version](https://img.shields.io/npm/v/hapi-auth-jwt2.svg?style=flat)](https://npmjs.org/package/hapi-auth-jwt2)
+[![HAPI 8.4](http://img.shields.io/badge/hapi-8.4-brightgreen.svg "Latest Hapi.js")](http://hapijs.com)
+
+
+This node.js module (Hapi plugin) lets you use JSON Web Tokens (JWTs)
+for authentication in your [Hapi.js](http://hapijs.com/)
+web application.
+
+If you are totally new to JWTs, we wrote an introductory post explaining  
+the concepts & benefits: https://github.com/docdis/learn-json-web-tokens
+
+If you (or anyone on your team) are unfamiliar with **Hapi.js** we have a  
+quick guide for that too: https://github.com/nelsonic/learn-hapi
 
 ## Usage
+
+We have tried to make this plugin a user (developer) friendly as possible,
+but if anything is unclear,  
+please submit any questions as issues on GitHub:
+https://github.com/ideaq/hapi-auth-jwt2/issues
 
 ### Install from NPM
 
@@ -20,29 +37,21 @@ npm install hapi-auth-jwt2 --save
 
 ### Example
 
-basic usage example to get started:
+This basic usage example should get started:
+
 
 ```javascript
 var Hapi = require('hapi');
-var JWT  = require('jsonwebtoken');  // used to sign our content
-var port = process.env.PORT || 8000; // allow port to be set
 
-var secret = 'NeverShareYourSecret'; // Never Share!
-
-var people = { // our "users databse"
+var people = { // our "users database"
     1: {
       id: 1,
-      name: 'Anthony Valid User'
+      name: 'Jen Jones'
     }
 };
 
-// use the token as the 'authorization' header for your requests
-var token = JWT.sign(people[1], secret); // synchronous
-
 // bring your own validation function
 var validate = function (decoded, request, callback) {
-
-    console.log(decoded);
 
     // do your checks to see if the person is valid
     if (!people[decoded.id]) {
@@ -54,7 +63,7 @@ var validate = function (decoded, request, callback) {
 };
 
 var server = new Hapi.Server();
-server.connection({ port: port });
+server.connection({ port: 8000 });
         // include our module here ↓↓
 server.register(require('hapi-auth-jwt2'), function (err) {
 
@@ -62,14 +71,9 @@ server.register(require('hapi-auth-jwt2'), function (err) {
       console.log(err);
     }
 
-    var verifyOptions = {
-
-    }
-
     server.auth.strategy('jwt', 'jwt', true,
-    { key: secret,  
-      validateFunc: validate,
-      verifyOptions: { ignoreExpiration: true }
+    { key: 'NeverShareYourSecret', // Never Share your secret key
+      validateFunc: validate       // validate function defined above
     });
 
     server.route([
@@ -124,6 +128,10 @@ That's it.
 Write your own `validateFunc` with what ever checks you want to perform
 on the **decoded** token before allowing the visitor to proceed.
 
+If you would like to see a "***real world example***" of this plugin in use
+in a ***production*** web app (API)
+please see: https://github.com/ideaq/time/tree/master/api/lib
+
 ## Documentation
 
 - `validateFunc` - (***required***) a the function which is run once the Token has been decoded
@@ -134,7 +142,7 @@ on the **decoded** token before allowing the visitor to proceed.
         - `err` - an internal error.
         - `valid` - `true` if the JWT was valid, otherwise `false`.
 
-### verifyOptions let you define how to Verify the Tokens
+### verifyOptions let you define how to Verify the Tokens (*Optional*)
 
 While registering the **hapi-auth-jwt2** plugin you can define
 the following **verifyOptions**:
@@ -143,7 +151,16 @@ the following **verifyOptions**:
 *  `audience` - do not enforce token [*audience*](http://self-issued.info/docs/draft-ietf-oauth-json-web-token.html#audDef)
 *  `issuer` - do not require the issuer to be valid
 
-See: [jsonwebtoken verify options]( https://github.com/auth0/node-jsonwebtoken#jwtverifytoken-secretorpublickey-options-callback)
+example:
+```js
+server.auth.strategy('jwt', 'jwt', true,
+{ key: 'NeverShareYourSecret', // Never Share your secret key
+  validateFunc: validate,      // validate function defined above
+  verifyOptions: { ignoreExpiration: true }  // do not reject expired tokens
+});
+```
+
+Read more about this at: [jsonwebtoken verify options]( https://github.com/auth0/node-jsonwebtoken#jwtverifytoken-secretorpublickey-options-callback)
 
 If you prefer *not* to use any of these verifyOptions simply
 do not set them when registering the plugin with your app;
@@ -177,7 +194,7 @@ So we decided to write our own module addressing all these issues.
 
 > "***perfection*** *is* ***attained*** *not when there is nothing more to add,  
 > but when there is* ***nothing more to remove***" ~
-[Antoine de Saint-Exupéry](http://en.wikiquote.org/wiki/Antoine_de_Saint_Exup%C3%A9ry)
+[Antoine de Saint-Exupéry](http://en.wikiquote.org/wiki/Antoine_de_Saint_Exup%C3%A9ry#Quotes)
 
 
 
@@ -200,9 +217,3 @@ We borrowed code from the following:
 + https://github.com/hapijs/hapi-auth-cookie
 + https://github.com/hapijs/hapi-auth-hawk
 + https://github.com/ryanfitz/hapi-auth-jwt (good starting point)
-
-
-[npm-image]: https://img.shields.io/npm/v/hapi-auth-jwt2.svg?style=flat
-[npm-url]: https://npmjs.org/package/hapi-auth-jwt2
-[node-version-image]: https://img.shields.io/node/v/hapi-auth-jwt2.svg?style=flat
-[node-version-url]: http://nodejs.org/download/
