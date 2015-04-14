@@ -128,9 +128,26 @@ That's it.
 Write your own `validateFunc` with what ever checks you want to perform
 on the **decoded** token before allowing the visitor to proceed.
 
+### Real World Example ?
+
 If you would like to see a "***real world example***" of this plugin in use
 in a ***production*** web app (API)
 please see: https://github.com/ideaq/time/tree/master/api/lib
+
++ **app.js** ***registering*** the **hapi-auth-jw2 plugin**:
+[app.js#L13](https://github.com/ideaq/time/blob/0a5ec8711840528a4960c388825fb883fabddd76/app.js#L13)
++ telling app.js where to find our **validateFunc**tion:
+[app.js#L21](https://github.com/ideaq/time/blob/0a5ec8711840528a4960c388825fb883fabddd76/app.js#L21)
++ **validateFunc**tion (how we check the JWT is still valid):
+[api/lib/auth_jwt_validate.js](https://github.com/ideaq/time/blob/0a5ec8711840528a4960c388825fb883fabddd76/api/lib/auth_jwt_validate.js) look up the person's session in our ElasticSearch Database
+if the [session record is ***found*** (valid) and ***not ended***](https://github.com/ideaq/time/blob/0a5ec8711840528a4960c388825fb883fabddd76/api/lib/auth_jwt_validate.js#L12) we allow the person to see the restricted content.
++ **Signing your JWTs**: in your app you need a method to *sign* the JWTs (and put them in a database
+  if that's how you are *verifying* your sessions) ours is:
+  [api/lib/auth_jwt_sign.js](https://github.com/ideaq/time/blob/0a5ec8711840528a4960c388825fb883fabddd76/api/lib/auth_jwt_sign.js#L18)
+
+If you have ***any questions*** on this please post an issue/question on GitHub:
+https://github.com/ideaq/hapi-auth-jwt2/issues  
+(*we are here to help get you started on your journey to **hapi**ness!*)
 
 ## Documentation
 
@@ -166,7 +183,25 @@ If you prefer *not* to use any of these verifyOptions simply
 do not set them when registering the plugin with your app;
 they are all optional.
 
-+ Original feature request: [issues/29](https://github.com/ideaq/hapi-auth-jwt2/issues/29)
+This feature was requested in: [issues/29](https://github.com/ideaq/hapi-auth-jwt2/issues/29)
+
+- - -
+
+## Frequently Asked Questions (FAQ)
+
+1. Do I need to include **jsonwebtoken** in my project? asked in  [hapi-auth-jwt2/issues/32](https://github.com/ideaq/hapi-auth-jwt2/issues/32)  
+**Q**: Must I include the **jsonwebtoken** package in my project
+[given that **hapi-auth-jwt2** plugin already includes it] ?  
+**A**: Yes, you need to *manually* install the **jsonwebtoken**
+node module from NPM with `npm install jsonwebtoken --save` if you want to ***sign*** JWTs in your app.  
+Even though **hapi-auth-jwt2** includes it
+as a **dependency** your app does not know where to find it in the **node_modules** tree for your project.  
+unless you include it via ***relative path*** e.g:
+`var JWT = require('./node_modules/hapi-auth-jwt2/node_modules/jsonwebtoken');`  
+we *recommend* including it in your **package.json** ***explicitly*** as a **dependency** for your project.
+
+> *If you have a question, **please post an issue**/question on **GitHub***:
+https://github.com/ideaq/hapi-auth-jwt2/issues
 
 - - -
 
@@ -216,4 +251,8 @@ We borrowed code from the following:
 + https://github.com/hapijs/hapi-auth-basic
 + https://github.com/hapijs/hapi-auth-cookie
 + https://github.com/hapijs/hapi-auth-hawk
-+ https://github.com/ryanfitz/hapi-auth-jwt (good starting point)
++ https://github.com/ryanfitz/hapi-auth-jwt
+(Ryan has made a good *starting point* - we tried to submit a [pull request](https://github.com/ryanfitz/hapi-auth-jwt/pull/27)  
+to improve it but got *ignored* ... an *authentication* plugin that [***ignores
+  security updates***](https://github.com/ryanfitz/hapi-auth-jwt/issues/26) in [dependencies](https://david-dm.org/ryanfitz/hapi-auth-jwt)
+  is a ***no-go*** for us; **security *matters***!)
