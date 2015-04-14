@@ -139,7 +139,7 @@ please see: https://github.com/ideaq/time/tree/master/api/lib
 + telling app.js where to find our **validateFunc**tion:
 [app.js#L21](https://github.com/ideaq/time/blob/0a5ec8711840528a4960c388825fb883fabddd76/app.js#L21)
 + **validateFunc**tion (how we check the JWT is still valid):
-[api/lib/auth_jwt_validate.js](https://github.com/ideaq/time/blob/0a5ec8711840528a4960c388825fb883fabddd76/api/lib/auth_jwt_validate.js) look up the person's session in our ElasticSearch Database
+[api/lib/auth_jwt_validate.js](https://github.com/ideaq/time/blob/0a5ec8711840528a4960c388825fb883fabddd76/api/lib/auth_jwt_validate.js) looks up the person's session in our ElasticSearch Database
 if the [session record is ***found*** (valid) and ***not ended***](https://github.com/ideaq/time/blob/0a5ec8711840528a4960c388825fb883fabddd76/api/lib/auth_jwt_validate.js#L12) we allow the person to see the restricted content.
 + **Signing your JWTs**: in your app you need a method to *sign* the JWTs (and put them in a database
   if that's how you are *verifying* your sessions) ours is:
