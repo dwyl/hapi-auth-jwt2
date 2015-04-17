@@ -144,7 +144,7 @@ test("Request with undefined auth header should 401", function(t) {
   server.inject(options, function(response) {
     console.log(" - - - - RESPONSE: ")
     console.log(response.result);
-    t.equal(response.statusCode, 401, "VALID Token should succeed!");
+    t.equal(response.statusCode, 401, "InVALID Token fails (as expected)!");
 
     t.end();
   });

@@ -169,6 +169,12 @@ they are all optional.
 
 This feature was requested in: [issues/29](https://github.com/ideaq/hapi-auth-jwt2/issues/29)
 
+<!--
+# Production Ready Example Code
+
+redis://rediscloud:OhEJHaKRrjWvSgna@pub-redis-10689.eu-west-1-2.1.ec2.garantiadata.com:10689
+-->
+
 - - -
 
 ## Frequently Asked Questions (FAQ)
@@ -186,7 +192,6 @@ we *recommend* including it in your **package.json** ***explicitly*** as a **dep
 
 > *If you have a question, **please post an issue**/question on **GitHub***:
 https://github.com/ideaq/hapi-auth-jwt2/issues
->>>>>>> Stashed changes
 
 - - -
 
