@@ -128,9 +128,26 @@ That's it.
 Write your own `validateFunc` with what ever checks you want to perform
 on the **decoded** token before allowing the visitor to proceed.
 
+### Real World Example ?
+
 If you would like to see a "***real world example***" of this plugin in use
 in a ***production*** web app (API)
 please see: https://github.com/ideaq/time/tree/master/api/lib
+
++ **app.js** ***registering*** the **hapi-auth-jw2 plugin**:
+[app.js#L13](https://github.com/ideaq/time/blob/0a5ec8711840528a4960c388825fb883fabddd76/app.js#L13)
++ telling app.js where to find our **validateFunc**tion:
+[app.js#L21](https://github.com/ideaq/time/blob/0a5ec8711840528a4960c388825fb883fabddd76/app.js#L21)
++ **validateFunc**tion (how we check the JWT is still valid):
+[api/lib/auth_jwt_validate.js](https://github.com/ideaq/time/blob/0a5ec8711840528a4960c388825fb883fabddd76/api/lib/auth_jwt_validate.js) looks up the person's session in our ElasticSearch Database
+if the [session record is ***found*** (valid) and ***not ended***](https://github.com/ideaq/time/blob/0a5ec8711840528a4960c388825fb883fabddd76/api/lib/auth_jwt_validate.js#L12) we allow the person to see the restricted content.
++ **Signing your JWTs**: in your app you need a method to *sign* the JWTs (and put them in a database
+  if that's how you are *verifying* your sessions) ours is:
+  [api/lib/auth_jwt_sign.js](https://github.com/ideaq/time/blob/0a5ec8711840528a4960c388825fb883fabddd76/api/lib/auth_jwt_sign.js#L18)
+
+If you have ***any questions*** on this please post an issue/question on GitHub:
+https://github.com/ideaq/hapi-auth-jwt2/issues  
+(*we are here to help get you started on your journey to **hapi**ness!*)
 
 ## Documentation
 
@@ -166,7 +183,6 @@ If you prefer *not* to use any of these verifyOptions simply
 do not set them when registering the plugin with your app;
 they are all optional.
 
-
 This feature was requested in: [issues/29](https://github.com/ideaq/hapi-auth-jwt2/issues/29)
 
 <!--
@@ -174,6 +190,9 @@ This feature was requested in: [issues/29](https://github.com/ideaq/hapi-auth-jw
 
 redis://rediscloud:OhEJHaKRrjWvSgna@pub-redis-10689.eu-west-1-2.1.ec2.garantiadata.com:10689
 -->
+
+=======
+This feature was requested in: [issues/29](https://github.com/ideaq/hapi-auth-jwt2/issues/29)
 
 - - -
 
@@ -241,4 +260,8 @@ We borrowed code from the following:
 + https://github.com/hapijs/hapi-auth-basic
 + https://github.com/hapijs/hapi-auth-cookie
 + https://github.com/hapijs/hapi-auth-hawk
-+ https://github.com/ryanfitz/hapi-auth-jwt (good starting point)
++ https://github.com/ryanfitz/hapi-auth-jwt
+(Ryan has made a good *starting point* - we tried to submit a [pull request](https://github.com/ryanfitz/hapi-auth-jwt/pull/27)  
+to improve it but got *ignored* ... an *authentication* plugin that [***ignores
+  security updates***](https://github.com/ryanfitz/hapi-auth-jwt/issues/26) in [dependencies](https://david-dm.org/ryanfitz/hapi-auth-jwt)
+  is a ***no-go*** for us; **security *matters***!)
