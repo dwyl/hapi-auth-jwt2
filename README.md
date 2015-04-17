@@ -8,7 +8,7 @@ The ***simplest*** authentication scheme/plugin for
 [![Code Climate](https://codeclimate.com/github/ideaq/hapi-auth-jwt2/badges/gpa.svg "No Nasty Code")](https://codeclimate.com/github/ideaq/hapi-auth-jwt2)
 [![Dependency Status](https://david-dm.org/ideaq/hapi-auth-jwt2.svg "Dependencies Checked & Updated Regularly (Security is Important!)")](https://david-dm.org/ideaq/hapi-auth-jwt2)
 [![Node.js Version](https://img.shields.io/node/v/hapi-auth-jwt2.svg?style=flat "Node.js 10 & 12 and io.js latest both supported")](http://nodejs.org/download/)
-[![NPM Version](https://img.shields.io/npm/v/hapi-auth-jwt2.svg?style=flat)](https://npmjs.org/package/hapi-auth-jwt2)
+[![NPM Version](https://badge.fury.io/js/hapi-auth-jwt2.svg?style=flat)](https://npmjs.org/package/hapi-auth-jwt2)
 [![HAPI 8.4](http://img.shields.io/badge/hapi-8.4-brightgreen.svg "Latest Hapi.js")](http://hapijs.com)
 
 
@@ -166,7 +166,27 @@ If you prefer *not* to use any of these verifyOptions simply
 do not set them when registering the plugin with your app;
 they are all optional.
 
-+ Original feature request: [issues/29](https://github.com/ideaq/hapi-auth-jwt2/issues/29)
+
+This feature was requested in: [issues/29](https://github.com/ideaq/hapi-auth-jwt2/issues/29)
+
+- - -
+
+## Frequently Asked Questions (FAQ)
+
+1. Do I need to include **jsonwebtoken** in my project? asked in  [hapi-auth-jwt2/issues/32](https://github.com/ideaq/hapi-auth-jwt2/issues/32)  
+**Q**: Must I include the **jsonwebtoken** package in my project
+[given that **hapi-auth-jwt2** plugin already includes it] ?  
+**A**: Yes, you need to *manually* install the **jsonwebtoken**
+node module from NPM with `npm install jsonwebtoken --save` if you want to ***sign*** JWTs in your app.  
+Even though **hapi-auth-jwt2** includes it
+as a **dependency** your app does not know where to find it in the **node_modules** tree for your project.  
+Unless you include it via ***relative path*** e.g:
+`var JWT = require('./node_modules/hapi-auth-jwt2/node_modules/jsonwebtoken');`  
+we *recommend* including it in your **package.json** ***explicitly*** as a **dependency** for your project.
+
+> *If you have a question, **please post an issue**/question on **GitHub***:
+https://github.com/ideaq/hapi-auth-jwt2/issues
+>>>>>>> Stashed changes
 
 - - -
 
