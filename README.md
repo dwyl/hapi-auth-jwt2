@@ -6,6 +6,7 @@ The ***simplest*** authentication scheme/plugin for
 [![Build Status](https://travis-ci.org/ideaq/hapi-auth-jwt2.svg "Build Status = Tests Passing")](https://travis-ci.org/ideaq/hapi-auth-jwt2)
 [![Test Coverage](https://codeclimate.com/github/ideaq/hapi-auth-jwt2/badges/coverage.svg "All Lines Tested")](https://codeclimate.com/github/ideaq/hapi-auth-jwt2)
 [![Code Climate](https://codeclimate.com/github/ideaq/hapi-auth-jwt2/badges/gpa.svg "No Nasty Code")](https://codeclimate.com/github/ideaq/hapi-auth-jwt2)
+[![bitHound Score](https://www.bithound.io/github/ideaq/hapi-auth-jwt2/badges/score.svg)](https://www.bithound.io/github/ideaq/hapi-auth-jwt2)
 [![Dependency Status](https://david-dm.org/ideaq/hapi-auth-jwt2.svg "Dependencies Checked & Updated Regularly (Security is Important!)")](https://david-dm.org/ideaq/hapi-auth-jwt2)
 [![Node.js Version](https://img.shields.io/node/v/hapi-auth-jwt2.svg?style=flat "Node.js 10 & 12 and io.js latest both supported")](http://nodejs.org/download/)
 [![NPM Version](https://badge.fury.io/js/hapi-auth-jwt2.svg?style=flat)](https://npmjs.org/package/hapi-auth-jwt2)
