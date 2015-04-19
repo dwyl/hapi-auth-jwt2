@@ -24,12 +24,9 @@ var validate = function (decoded, request, callback) {
   // do your checks to see if the session is valid
   redisClient.get(decoded.id, function (rediserr, reply) {
     console.log(' - - - - - - - REDIS reply - - - - - - - ', reply);
+    var session;
     if(reply) {
-      try {
-        var session = JSON.parse(reply);
-      } catch(e) {
-        return callback(null, false);
-      }
+      session = JSON.parse(reply);
     }
     else { // unable to find session in redis ... reply is null
       return callback(null, false);
@@ -71,12 +68,11 @@ server.register(hapiAuthJWT, function (err) {
         .header("Authorization", request.headers.authorization);
       }
     },
-    {
+    { // implement your own login/auth function here
       method: ['GET','POST'], path: "/auth", config: { auth: false },
       handler: function(request, reply) {
-        // implement your own login/auth function here
         var session = {
-          valid: true, // this could be set to false if the person logs out
+          valid: true, // this will be set to false when the person logs out
           id: aguid(), // a random session id
           exp: new Date().getTime() + 30 * 60 * 1000 // expires in 30 minutes time
         }
@@ -96,17 +92,18 @@ server.register(hapiAuthJWT, function (err) {
         // implement your own login/auth function here
         var decoded = JWT.decode(request.headers.authorization,
           process.env.JWT_SECRET);
-        redisClient.get(decoded.id, function(rediserror, reply) {
-          var session = JSON.parse(reply)
+        var session;
+        redisClient.get(decoded.id, function(rediserror, redisreply) {
+          session = JSON.parse(redisreply)
           console.log(' - - - - - - SESSION - - - - - - - -')
           console.log(session);
           // update the session to no longer valid:
           session.valid = false;
           session.ended = new Date().getTime();
           // create the session in Redis
-          redisClient.set(session.id, JSON.stringify(session));          
-          reply({text: 'Successfully Logged Out! (Session no longer valid)'})
-          .header("Authorization", request.headers.authorization);
+          redisClient.set(session.id, JSON.stringify(session));
+
+          reply({text: 'Check Auth Header for your Token'})
         })
       }
     },

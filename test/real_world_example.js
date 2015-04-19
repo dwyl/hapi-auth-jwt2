@@ -148,6 +148,23 @@ test("Access restricted content with *VALID* JWT", function(t) {
   });
 });
 
+test("Logout to end the session", function(t) {
+  // use the token as the 'authorization' header in requests
+  var options = {
+    method: 'POST',
+    url: '/logout',
+    headers: { 'Authorization' : token } // token from previous test
+  };
+  // server.inject lets us similate an http request
+  server.inject(options, function(res) {
+    // token = res.headers.authorization;
+    // console.log(" - - - - RESPONSE: ");
+    console.log(res.result);
+    t.equal(res.statusCode, 200, "Logout succeeded");
+    t.end();
+  });
+});
+
 test("Attempt to Access restricted content with JWT which is no longer valid", function(t) {
   // use the token as the 'authorization' header in requests
   var options = {
@@ -157,10 +174,10 @@ test("Attempt to Access restricted content with JWT which is no longer valid", f
   };
   // server.inject lets us similate an http request
   server.inject(options, function(res) {
-    token = res.headers.authorization;
+    // token = res.headers.authorization;
     console.log(" - - - - RESPONSE: ");
     console.log(res.result);
-    t.equal(res.statusCode, 200, "VALID Token should succeed!");
+    t.equal(res.statusCode, 401, "Session is no longer valid. (cause we logged out!)");
     t.end();
   });
 });
