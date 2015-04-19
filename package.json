@@ -21,9 +21,11 @@
   },
   "homepage": "https://github.com/ideaq/hapi-auth-jwt",
   "dependencies": {
+    "aguid": "^1.0.3",
     "boom": "^2.7.0",
     "hoek": "^2.12.0",
-    "jsonwebtoken": "^5.0.0"
+    "jsonwebtoken": "^5.0.0",
+    "redis": "^0.12.1"
   },
   "peerDependencies": {
     "hapi": ">=8.x.x"
@@ -46,7 +48,8 @@
     "coverage": "istanbul cover ./node_modules/tape/bin/tape ./test/*.js && ./node_modules/.bin/istanbul check-coverage --statements 100 --functions 100 --lines 100 --branches 100",
     "jshint": "./node_modules/jshint/bin/jshint -c .jshintrc --exclude-path .gitignore .",
     "codeclimate": "CODECLIMATE_REPO_TOKEN=1f00e2891b3e24ed11bb9b22a8a4793c55c5470d60e859389a0c3dd24220df46 ./node_modules/codeclimate-test-reporter/bin/codeclimate.js < ./coverage/lcov.info",
-    "start":"node example/server.js"
+    "start": "node example/server.js",
+    "report":"open coverage/lcov-report/index.html"
   },
   "pre-commit": [
     "jshint",

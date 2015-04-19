@@ -149,6 +149,18 @@ If you have ***any questions*** on this please post an issue/question on GitHub:
 https://github.com/ideaq/hapi-auth-jwt2/issues  
 (*we are here to help get you started on your journey to **hapi**ness!*)
 
+#### Production-ready Example using Redis?
+
+
+Redis is *perfect* for storing session data that needs to be checked
+on every authenticated request.
+If you are unfamiliar with Redis or need a refresher,
+please see: https://github.com/docdis/learn-redis
+
+Feature request *seconded* by [@manonthemat](https://github.com/manonthemat) see:
+[hapi-auth-jwt2/issues/9](https://github.com/ideaq/hapi-auth-jwt2/issues/9)
+
+
 ## Documentation
 
 - `validateFunc` - (***required***) a the function which is run once the Token has been decoded
