@@ -154,6 +154,7 @@ https://github.com/ideaq/hapi-auth-jwt2/issues
 
 Redis is *perfect* for storing session data that needs to be checked
 on every authenticated request.
+
 If you are unfamiliar with Redis or anyone on your team needs a refresher,
 please checkout: https://github.com/docdis/learn-redis
 
@@ -162,7 +163,7 @@ The ***code*** is in: **example/real_world_example_using_redis_on_heroku.js**
 and corresponding ***tests*** in **test/real_world_example.js**
 feel free to inspect, use, or ask additional questions if unclear.
 
-Feature request *seconded* by [@manonthemat](https://github.com/manonthemat) see:
+Having a more real-world example was *seconded* by [@manonthemat](https://github.com/manonthemat) see:
 [hapi-auth-jwt2/issues/9](https://github.com/ideaq/hapi-auth-jwt2/issues/9)
 
 
