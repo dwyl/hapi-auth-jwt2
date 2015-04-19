@@ -149,13 +149,17 @@ If you have ***any questions*** on this please post an issue/question on GitHub:
 https://github.com/ideaq/hapi-auth-jwt2/issues  
 (*we are here to help get you started on your journey to **hapi**ness!*)
 
-#### Production-ready Example using Redis?
-
+### Production-ready Example using Redis?
 
 Redis is *perfect* for storing session data that needs to be checked
 on every authenticated request.
-If you are unfamiliar with Redis or need a refresher,
-please see: https://github.com/docdis/learn-redis
+If you are unfamiliar with Redis or anyone on your team needs a refresher,
+please checkout: https://github.com/docdis/learn-redis
+
+The ***code*** is in: **example/real_world_example_using_redis_on_heroku.js**
+(snappy name, right?)
+and corresponding ***tests*** in **test/real_world_example.js**
+feel free to inspect, use, or ask additional questions if unclear.
 
 Feature request *seconded* by [@manonthemat](https://github.com/manonthemat) see:
 [hapi-auth-jwt2/issues/9](https://github.com/ideaq/hapi-auth-jwt2/issues/9)
@@ -197,14 +201,6 @@ they are all optional.
 
 This feature was requested in: [issues/29](https://github.com/ideaq/hapi-auth-jwt2/issues/29)
 
-<!--
-# Production Ready Example Code
-
-redis://rediscloud:OhEJHaKRrjWvSgna@pub-redis-10689.eu-west-1-2.1.ec2.garantiadata.com:10689
--->
-
-=======
-This feature was requested in: [issues/29](https://github.com/ideaq/hapi-auth-jwt2/issues/29)
 
 - - -
 

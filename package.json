@@ -21,21 +21,21 @@
   },
   "homepage": "https://github.com/ideaq/hapi-auth-jwt",
   "dependencies": {
-    "aguid": "^1.0.3",
     "boom": "^2.7.0",
     "hoek": "^2.12.0",
-    "jsonwebtoken": "^5.0.0",
-    "redis": "^0.12.1"
+    "jsonwebtoken": "^5.0.0"
   },
   "peerDependencies": {
     "hapi": ">=8.x.x"
   },
   "devDependencies": {
+    "aguid": "^1.0.3",
     "hapi": "^8.4.0",
     "codeclimate-test-reporter": "0.0.4",
     "istanbul": "^0.3.13",
     "jshint": "^2.6.3",
     "pre-commit": "^1.0.6",
+    "redis": "^0.12.1",
     "tap-spec": "^3.0.0",
     "tape": "^4.0.0"
   },
