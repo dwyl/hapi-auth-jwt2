@@ -1,6 +1,6 @@
 {
   "name": "hapi-auth-jwt2",
-  "version": "4.3.0",
+  "version": "4.3.1",
   "description": "Hapi.js Authentication Plugin/Scheme using JSON Web Tokens (JWT)",
   "main": "lib/index.js",
   "repository": {
@@ -29,11 +29,13 @@
     "hapi": ">=8.x.x"
   },
   "devDependencies": {
+    "aguid": "^1.0.3",
     "hapi": "^8.4.0",
     "codeclimate-test-reporter": "0.0.4",
     "istanbul": "^0.3.13",
     "jshint": "^2.6.3",
     "pre-commit": "^1.0.6",
+    "redis": "^0.12.1",
     "tap-spec": "^3.0.0",
     "tape": "^4.0.0"
   },
@@ -46,7 +48,8 @@
     "coverage": "istanbul cover ./node_modules/tape/bin/tape ./test/*.js && ./node_modules/.bin/istanbul check-coverage --statements 100 --functions 100 --lines 100 --branches 100",
     "jshint": "./node_modules/jshint/bin/jshint -c .jshintrc --exclude-path .gitignore .",
     "codeclimate": "CODECLIMATE_REPO_TOKEN=1f00e2891b3e24ed11bb9b22a8a4793c55c5470d60e859389a0c3dd24220df46 ./node_modules/codeclimate-test-reporter/bin/codeclimate.js < ./coverage/lcov.info",
-    "start":"node example/server.js"
+    "start": "node example/server.js",
+    "report":"open coverage/lcov-report/index.html"
   },
   "pre-commit": [
     "jshint",

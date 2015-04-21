@@ -6,6 +6,7 @@ The ***simplest*** authentication scheme/plugin for
 [![Build Status](https://travis-ci.org/ideaq/hapi-auth-jwt2.svg "Build Status = Tests Passing")](https://travis-ci.org/ideaq/hapi-auth-jwt2)
 [![Test Coverage](https://codeclimate.com/github/ideaq/hapi-auth-jwt2/badges/coverage.svg "All Lines Tested")](https://codeclimate.com/github/ideaq/hapi-auth-jwt2)
 [![Code Climate](https://codeclimate.com/github/ideaq/hapi-auth-jwt2/badges/gpa.svg "No Nasty Code")](https://codeclimate.com/github/ideaq/hapi-auth-jwt2)
+[![bitHound Score](https://www.bithound.io/github/ideaq/hapi-auth-jwt2/badges/score.svg)](https://www.bithound.io/github/ideaq/hapi-auth-jwt2)
 [![Dependency Status](https://david-dm.org/ideaq/hapi-auth-jwt2.svg "Dependencies Checked & Updated Regularly (Security is Important!)")](https://david-dm.org/ideaq/hapi-auth-jwt2)
 [![Node.js Version](https://img.shields.io/node/v/hapi-auth-jwt2.svg?style=flat "Node.js 10 & 12 and io.js latest both supported")](http://nodejs.org/download/)
 [![NPM Version](https://badge.fury.io/js/hapi-auth-jwt2.svg?style=flat)](https://npmjs.org/package/hapi-auth-jwt2)
@@ -149,6 +150,23 @@ If you have ***any questions*** on this please post an issue/question on GitHub:
 https://github.com/ideaq/hapi-auth-jwt2/issues  
 (*we are here to help get you started on your journey to **hapi**ness!*)
 
+### Production-ready Example using Redis?
+
+Redis is *perfect* for storing session data that needs to be checked
+on every authenticated request.
+
+If you are unfamiliar with Redis or anyone on your team needs a refresher,
+please checkout: https://github.com/docdis/learn-redis
+
+The ***code*** is in: **example/real_world_example_using_redis_on_heroku.js**
+(snappy name, right?)
+and corresponding ***tests*** in **test/real_world_example.js**
+feel free to inspect, use, or ask additional questions if unclear.
+
+Having a more real-world example was *seconded* by [@manonthemat](https://github.com/manonthemat) see:
+[hapi-auth-jwt2/issues/9](https://github.com/ideaq/hapi-auth-jwt2/issues/9)
+
+
 ## Documentation
 
 - `validateFunc` - (***required***) a the function which is run once the Token has been decoded
@@ -185,14 +203,6 @@ they are all optional.
 
 This feature was requested in: [issues/29](https://github.com/ideaq/hapi-auth-jwt2/issues/29)
 
-<!--
-# Production Ready Example Code
-
-redis://rediscloud:OhEJHaKRrjWvSgna@pub-redis-10689.eu-west-1-2.1.ec2.garantiadata.com:10689
--->
-
-=======
-This feature was requested in: [issues/29](https://github.com/ideaq/hapi-auth-jwt2/issues/29)
 
 - - -
 
