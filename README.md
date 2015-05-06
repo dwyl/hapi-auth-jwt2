@@ -173,9 +173,10 @@ Having a more real-world example was *seconded* by [@manonthemat](https://github
  signature `function(decoded, request, callback)` where:
     - `decoded` - (***required***) is the ***decoded*** JWT received from the client in **request.headers.authorization**
     - `request` - (***required***) is the original ***request*** received from the client  
-    - `callback` - (***required***) a callback function with the signature `function(err, isValid)` where:
+    - `callback` - (***required***) a callback function with the signature `function(err, isValid, credentials)` where:
         - `err` - an internal error.
         - `valid` - `true` if the JWT was valid, otherwise `false`.
+        - `credentials` - (***optional***) alternative credentials to be set instead of `decoded`.
 
 ### verifyOptions let you define how to Verify the Tokens (*Optional*)
 

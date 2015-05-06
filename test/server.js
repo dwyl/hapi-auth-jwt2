@@ -34,8 +34,7 @@ server.register(require('../'), function (err) {
 
   server.auth.strategy('jwt', 'jwt', {
     key: secret,
-    validateFunc: validate,
-    verifyOptions: { ignoreExpiration: true }
+    validateFunc: validate
   });
 
   server.route([
