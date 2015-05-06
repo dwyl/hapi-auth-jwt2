@@ -79,6 +79,27 @@ test("Try using an incorrect secret to sign the JWT", function(t) {
   });
 });
 
+test("Try using an expired token", function(t) {
+  // use the token as the 'authorization' header in requests
+  var token = JWT.sign({ id:123,"name":"Charlie" }, secret, { expiresInSeconds: 1 });
+  console.log(" - - - - - - token  - - - - -")
+  console.log(token);
+  var options = {
+    method: "POST",
+    url: "/privado",
+    headers: { authorization: "Bearer "+token  }
+  };
+  // server.inject lets us similate an http request
+  setTimeout(function () {
+    server.inject(options, function(response) {
+      t.equal(response.statusCode, 401, "Expired token should be invalid");
+      t.equal(response.result.message, 'Token expired', 'Message should be "Token expired"')
+    t.equal(true, true, "true is true")
+      t.end();
+    });
+  }, 1000);
+});
+
 test("Token is well formed but is allowed=false so should be denied", function(t) {
   // use the token as the 'authorization' header in requests
   // var token = jwt.sign({ "id": 1 ,"name":"Old Greg" }, 'incorrectSecret');
