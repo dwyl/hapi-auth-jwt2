@@ -220,27 +220,27 @@ Unless you include it via ***relative path*** e.g:
 `var JWT = require('./node_modules/hapi-auth-jwt2/node_modules/jsonwebtoken');`  
 we *recommend* including it in your **package.json** ***explicitly*** as a **dependency** for your project.
 
-> *If you have a question, **please post an issue**/question on **GitHub***:
+> *If you have a question*, ***please post an issue/question on GitHub***:
 https://github.com/dwyl/hapi-auth-jwt2/issues
 
 - - -
 
-## Contributing ## Contributing [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dwyl/hapi-auth-jwt2/issues)
+## Contributing [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dwyl/hapi-auth-jwt2/issues)
 
-If you spot an area for improvement, please raise an issue: https://github.com/dwyl/hapi-auth-jwt2/issues
-Someone on the dwyl team is *always* online so
+If you spot an area for improvement, please raise an issue: https://github.com/dwyl/hapi-auth-jwt2/issues  
+*Someone* in the dwyl team is *always* online so we will usually answer within a few hours.
 
-### Running the tests
+### Running the tests requires environment variables
 
 The "*real world example*" expects to have two environment variables:
 **JWT_SECRET** and **REDISCLOUD_URL**.
+
+> ***Ask*** [@**nelsonic**](https://github.com/nelsonic) for a *valid* **Redis Cloud url** (...*we cannot publish the* ***real*** *one on GitHub...*)
 
 ```sh
 export JWT_SECRET='ItsNoSecretBecauseYouToldEverybody'
 export REDISCLOUD_URL='redis://rediscloud:OhEJjWvSgna@pub-redis-1046.eu-west-1-2.1.ec2.garantiadata.com:10689'
 ```
-
-> Ask [@nelsonic](https://github.com/nelsonic) for a valid Dev **Redis url** (*we cannot publish the* ***real*** *one on GitHub...*)
 
 
 # tl;dr
