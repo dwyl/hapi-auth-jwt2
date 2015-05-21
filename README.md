@@ -3,11 +3,11 @@
 The ***simplest*** authentication scheme/plugin for
 [Hapi.js](http://hapijs.com/) apps using JSON Web Tokens.
 
-[![Build Status](https://travis-ci.org/ideaq/hapi-auth-jwt2.svg "Build Status = Tests Passing")](https://travis-ci.org/ideaq/hapi-auth-jwt2)
-[![Test Coverage](https://codeclimate.com/github/ideaq/hapi-auth-jwt2/badges/coverage.svg "All Lines Tested")](https://codeclimate.com/github/ideaq/hapi-auth-jwt2)
-[![Code Climate](https://codeclimate.com/github/ideaq/hapi-auth-jwt2/badges/gpa.svg "No Nasty Code")](https://codeclimate.com/github/ideaq/hapi-auth-jwt2)
-[![bitHound Score](https://www.bithound.io/github/ideaq/hapi-auth-jwt2/badges/score.svg)](https://www.bithound.io/github/ideaq/hapi-auth-jwt2)
-[![Dependency Status](https://david-dm.org/ideaq/hapi-auth-jwt2.svg "Dependencies Checked & Updated Regularly (Security is Important!)")](https://david-dm.org/ideaq/hapi-auth-jwt2)
+[![Build Status](https://travis-ci.org/dwyl/hapi-auth-jwt2.svg "Build Status = Tests Passing")](https://travis-ci.org/dwyl/hapi-auth-jwt2)
+[![Test Coverage](https://codeclimate.com/github/dwyl/hapi-auth-jwt2/badges/coverage.svg "All Lines Tested")](https://codeclimate.com/github/dwyl/hapi-auth-jwt2)
+[![Code Climate](https://codeclimate.com/github/dwyl/hapi-auth-jwt2/badges/gpa.svg "No Nasty Code")](https://codeclimate.com/github/dwyl/hapi-auth-jwt2)
+[![bitHound Score](https://www.bithound.io/github/dwyl/hapi-auth-jwt2/badges/score.svg)](https://www.bithound.io/github/dwyl/hapi-auth-jwt2)
+[![Dependency Status](https://david-dm.org/dwyl/hapi-auth-jwt2.svg "Dependencies Checked & Updated Regularly (Security is Important!)")](https://david-dm.org/dwyl/hapi-auth-jwt2)
 [![Node.js Version](https://img.shields.io/node/v/hapi-auth-jwt2.svg?style=flat "Node.js 10 & 12 and io.js latest both supported")](http://nodejs.org/download/)
 [![NPM Version](https://badge.fury.io/js/hapi-auth-jwt2.svg?style=flat)](https://npmjs.org/package/hapi-auth-jwt2)
 [![HAPI 8.4](http://img.shields.io/badge/hapi-8.4-brightgreen.svg "Latest Hapi.js")](http://hapijs.com)
@@ -28,7 +28,7 @@ quick guide for that too: https://github.com/nelsonic/learn-hapi
 We have tried to make this plugin a user (developer) friendly as possible,
 but if anything is unclear,  
 please submit any questions as issues on GitHub:
-https://github.com/ideaq/hapi-auth-jwt2/issues
+https://github.com/dwyl/hapi-auth-jwt2/issues
 
 ### Install from NPM
 
@@ -133,21 +133,21 @@ on the **decoded** token before allowing the visitor to proceed.
 
 If you would like to see a "***real world example***" of this plugin in use
 in a ***production*** web app (API)
-please see: https://github.com/ideaq/time/tree/master/api/lib
+please see: https://github.com/dwyl/time/tree/master/api/lib
 
 + **app.js** ***registering*** the **hapi-auth-jw2 plugin**:
-[app.js#L13](https://github.com/ideaq/time/blob/0a5ec8711840528a4960c388825fb883fabddd76/app.js#L13)
+[app.js#L13](https://github.com/dwyl/time/blob/0a5ec8711840528a4960c388825fb883fabddd76/app.js#L13)
 + telling app.js where to find our **validateFunc**tion:
-[app.js#L21](https://github.com/ideaq/time/blob/0a5ec8711840528a4960c388825fb883fabddd76/app.js#L21)
+[app.js#L21](https://github.com/dwyl/time/blob/0a5ec8711840528a4960c388825fb883fabddd76/app.js#L21)
 + **validateFunc**tion (how we check the JWT is still valid):
-[api/lib/auth_jwt_validate.js](https://github.com/ideaq/time/blob/0a5ec8711840528a4960c388825fb883fabddd76/api/lib/auth_jwt_validate.js) looks up the person's session in our ElasticSearch Database
-if the [session record is ***found*** (valid) and ***not ended***](https://github.com/ideaq/time/blob/0a5ec8711840528a4960c388825fb883fabddd76/api/lib/auth_jwt_validate.js#L12) we allow the person to see the restricted content.
+[api/lib/auth_jwt_validate.js](https://github.com/dwyl/time/blob/0a5ec8711840528a4960c388825fb883fabddd76/api/lib/auth_jwt_validate.js) looks up the person's session in our ElasticSearch Database
+if the [session record is ***found*** (valid) and ***not ended***](https://github.com/dwyl/time/blob/0a5ec8711840528a4960c388825fb883fabddd76/api/lib/auth_jwt_validate.js#L12) we allow the person to see the restricted content.
 + **Signing your JWTs**: in your app you need a method to *sign* the JWTs (and put them in a database
   if that's how you are *verifying* your sessions) ours is:
-  [api/lib/auth_jwt_sign.js](https://github.com/ideaq/time/blob/0a5ec8711840528a4960c388825fb883fabddd76/api/lib/auth_jwt_sign.js#L18)
+  [api/lib/auth_jwt_sign.js](https://github.com/dwyl/time/blob/0a5ec8711840528a4960c388825fb883fabddd76/api/lib/auth_jwt_sign.js#L18)
 
 If you have ***any questions*** on this please post an issue/question on GitHub:
-https://github.com/ideaq/hapi-auth-jwt2/issues  
+https://github.com/dwyl/hapi-auth-jwt2/issues  
 (*we are here to help get you started on your journey to **hapi**ness!*)
 
 ### Production-ready Example using Redis?
@@ -164,7 +164,7 @@ and corresponding ***tests*** in **test/real_world_example.js**
 feel free to inspect, use, or ask additional questions if unclear.
 
 Having a more real-world example was *seconded* by [@manonthemat](https://github.com/manonthemat) see:
-[hapi-auth-jwt2/issues/9](https://github.com/ideaq/hapi-auth-jwt2/issues/9)
+[hapi-auth-jwt2/issues/9](https://github.com/dwyl/hapi-auth-jwt2/issues/9)
 
 
 ## Documentation
@@ -202,14 +202,14 @@ If you prefer *not* to use any of these verifyOptions simply
 do not set them when registering the plugin with your app;
 they are all optional.
 
-This feature was requested in: [issues/29](https://github.com/ideaq/hapi-auth-jwt2/issues/29)
+This feature was requested in: [issues/29](https://github.com/dwyl/hapi-auth-jwt2/issues/29)
 
 
 - - -
 
 ## Frequently Asked Questions (FAQ)
 
-1. Do I need to include **jsonwebtoken** in my project? asked in  [hapi-auth-jwt2/issues/32](https://github.com/ideaq/hapi-auth-jwt2/issues/32)  
+1. Do I need to include **jsonwebtoken** in my project? asked in  [hapi-auth-jwt2/issues/32](https://github.com/dwyl/hapi-auth-jwt2/issues/32)  
 **Q**: Must I include the **jsonwebtoken** package in my project
 [given that **hapi-auth-jwt2** plugin already includes it] ?  
 **A**: Yes, you need to *manually* install the **jsonwebtoken**
@@ -221,13 +221,13 @@ Unless you include it via ***relative path*** e.g:
 we *recommend* including it in your **package.json** ***explicitly*** as a **dependency** for your project.
 
 > *If you have a question, **please post an issue**/question on **GitHub***:
-https://github.com/ideaq/hapi-auth-jwt2/issues
+https://github.com/dwyl/hapi-auth-jwt2/issues
 
 - - -
 
 ## Motivation
 
-While making [***Time***](https://github.com/ideaq/time) we want to ensure
+While making [***Time***](https://github.com/dwyl/time) we want to ensure
 our app (and API) is as ***simple*** as *possible* to use.  
 This lead us to using JSON Web Tokens for ***Stateless*** Authentication.
 

@@ -1,11 +1,11 @@
 {
   "name": "hapi-auth-jwt2",
-  "version": "4.3.2",
+  "version": "4.3.3",
   "description": "Hapi.js Authentication Plugin/Scheme using JSON Web Tokens (JWT)",
   "main": "lib/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ideaq/hapi-auth-jwt.git"
+    "url": "https://github.com/dwyl/hapi-auth-jwt.git"
   },
   "keywords": [
     "Hapi.js",
@@ -21,9 +21,9 @@
   }],
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ideaq/hapi-auth-jwt/issues"
+    "url": "https://github.com/dwyl/hapi-auth-jwt/issues"
   },
-  "homepage": "https://github.com/ideaq/hapi-auth-jwt",
+  "homepage": "https://github.com/dwyl/hapi-auth-jwt",
   "dependencies": {
     "boom": "^2.7.0",
     "hoek": "^2.12.0",
@@ -49,9 +49,9 @@
   "scripts": {
     "quick": "./node_modules/tape/bin/tape ./test/*.js | node_modules/tap-spec/bin/cmd.js",
     "test": "istanbul cover ./node_modules/tape/bin/tape ./test/*.js  | node_modules/tap-spec/bin/cmd.js",
-    "coverage": "istanbul cover ./node_modules/tape/bin/tape ./test/*.js && ./node_modules/.bin/istanbul check-coverage --statements 100 --functions 100 --lines 100 --branches 100",
+    "coverage": "istanbul cover ./node_modules/tape/bin/tape ./test/*.js && istanbul check-coverage --statements 100 --functions 100 --lines 100 --branches 100",
     "jshint": "./node_modules/jshint/bin/jshint -c .jshintrc --exclude-path .gitignore .",
-    "codeclimate": "CODECLIMATE_REPO_TOKEN=1f00e2891b3e24ed11bb9b22a8a4793c55c5470d60e859389a0c3dd24220df46 ./node_modules/codeclimate-test-reporter/bin/codeclimate.js < ./coverage/lcov.info",
+    "codeclimate": "CODECLIMATE_REPO_TOKEN=6c47340a2888b54541779bd8bffcaad5577095a7ae888b72b4736fc68eb094f8 ./node_modules/codeclimate-test-reporter/bin/codeclimate.js < ./coverage/lcov.info",
     "start": "node example/server.js",
     "report":"open coverage/lcov-report/index.html"
   },
