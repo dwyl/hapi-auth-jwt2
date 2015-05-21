@@ -34,11 +34,11 @@
   },
   "devDependencies": {
     "aguid": "^1.0.3",
-    "hapi": "^8.4.0",
+    "hapi": "^8.5.0",
     "codeclimate-test-reporter": "0.0.4",
-    "istanbul": "^0.3.13",
-    "jshint": "^2.6.3",
-    "pre-commit": "^1.0.6",
+    "istanbul": "^0.3.14",
+    "jshint": "^2.7.0",
+    "pre-commit": "^1.0.7",
     "redis": "^0.12.1",
     "tap-spec": "^3.0.0",
     "tape": "^4.0.0"

@@ -10,7 +10,7 @@ The ***simplest*** authentication scheme/plugin for
 [![Dependency Status](https://david-dm.org/dwyl/hapi-auth-jwt2.svg "Dependencies Checked & Updated Regularly (Security is Important!)")](https://david-dm.org/dwyl/hapi-auth-jwt2)
 [![Node.js Version](https://img.shields.io/node/v/hapi-auth-jwt2.svg?style=flat "Node.js 10 & 12 and io.js latest both supported")](http://nodejs.org/download/)
 [![NPM Version](https://badge.fury.io/js/hapi-auth-jwt2.svg?style=flat)](https://npmjs.org/package/hapi-auth-jwt2)
-[![HAPI 8.4](http://img.shields.io/badge/hapi-8.4-brightgreen.svg "Latest Hapi.js")](http://hapijs.com)
+[![HAPI 8.5](http://img.shields.io/badge/hapi-8.4-brightgreen.svg "Latest Hapi.js")](http://hapijs.com)
 
 
 This node.js module (Hapi plugin) lets you use JSON Web Tokens (JWTs)
@@ -225,6 +225,26 @@ https://github.com/dwyl/hapi-auth-jwt2/issues
 
 - - -
 
+## Contributing ## Contributing [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dwyl/hapi-auth-jwt2/issues)
+
+If you spot an area for improvement, please raise an issue: https://github.com/dwyl/hapi-auth-jwt2/issues
+Someone on the dwyl team is *always* online so
+
+### Running the tests
+
+The "*real world example*" expects to have two environment variables:
+**JWT_SECRET** and **REDISCLOUD_URL**.
+
+```sh
+export JWT_SECRET='ItsNoSecretBecauseYouToldEverybody'
+export REDISCLOUD_URL='redis://rediscloud:OhEJjWvSgna@pub-redis-1046.eu-west-1-2.1.ec2.garantiadata.com:10689'
+```
+
+> Ask [@nelsonic](https://github.com/nelsonic) for a valid Dev **Redis url** (*we cannot publish the* ***real*** *one on GitHub...*)
+
+
+# tl;dr
+
 ## Motivation
 
 While making [***Time***](https://github.com/dwyl/time) we want to ensure
@@ -252,11 +272,15 @@ So we decided to write our own module addressing all these issues.
 [Antoine de Saint-Exupéry](http://en.wikiquote.org/wiki/Antoine_de_Saint_Exup%C3%A9ry#Quotes)
 
 
-
 ## Why hapi-auth-jwt2 ?
 
 The name we wanted was taken.  
 Think of our module as the "***new, simplified and actively maintained version***"
+
+
+
+
+
 
 ## Useful Links
 
