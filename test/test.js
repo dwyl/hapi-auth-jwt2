@@ -170,3 +170,152 @@ test("Request with undefined auth header should 401", function(t) {
     t.end();
   });
 });
+
+test("Auth mode 'required' should require authentication header", function(t) {
+  var options = {
+    method: "POST",
+    url: "/required"
+  };
+  // server.inject lets us similate an http request
+  server.inject(options, function(response) {
+    t.equal(response.statusCode, 401, "No token header should fail in auth 'required' mode");
+    t.end();
+  });
+});
+
+test("Auth mode 'required' should fail with invalid token", function(t) {
+  // use the token as the 'authorization' header in requests
+  var token = JWT.sign({ id:123,"name":"Charlie" }, 'badsecret');
+  var options = {
+    method: "POST",
+    url: "/required",
+    headers: { authorization: "Bearer "+token }
+  };
+  // server.inject lets us similate an http request
+  server.inject(options, function(response) {
+    console.log(" - - - - RESPONSE: ")
+    console.log(response.result);
+    t.equal(response.statusCode, 401, "Invalid token should error!");
+
+    t.end();
+  });
+});
+
+test("Auth mode 'required' should should pass with valid token", function(t) {
+  // use the token as the 'authorization' header in requests
+  var token = JWT.sign({ id:123,"name":"Charlie" }, secret);
+  var options = {
+    method: "POST",
+    url: "/required",
+    headers: { authorization: "Bearer "+token }
+  };
+  // server.inject lets us similate an http request
+  server.inject(options, function(response) {
+    console.log(" - - - - RESPONSE: ")
+    console.log(response.result);
+    t.equal(response.statusCode, 200, "Valid token should succeed!");
+
+    t.end();
+  });
+});
+
+test("Auth mode 'optional' should pass when no auth header specified", function(t) {
+  var options = {
+    method: "POST",
+    url: "/optional"
+  };
+  server.inject(options, function(response) {
+    console.log(" - - - - RESPONSE: ")
+    console.log(response.result);
+    t.equal(response.statusCode, 200, "No auth header should pass in optional mode!");
+
+    t.end();
+  });
+});
+
+test("Auth mode 'optional' should fail with invalid token", function(t) {
+  // use the token as the 'authorization' header in requests
+  var token = JWT.sign({ id:123,"name":"Charlie" }, 'badsecret');
+  var options = {
+    method: "POST",
+    url: "/optional",
+    headers: { authorization: "Bearer "+token }
+  };
+  // server.inject lets us similate an http request
+  server.inject(options, function(response) {
+    console.log(" - - - - RESPONSE: ")
+    console.log(response.result);
+    t.equal(response.statusCode, 401, "Invalid token should error!");
+
+    t.end();
+  });
+});
+
+test("Auth mode 'optional' should pass with valid token", function(t) {
+  // use the token as the 'authorization' header in requests
+  // var token = JWT.sign({ id:123,"name":"Charlie" }, secret);
+  var token = JWT.sign({ id:123,"name":"Charlie" }, secret);
+  var options = {
+    method: "POST",
+    url: "/optional",
+    headers: { authorization: "Bearer "+token }
+  };
+  // server.inject lets us similate an http request
+  server.inject(options, function(response) {
+    console.log(" - - - - RESPONSE: ")
+    console.log(response.result);
+    t.equal(response.statusCode, 200, "Valid token should succeed!");
+
+    t.end();
+  });
+});
+
+test("Auth mode 'try' should pass when no auth header specified", function(t) {
+  var options = {
+    method: "POST",
+    url: "/try"
+  };
+  server.inject(options, function(response) {
+    console.log(" - - - - RESPONSE: ")
+    console.log(response.result);
+    t.equal(response.statusCode, 200, "No auth header should pass in 'try' mode!");
+
+    t.end();
+  });
+});
+
+test("Auth mode 'try' should pass with invalid token", function(t) {
+  // use the token as the 'authorization' header in requests
+  var token = JWT.sign({ id:123,"name":"Charlie" }, 'badsecret');
+  var options = {
+    method: "POST",
+    url: "/try",
+    headers: { authorization: "Bearer "+token }
+  };
+  // server.inject lets us similate an http request
+  server.inject(options, function(response) {
+    console.log(" - - - - RESPONSE: ")
+    console.log(response.result);
+    t.equal(response.statusCode, 200, "Invalid token should pass in 'try' mode");
+
+    t.end();
+  });
+});
+
+test("Auth mode 'try' should pass with valid token", function(t) {
+  // use the token as the 'authorization' header in requests
+  var token = JWT.sign({ id:123,"name":"Charlie" }, secret);
+  var options = {
+    method: "POST",
+    url: "/try",
+    headers: { authorization: "Bearer "+token }
+  };
+  // server.inject lets us similate an http request
+  server.inject(options, function(response) {
+    console.log(" - - - - RESPONSE: ")
+    console.log(response.result);
+    t.equal(response.statusCode, 200, "Valid token should succeed!");
+
+    t.end();
+  });
+});
