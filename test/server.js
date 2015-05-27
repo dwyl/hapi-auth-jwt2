@@ -14,20 +14,20 @@ var db = {
 // defining our own validate function lets us do something
 // useful/custom with the decodedToken before reply(ing)
 var validate = function (decoded, request, callback) {
-    if (db[decoded.id].allowed) {
-      return callback(null, true);
-    }
-    else {
-      return callback('fail', false);
-    }
+  if (db[decoded.id].allowed) {
+    return callback(null, true);
+  }
+  else {
+    return callback('fail', false);
+  }
 };
 
 var home = function(req, reply) {
-    reply('Hai!');
+  return reply('Hai!');
 }
 
 var privado = function(req, reply) {
-  reply('worked');
+  return reply('worked');
 }
 
 server.register(require('../'), function (err) {
@@ -40,6 +40,9 @@ server.register(require('../'), function (err) {
   server.route([
     { method: 'GET',  path: '/', handler: home, config:{ auth: false } },
     { method: 'POST', path: '/privado', handler: privado, config: { auth: 'jwt' } },
+    { method: 'POST', path: '/required', handler: privado, config: { auth: { mode: 'required', strategy: 'jwt' } } },
+    { method: 'POST', path: '/optional', handler: privado, config: { auth: { mode: 'optional', strategy: 'jwt' } } },
+    { method: 'POST', path: '/try', handler: privado, config: { auth: { mode: 'try', strategy: 'jwt' } } },
   ]);
 
 });

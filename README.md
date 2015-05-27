@@ -25,9 +25,9 @@ quick guide for that too: https://github.com/nelsonic/learn-hapi
 
 ## Usage
 
-We have tried to make this plugin a user (developer) friendly as possible,
-but if anything is unclear,  
-please submit any questions as issues on GitHub:
+We tried to make this plugin as user (developer) friendly as possible,
+but if anything is unclear, please submit any questions as issues on GitHub:
+
 https://github.com/dwyl/hapi-auth-jwt2/issues
 
 ### Install from NPM
@@ -202,6 +202,15 @@ they are all optional.
 
 This feature was requested in: [issues/29](https://github.com/dwyl/hapi-auth-jwt2/issues/29)
 
+### Authentication Modes
+
+This plugin supports [authentication modes](http://hapijs.com/api#route-options) on routes.
+
+- `required` - requires Authorization header to be sent with every request
+
+- `optional` - if no Authorization header is provided, request will pass with `request.auth.isAuthenticated` set to `true` and `request.auth.credentials` set to empty object
+
+- `try` - similar to `optional` but invalid Authorization header will pass with `request.auth.isAuthenticated` set to false and failed credentials provided in `request.auth.credentials`
 
 - - -
 
@@ -274,11 +283,6 @@ So we decided to write our own module addressing all these issues.
 
 The name we wanted was taken.  
 Think of our module as the "***new, simplified and actively maintained version***"
-
-
-
-
-
 
 ## Useful Links
 
