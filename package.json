@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/dwyl/hapi-auth-jwt.git"
+    "url": "https://github.com/dwyl/hapi-auth-jwt2.git"
   },
   "keywords": [
     "Hapi.js",
@@ -21,9 +21,9 @@
   }],
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/dwyl/hapi-auth-jwt/issues"
+    "url": "https://github.com/dwyl/hapi-auth-jwt2/issues"
   },
-  "homepage": "https://github.com/dwyl/hapi-auth-jwt",
+  "homepage": "https://github.com/dwyl/hapi-auth-jwt2",
   "dependencies": {
     "boom": "^2.7.0",
     "hoek": "^2.13.0",
