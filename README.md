@@ -38,7 +38,7 @@ npm install hapi-auth-jwt2 --save
 
 ### Example
 
-This basic usage example should get started:
+This basic usage example should help you get started:
 
 
 ```javascript
@@ -135,7 +135,7 @@ If you would like to see a "***real world example***" of this plugin in use
 in a ***production*** web app (API)
 please see: https://github.com/dwyl/time/tree/master/api/lib
 
-+ **app.js** ***registering*** the **hapi-auth-jw2 plugin**:
++ **app.js** ***registering*** the **hapi-auth-jwt2 plugin**:
 [app.js#L13](https://github.com/dwyl/time/blob/0a5ec8711840528a4960c388825fb883fabddd76/app.js#L13)
 + telling app.js where to find our **validateFunc**tion:
 [app.js#L21](https://github.com/dwyl/time/blob/0a5ec8711840528a4960c388825fb883fabddd76/app.js#L21)
@@ -167,24 +167,29 @@ Having a more real-world example was *seconded* by [@manonthemat](https://github
 
 ## Documentation
 
-- `validateFunc` - (***required***) a the function which is run once the Token has been decoded
+- `key` - (***required***) the secret key used to check the signature of the token or a key lookup function with
+signature `function(decoded, callback)` where:
+    - `decoded` - the ***decoded*** but ***unverified*** JWT received from client
+    - `callback` - callback function with the signature `function(err, key, extraInfo)` where:
+        - `err` - an internal error
+        - `key` - the secret key
+        - `extraInfo` - (***optional***) any additional information that you would like to use in
+        `validateFunc` which can be accessed via `request.plugins['hapi-auth-jwt2'].extraInfo`
+- `validateFunc` - (***required***) the function which is run once the Token has been decoded with
  signature `function(decoded, request, callback)` where:
-    - `decoded` - (***required***) is the ***decoded*** JWT received from the client in **request.headers.authorization**
+    - `decoded` - (***required***) is the ***decoded*** and ***verified*** JWT received from the client in **request.headers.authorization**
     - `request` - (***required***) is the original ***request*** received from the client  
     - `callback` - (***required***) a callback function with the signature `function(err, isValid, credentials)` where:
         - `err` - an internal error.
         - `valid` - `true` if the JWT was valid, otherwise `false`.
         - `credentials` - (***optional***) alternative credentials to be set instead of `decoded`.
+- `verifyOptions` - (***optional***) settings to define how tokens are verified by jsonwebtoken library
+    - `ignoreExpiration` - ignore expired tokens
+    - `audience` - do not enforce token [*audience*](http://self-issued.info/docs/draft-ietf-oauth-json-web-token.html#audDef)
+    - `issuer` - do not require the issuer to be valid
+    - `algorithms` - list of allowed algorithms
 
 ### verifyOptions let you define how to Verify the Tokens (*Optional*)
-
-While registering the **hapi-auth-jwt2** plugin you can define
-the following **verifyOptions**:
-
-*  `ignoreExpiration` - ignore expired tokens
-*  `audience` - do not enforce token [*audience*](http://self-issued.info/docs/draft-ietf-oauth-json-web-token.html#audDef)
-*  `issuer` - do not require the issuer to be valid
-*  `algorithms` - list of allowed algorithms
 
 example:
 ```js
@@ -221,6 +226,12 @@ This plugin supports [authentication modes](http://hapijs.com/api#route-options)
 - `optional` - if no Authorization header is provided, request will pass with `request.auth.isAuthenticated` set to `true` and `request.auth.credentials` set to empty object
 
 - `try` - similar to `optional` but invalid Authorization header will pass with `request.auth.isAuthenticated` set to false and failed credentials provided in `request.auth.credentials`
+
+### Additional notes on key lookup functions
+
+- This option to look up a secret key was added to support "multi-tenant" environments. One use case would be companies that white label API services for their customers and cannot use a shared secret key.
+
+- The reason why you might want to pass back `extraInfo` in the callback is because you likely need to do a database call to get the key which also probably returns useful user data. This could save you another call in `validateFunc`.
 
 - - -
 
