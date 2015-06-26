@@ -184,6 +184,7 @@ the following **verifyOptions**:
 *  `ignoreExpiration` - ignore expired tokens
 *  `audience` - do not enforce token [*audience*](http://self-issued.info/docs/draft-ietf-oauth-json-web-token.html#audDef)
 *  `issuer` - do not require the issuer to be valid
+*  `algorithms` - list of allowed algorithms
 
 example:
 ```js
@@ -195,6 +196,15 @@ server.auth.strategy('jwt', 'jwt', true,
 ```
 
 Read more about this at: [jsonwebtoken verify options]( https://github.com/auth0/node-jsonwebtoken#jwtverifytoken-secretorpublickey-options-callback)
+
+For [security reasons](https://auth0.com/blog/2015/03/31/critical-vulnerabilities-in-json-web-token-libraries/) you might want to specify the allowed algorithms you used when signing the tokens:
+```js
+server.auth.strategy('jwt', 'jwt', true,
+{ key: 'NeverShareYourSecret', // Never Share your secret key
+  validateFunc: validate,      // validate function defined above
+  verifyOptions: { algorithms: [ 'HS256' ] }  // only allow HS256 algorithm
+});
+```
 
 If you prefer *not* to use any of these verifyOptions simply
 do not set them when registering the plugin with your app;
