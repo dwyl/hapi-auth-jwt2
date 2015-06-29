@@ -10,7 +10,7 @@ The ***simplest*** authentication scheme/plugin for
 [![Dependency Status](https://david-dm.org/dwyl/hapi-auth-jwt2.svg "Dependencies Checked & Updated Regularly (Security is Important!)")](https://david-dm.org/dwyl/hapi-auth-jwt2)
 [![Node.js Version](https://img.shields.io/node/v/hapi-auth-jwt2.svg?style=flat "Node.js 10 & 12 and io.js latest both supported")](http://nodejs.org/download/)
 [![NPM Version](https://badge.fury.io/js/hapi-auth-jwt2.svg?style=flat)](https://npmjs.org/package/hapi-auth-jwt2)
-[![HAPI 8.5](http://img.shields.io/badge/hapi-8.5-brightgreen.svg "Latest Hapi.js")](http://hapijs.com)
+[![HAPI 8.5](http://img.shields.io/badge/hapi-8.6-brightgreen.svg "Latest Hapi.js")](http://hapijs.com)
 
 
 This node.js module (Hapi plugin) lets you use JSON Web Tokens (JWTs)
