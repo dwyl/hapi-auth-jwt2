@@ -73,8 +73,9 @@ server.register(require('hapi-auth-jwt2'), function (err) {
     }
 
     server.auth.strategy('jwt', 'jwt', true,
-    { key: 'NeverShareYourSecret', // Never Share your secret key
-      validateFunc: validate       // validate function defined above
+    { key: 'NeverShareYourSecret',          // Never Share your secret key
+      validateFunc: validate,            // validate function defined above
+      verifyOptions: { algorithms: [ 'HS256' ] } // pick a strong algorithm
     });
 
     server.route([
@@ -196,7 +197,10 @@ example:
 server.auth.strategy('jwt', 'jwt', true,
 { key: 'NeverShareYourSecret', // Never Share your secret key
   validateFunc: validate,      // validate function defined above
-  verifyOptions: { ignoreExpiration: true }  // do not reject expired tokens
+  verifyOptions: {
+    ignoreExpiration: true,    // do not reject expired tokens
+    algorithms: [ 'HS256' ]    // specify your secure algorithm
+  }
 });
 ```
 
