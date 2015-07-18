@@ -265,7 +265,7 @@ var url   = "/path?token="+token;
 
 There are _several_ options for generating secret keys.
 The _easist_ way is to simply copy paste a _**strong random string**_ of alpha-numeric characters from https://www.grc.com/passwords.htm
-(_if you want more a longer key simply refresh the page and copy-paste multiple random strings_)
+(_if you want a longer key simply refresh the page and copy-paste multiple random strings_)
 
 
 - - -
