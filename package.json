@@ -27,21 +27,21 @@
   "dependencies": {
     "boom": "^2.8.0",
     "hoek": "^2.14.0",
-    "jsonwebtoken": "^5.0.2"
+    "jsonwebtoken": "^5.0.4"
   },
   "peerDependencies": {
     "hapi": ">=8.x.x"
   },
   "devDependencies": {
     "aguid": "^1.0.3",
-    "hapi": "^8.6.1",
-    "codeclimate-test-reporter": "0.0.4",
+    "hapi": "^8.8.0",
+    "codeclimate-test-reporter": "^0.1.0",
     "istanbul": "^0.3.17",
     "jshint": "^2.8.0",
     "pre-commit": "^1.0.10",
     "redis": "^0.12.1",
     "tap-spec": "^4.0.2",
-    "tape": "^4.0.0"
+    "tape": "^4.0.1"
   },
   "engines": {
     "node": ">=0.10"
