@@ -19,7 +19,7 @@ var scopesDb = {
 // defining our own validate function lets us do something
 // useful/custom with the decodedToken before reply(ing)
 var validate = function (decoded, request, callback) {
-  
+
     if (db[decoded.id].allowed) {
       var credentials = db[decoded.id];
       credentials.scope = scopesDb[decoded.id];
@@ -40,7 +40,11 @@ var privado = function(req, reply) {
 
 server.register(require('../'), function (err) {
 
-  server.auth.strategy('jwt', 'jwt', { key: secret,  validateFunc: validate });
+  server.auth.strategy('jwt', 'jwt', {
+    key: secret,
+    validateFunc: validate,
+    verifyOptions: { algorithms: [ 'HS256' ] } // use HS256 (secure) algorithm
+  });
 
   server.route([
     { method: 'GET',  path: '/', handler: home, config:{ auth: false } },

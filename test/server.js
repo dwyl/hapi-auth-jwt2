@@ -34,7 +34,8 @@ server.register(require('../'), function (err) {
 
   server.auth.strategy('jwt', 'jwt', {
     key: secret,
-    validateFunc: validate
+    validateFunc: validate,
+    verifyOptions: { algorithms: [ 'HS256' ] } // only allow HS256 algorithm
   });
 
   server.route([

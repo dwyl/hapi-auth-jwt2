@@ -64,10 +64,7 @@ var privado = function(req, reply) {
 
 server.register(require('../'), function (err) {
 
-  server.auth.strategy('jwt', 'jwt', {
-    key: keyFunc,
-    validateFunc: validate
-  });
+  server.auth.strategy('jwt', 'jwt', { key: keyFunc, validateFunc: validate });
 
   server.route([
     { method: 'GET',  path: '/', handler: home, config:{ auth: false } },
