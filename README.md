@@ -1,7 +1,7 @@
 # Hapi Auth with JSON Web Tokens (JWT)
 
-The ***simplest*** authentication scheme/plugin for
-[Hapi.js](http://hapijs.com/) apps using JSON Web Tokens.
+***The*** authentication scheme/plugin for
+[**Hapi.js**](http://hapijs.com/) apps using **JSON Web Tokens**
 
 [![Build Status](https://travis-ci.org/dwyl/hapi-auth-jwt2.svg "Build Status = Tests Passing")](https://travis-ci.org/dwyl/hapi-auth-jwt2)
 [![Test Coverage](https://codeclimate.com/github/dwyl/hapi-auth-jwt2/badges/coverage.svg "All Lines Tested")](https://codeclimate.com/github/dwyl/hapi-auth-jwt2)
@@ -10,7 +10,7 @@ The ***simplest*** authentication scheme/plugin for
 [![Dependency Status](https://david-dm.org/dwyl/hapi-auth-jwt2.svg "Dependencies Checked & Updated Regularly (Security is Important!)")](https://david-dm.org/dwyl/hapi-auth-jwt2)
 [![Node.js Version](https://img.shields.io/node/v/hapi-auth-jwt2.svg?style=flat "Node.js 10 & 12 and io.js latest both supported")](http://nodejs.org/download/)
 [![NPM Version](https://badge.fury.io/js/hapi-auth-jwt2.svg?style=flat)](https://npmjs.org/package/hapi-auth-jwt2)
-[![HAPI 8.5](http://img.shields.io/badge/hapi-8.6-brightgreen.svg "Latest Hapi.js")](http://hapijs.com)
+[![HAPI 8.8](http://img.shields.io/badge/hapi-8.8-brightgreen.svg "Latest Hapi.js")](http://hapijs.com)
 
 
 This node.js module (Hapi plugin) lets you use JSON Web Tokens (JWTs)
@@ -27,7 +27,6 @@ quick guide for that too: https://github.com/nelsonic/learn-hapi
 
 We tried to make this plugin as user (developer) friendly as possible,
 but if anything is unclear, please submit any questions as issues on GitHub:
-
 https://github.com/dwyl/hapi-auth-jwt2/issues
 
 ### Install from NPM
