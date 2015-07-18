@@ -74,7 +74,6 @@ test("Try using an incorrect secret to sign the JWT", function(t) {
   // server.inject lets us similate an http request
   server.inject(options, function(response) {
     t.equal(response.statusCode, 401, "Token signed with incorrect key fails");
-  t.equal(true, true, "true is true")
     t.end();
   });
 });
@@ -94,7 +93,6 @@ test("Try using an expired token", function(t) {
     server.inject(options, function(response) {
       t.equal(response.statusCode, 401, "Expired token should be invalid");
       t.equal(response.result.message, 'Token expired', 'Message should be "Token expired"')
-    t.equal(true, true, "true is true")
       t.end();
     });
   }, 1000);
@@ -126,10 +124,9 @@ test("Access restricted content (with VALID Token)", function(t) {
   };
   // server.inject lets us similate an http request
   server.inject(options, function(response) {
-    console.log(" - - - - RESPONSE: ")
-    console.log(response.result);
+    // console.log(" - - - - RESPONSE: ")
+    // console.log(response.result);
     t.equal(response.statusCode, 200, "VALID Token should succeed!");
-
     t.end();
   });
 });
@@ -144,10 +141,9 @@ test("Access restricted content (with Well-formed but invalid Token)", function(
   };
   // server.inject lets us similate an http request
   server.inject(options, function(response) {
-    console.log(" - - - - RESPONSE: ")
-    console.log(response.result);
+    // console.log(" - - - - RESPONSE: ")
+    // console.log(response.result);
     t.equal(response.statusCode, 401, "InVALID Token should Error!");
-
     t.end();
   });
 });
@@ -163,8 +159,8 @@ test("Request with undefined auth header should 401", function(t) {
   };
   // server.inject lets us similate an http request
   server.inject(options, function(response) {
-    console.log(" - - - - RESPONSE: ")
-    console.log(response.result);
+    // console.log(" - - - - RESPONSE: ")
+    // console.log(response.result);
     t.equal(response.statusCode, 401, "InVALID Token fails (as expected)!");
 
     t.end();
@@ -193,10 +189,9 @@ test("Auth mode 'required' should fail with invalid token", function(t) {
   };
   // server.inject lets us similate an http request
   server.inject(options, function(response) {
-    console.log(" - - - - RESPONSE: ")
-    console.log(response.result);
+    // console.log(" - - - - RESPONSE: ")
+    // console.log(response.result);
     t.equal(response.statusCode, 401, "Invalid token should error!");
-
     t.end();
   });
 });
@@ -211,10 +206,9 @@ test("Auth mode 'required' should should pass with valid token", function(t) {
   };
   // server.inject lets us similate an http request
   server.inject(options, function(response) {
-    console.log(" - - - - RESPONSE: ")
-    console.log(response.result);
+    // console.log(" - - - - RESPONSE: ")
+    // console.log(response.result);
     t.equal(response.statusCode, 200, "Valid token should succeed!");
-
     t.end();
   });
 });
@@ -225,10 +219,9 @@ test("Auth mode 'optional' should pass when no auth header specified", function(
     url: "/optional"
   };
   server.inject(options, function(response) {
-    console.log(" - - - - RESPONSE: ")
-    console.log(response.result);
+    // console.log(" - - - - RESPONSE: ")
+    // console.log(response.result);
     t.equal(response.statusCode, 200, "No auth header should pass in optional mode!");
-
     t.end();
   });
 });
@@ -243,10 +236,9 @@ test("Auth mode 'optional' should fail with invalid token", function(t) {
   };
   // server.inject lets us similate an http request
   server.inject(options, function(response) {
-    console.log(" - - - - RESPONSE: ")
-    console.log(response.result);
+    // console.log(" - - - - RESPONSE: ")
+    // console.log(response.result);
     t.equal(response.statusCode, 401, "Invalid token should error!");
-
     t.end();
   });
 });
@@ -262,10 +254,9 @@ test("Auth mode 'optional' should pass with valid token", function(t) {
   };
   // server.inject lets us similate an http request
   server.inject(options, function(response) {
-    console.log(" - - - - RESPONSE: ")
-    console.log(response.result);
+    // console.log(" - - - - RESPONSE: ")
+    // console.log(response.result);
     t.equal(response.statusCode, 200, "Valid token should succeed!");
-
     t.end();
   });
 });
@@ -276,10 +267,9 @@ test("Auth mode 'try' should pass when no auth header specified", function(t) {
     url: "/try"
   };
   server.inject(options, function(response) {
-    console.log(" - - - - RESPONSE: ")
-    console.log(response.result);
+    // console.log(" - - - - RESPONSE: ")
+    // console.log(response.result);
     t.equal(response.statusCode, 200, "No auth header should pass in 'try' mode!");
-
     t.end();
   });
 });
@@ -294,10 +284,9 @@ test("Auth mode 'try' should pass with invalid token", function(t) {
   };
   // server.inject lets us similate an http request
   server.inject(options, function(response) {
-    console.log(" - - - - RESPONSE: ")
-    console.log(response.result);
+    // console.log(" - - - - RESPONSE: ")
+    // console.log(response.result);
     t.equal(response.statusCode, 200, "Invalid token should pass in 'try' mode");
-
     t.end();
   });
 });
@@ -312,10 +301,9 @@ test("Auth mode 'try' should pass with valid token", function(t) {
   };
   // server.inject lets us similate an http request
   server.inject(options, function(response) {
-    console.log(" - - - - RESPONSE: ")
-    console.log(response.result);
+    // console.log(" - - - - RESPONSE: ")
+    // console.log(response.result);
     t.equal(response.statusCode, 200, "Valid token should succeed!");
-
     t.end();
   });
 });

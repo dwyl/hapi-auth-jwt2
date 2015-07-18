@@ -189,6 +189,7 @@ signature `function(decoded, callback)` where:
     - `audience` - do not enforce token [*audience*](http://self-issued.info/docs/draft-ietf-oauth-json-web-token.html#audDef)
     - `issuer` - do not require the issuer to be valid
     - `algorithms` - list of allowed algorithms
+- `url tokens` - if you prefer to pass your token in via url, simply add a `token` url parameter to your reqest.
 
 ### verifyOptions let you define how to Verify the Tokens (*Optional*)
 
@@ -236,6 +237,36 @@ This plugin supports [authentication modes](http://hapijs.com/api#route-options)
 - This option to look up a secret key was added to support "multi-tenant" environments. One use case would be companies that white label API services for their customers and cannot use a shared secret key.
 
 - The reason why you might want to pass back `extraInfo` in the callback is because you likely need to do a database call to get the key which also probably returns useful user data. This could save you another call in `validateFunc`.
+
+## URL (URI) Token
+
+Several people requested the ability pass in JSNOWebTokens via request URL:
+https://github.com/dwyl/hapi-auth-jwt2/issues/19
+
+### Usage
+
+Setup your hapi.js server as described above (_no special setup for using jwt tokens in urls_)
+
+```sh
+https://yoursite.co/path?token=your.jsonwebtoken.here
+```
+You will need to generage valid tokens for this to work.
+
+```js
+var JWT   = require('jsonwebtoken');
+var obj   = { id:123,"name":"Charlie" }; // object/info you want to sign
+var token = JWT.sign(obj, secret);
+var url   = "/path?token="+token;
+```
+
+## Generating Your Secret Key
+
+@skota asked "_How to generate secret key_?" in: https://github.com/dwyl/hapi-auth-jwt2/issues/48
+
+There are _several_ options for generating secret keys.
+The _easist_ way is to simply copy paste a _**strong random string**_ of alpha-numeric characters from https://www.grc.com/passwords.htm
+(_if you want more a longer key simply refresh the page and copy-paste multiple random strings_)
+
 
 - - -
 
