@@ -18,7 +18,7 @@ for authentication in your [Hapi.js](http://hapijs.com/)
 web application.
 
 If you are totally new to JWTs, we wrote an introductory post explaining  
-the concepts & benefits: https://github.com/docdis/learn-json-web-tokens
+the concepts & benefits: https://github.com/dwyl/learn-json-web-tokens
 
 If you (or anyone on your team) are unfamiliar with **Hapi.js** we have a  
 quick guide for that too: https://github.com/nelsonic/learn-hapi
@@ -156,7 +156,7 @@ Redis is *perfect* for storing session data that needs to be checked
 on every authenticated request.
 
 If you are unfamiliar with Redis or anyone on your team needs a refresher,
-please checkout: https://github.com/docdis/learn-redis
+please checkout: https://github.com/dwyl/learn-redis
 
 The ***code*** is at: https://github.com/dwyl/hapi-auth-jwt2-example
 and with tests. please ask additional questions if unclear!
@@ -341,8 +341,10 @@ Think of our module as the "***new, simplified and actively maintained version**
 
 ## Useful Links
 
-For more background on JWT see our post:
-https://github.com/docdis/learn-json-web-tokens
++ For more background on jsonwebtokens (JWTs) see our detailed overview:
+https://github.com/dwyl/learn-json-web-tokens
++ Securing Hapi Client Side Sessions:
+https://blog.liftsecurity.io/2014/11/26/securing-hapi-client-side-sessions
 
 ### Hapi.js Auth
 
