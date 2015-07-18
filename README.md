@@ -252,6 +252,22 @@ https://yoursite.co/path?token=your.jsonwebtoken.here
 ```
 You will need to generage valid tokens for this to work.
 
+```js
+var JWT   = require('jsonwebtoken');
+var obj   = { id:123,"name":"Charlie" }; // object/info you want to sign
+var token = JWT.sign(obj, secret);
+var url   = "/path?token="+token;
+```
+
+## Generating Your Secret Key
+
+@skota asked "_How to generate secret key_?" in: https://github.com/dwyl/hapi-auth-jwt2/issues/48
+
+There are _several_ options for generating secret keys.
+The _easist_ way is to simply copy paste a _**strong random string**_ of alpha-numeric characters from https://www.grc.com/passwords.htm
+(_if you want more a longer key simply refresh the page and copy-paste multiple random strings_)
+
+
 - - -
 
 ## Frequently Asked Questions (FAQ)
