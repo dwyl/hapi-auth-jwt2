@@ -62,12 +62,12 @@ test("Access restricted content with VALID Token Cookie (With Options!)", functi
     url: "/privado",
     headers: { cookie : "token=" + token + cookie_options  }
   };
-  console.log(' - - - - - - - - - - - - - - - OPTIONS:')
-  console.log(options);
+  // console.log(' - - - - - - - - - - - - - - - OPTIONS:')
+  // console.log(options);
   // server.inject lets us similate an http request
   server.inject(options, function(response) {
-    console.log(' - - - - - - - - - - - - - - - response:')
-    console.log(response);
+    // console.log(' - - - - - - - - - - - - - - - response:')
+    // console.log(response);
     t.equal(response.statusCode, 200, "VALID COOKIE Token (With Options!) should succeed!");
     t.end();
   });
