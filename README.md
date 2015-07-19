@@ -240,6 +240,34 @@ https://github.com/dwyl/hapi-auth-jwt2/issues/55
 So we added the ability to *optionally* send/store your tokens in cookies
 to simplify building your *web app*.
 
+To enable cookie support in your application all you need to do is add
+a few lines to your code:
+
+### Cookie Options
+
+Firstly set the options you want to apply to your cookie:
+
+```js
+var cookie_options = {
+  ttl: 365 * 24 * 60 * 60 * 1000, // expires a year from today
+  encoding: 'none',    // we already used JWT to encode
+  isSecure: true,      // warm & fuzzy feelings
+  isHttpOnly: true,    // prevent client alteration
+  clearInvalid: false, // remove invalid cookies
+  strictHeader: true   // don't allow violations of RFC 6265
+}
+```
+
+### Set the Cookie on your `reply`
+
+Then, in your authorisation handler
+
+```js
+reply({text: 'You have been authenticated!'})
+.header("Authorization", token)        // where token is the JWT
+.state("token", token, cookie_options) // set the cookie with options
+```
+
 For a detailed example please see:
 https://github.com/nelsonic/hapi-auth-jwt2-cookie-example
 
