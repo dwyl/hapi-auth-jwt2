@@ -1,7 +1,7 @@
 # Hapi Auth with JSON Web Tokens (JWT)
 
-The ***simplest*** authentication scheme/plugin for
-[Hapi.js](http://hapijs.com/) apps using JSON Web Tokens.
+***The*** authentication scheme/plugin for
+[**Hapi.js**](http://hapijs.com/) apps using **JSON Web Tokens**
 
 [![Build Status](https://travis-ci.org/dwyl/hapi-auth-jwt2.svg "Build Status = Tests Passing")](https://travis-ci.org/dwyl/hapi-auth-jwt2)
 [![Test Coverage](https://codeclimate.com/github/dwyl/hapi-auth-jwt2/badges/coverage.svg "All Lines Tested")](https://codeclimate.com/github/dwyl/hapi-auth-jwt2)
@@ -9,8 +9,8 @@ The ***simplest*** authentication scheme/plugin for
 [![bitHound Score](https://www.bithound.io/github/dwyl/hapi-auth-jwt2/badges/score.svg)](https://www.bithound.io/github/dwyl/hapi-auth-jwt2)
 [![Dependency Status](https://david-dm.org/dwyl/hapi-auth-jwt2.svg "Dependencies Checked & Updated Regularly (Security is Important!)")](https://david-dm.org/dwyl/hapi-auth-jwt2)
 [![Node.js Version](https://img.shields.io/node/v/hapi-auth-jwt2.svg?style=flat "Node.js 10 & 12 and io.js latest both supported")](http://nodejs.org/download/)
-[![NPM Version](https://badge.fury.io/js/hapi-auth-jwt2.svg?style=flat)](https://npmjs.org/package/hapi-auth-jwt2)
-[![HAPI 8.5](http://img.shields.io/badge/hapi-8.6-brightgreen.svg "Latest Hapi.js")](http://hapijs.com)
+[![npm](https://img.shields.io/npm/v/hapi-auth-jwt2.svg)](https://www.npmjs.com/package/hapi-auth-jwt2)
+[![HAPI 8.8](http://img.shields.io/badge/hapi-8.8-brightgreen.svg "Latest Hapi.js")](http://hapijs.com)
 
 
 This node.js module (Hapi plugin) lets you use JSON Web Tokens (JWTs)
@@ -18,7 +18,7 @@ for authentication in your [Hapi.js](http://hapijs.com/)
 web application.
 
 If you are totally new to JWTs, we wrote an introductory post explaining  
-the concepts & benefits: https://github.com/docdis/learn-json-web-tokens
+the concepts & benefits: https://github.com/dwyl/learn-json-web-tokens
 
 If you (or anyone on your team) are unfamiliar with **Hapi.js** we have a  
 quick guide for that too: https://github.com/nelsonic/learn-hapi
@@ -27,7 +27,6 @@ quick guide for that too: https://github.com/nelsonic/learn-hapi
 
 We tried to make this plugin as user (developer) friendly as possible,
 but if anything is unclear, please submit any questions as issues on GitHub:
-
 https://github.com/dwyl/hapi-auth-jwt2/issues
 
 ### Install from NPM
@@ -130,42 +129,6 @@ That's it.
 Write your own `validateFunc` with what ever checks you want to perform
 on the **decoded** token before allowing the visitor to proceed.
 
-### Real World Example ?
-
-If you would like to see a "***real world example***" of this plugin in use
-in a ***production*** web app (API)
-please see: https://github.com/dwyl/time/tree/master/api/lib
-
-+ **app.js** ***registering*** the **hapi-auth-jwt2 plugin**:
-[app.js#L13](https://github.com/dwyl/time/blob/0a5ec8711840528a4960c388825fb883fabddd76/app.js#L13)
-+ telling app.js where to find our **validateFunc**tion:
-[app.js#L21](https://github.com/dwyl/time/blob/0a5ec8711840528a4960c388825fb883fabddd76/app.js#L21)
-+ **validateFunc**tion (how we check the JWT is still valid):
-[api/lib/auth_jwt_validate.js](https://github.com/dwyl/time/blob/0a5ec8711840528a4960c388825fb883fabddd76/api/lib/auth_jwt_validate.js) looks up the person's session in our ElasticSearch Database
-if the [session record is ***found*** (valid) and ***not ended***](https://github.com/dwyl/time/blob/0a5ec8711840528a4960c388825fb883fabddd76/api/lib/auth_jwt_validate.js#L12) we allow the person to see the restricted content.
-+ **Signing your JWTs**: in your app you need a method to *sign* the JWTs (and put them in a database
-  if that's how you are *verifying* your sessions) ours is:
-  [api/lib/auth_jwt_sign.js](https://github.com/dwyl/time/blob/0a5ec8711840528a4960c388825fb883fabddd76/api/lib/auth_jwt_sign.js#L18)
-
-If you have ***any questions*** on this please post an issue/question on GitHub:
-https://github.com/dwyl/hapi-auth-jwt2/issues  
-(*we are here to help get you started on your journey to **hapi**ness!*)
-
-### Production-ready Example using Redis?
-
-Redis is *perfect* for storing session data that needs to be checked
-on every authenticated request.
-
-If you are unfamiliar with Redis or anyone on your team needs a refresher,
-please checkout: https://github.com/docdis/learn-redis
-
-The ***code*** is at: https://github.com/dwyl/hapi-auth-jwt2-example
-and with tests. please ask additional questions if unclear!
-
-Having a more real-world example was *seconded* by [@manonthemat](https://github.com/manonthemat) see:
-[hapi-auth-jwt2/issues/9](https://github.com/dwyl/hapi-auth-jwt2/issues/9)
-
-
 ## Documentation
 
 - `key` - (***required***) the secret key used to check the signature of the token or a key lookup function with
@@ -190,6 +153,8 @@ signature `function(decoded, callback)` where:
     - `issuer` - do not require the issuer to be valid
     - `algorithms` - list of allowed algorithms
 - `url tokens` - if you prefer to pass your token in via url, simply add a `token` url parameter to your reqest.
+- `cookie token` - If you prefer to use cookies in your hapi.js app,
+simply set the cookie `token=your.jsonwebtoken.here`
 
 ### verifyOptions let you define how to Verify the Tokens (*Optional*)
 
@@ -265,8 +230,54 @@ var url   = "/path?token="+token;
 
 There are _several_ options for generating secret keys.
 The _easist_ way is to simply copy paste a _**strong random string**_ of alpha-numeric characters from https://www.grc.com/passwords.htm
-(_if you want more a longer key simply refresh the page and copy-paste multiple random strings_)
+(_if you want a longer key simply refresh the page and copy-paste multiple random strings_)
 
+## Want to send/store your JWT in a Cookie?
+
+[@benjaminlees](https://github.com/benjaminlees)
+requested the ability to send tokens as cookies:
+https://github.com/dwyl/hapi-auth-jwt2/issues/55  
+So we added the ability to *optionally* send/store your tokens in cookies
+to simplify building your *web app*.
+
+To enable cookie support in your application all you need to do is add
+a few lines to your code:
+
+### Cookie Options
+
+Firstly set the options you want to apply to your cookie:
+
+```js
+var cookie_options = {
+  ttl: 365 * 24 * 60 * 60 * 1000, // expires a year from today
+  encoding: 'none',    // we already used JWT to encode
+  isSecure: true,      // warm & fuzzy feelings
+  isHttpOnly: true,    // prevent client alteration
+  clearInvalid: false, // remove invalid cookies
+  strictHeader: true   // don't allow violations of RFC 6265
+}
+```
+
+### Set the Cookie on your `reply`
+
+Then, in your authorisation handler
+
+```js
+reply({text: 'You have been authenticated!'})
+.header("Authorization", token)        // where token is the JWT
+.state("token", token, cookie_options) // set the cookie with options
+```
+
+For a detailed example please see:
+https://github.com/nelsonic/hapi-auth-jwt2-cookie-example
+
+### Backgroun Reading
+
++ Wikipedia has a good intro (general): https://en.wikipedia.org/wiki/HTTP_cookie
++ Cookies Explained (by Nicholas C. Zakas - JavaScript über-master) http://www.nczonline.net/blog/2009/05/05/http-cookies-explained/
++ The Unofficial Cookie FAQ: http://www.cookiecentral.com/faq/
++  HTTP State Management Mechanism (long but complete spec):
+http://tools.ietf.org/html/rfc6265
 
 - - -
 
@@ -285,6 +296,47 @@ we *recommend* including it in your **package.json** ***explicitly*** as a **dep
 
 > *If you have a question*, ***please post an issue/question on GitHub***:
 https://github.com/dwyl/hapi-auth-jwt2/issues
+
+<br />
+<br />
+
+### Real World Example ?
+
+If you would like to see a "***real world example***" of this plugin in use
+in a ***production*** web app (API)
+please see: https://github.com/dwyl/time/tree/master/api/lib
+
++ **app.js** ***registering*** the **hapi-auth-jwt2 plugin**:
+[app.js#L13](https://github.com/dwyl/time/blob/0a5ec8711840528a4960c388825fb883fabddd76/app.js#L13)
++ telling app.js where to find our **validateFunc**tion:
+[app.js#L21](https://github.com/dwyl/time/blob/0a5ec8711840528a4960c388825fb883fabddd76/app.js#L21)
++ **validateFunc**tion (how we check the JWT is still valid):
+[api/lib/auth_jwt_validate.js](https://github.com/dwyl/time/blob/0a5ec8711840528a4960c388825fb883fabddd76/api/lib/auth_jwt_validate.js) looks up the person's session in our ElasticSearch Database
+if the [session record is ***found*** (valid) and ***not ended***](https://github.com/dwyl/time/blob/0a5ec8711840528a4960c388825fb883fabddd76/api/lib/auth_jwt_validate.js#L12) we allow the person to see the restricted content.
++ **Signing your JWTs**: in your app you need a method to *sign* the JWTs (and put them in a database
+  if that's how you are *verifying* your sessions) ours is:
+  [api/lib/auth_jwt_sign.js](https://github.com/dwyl/time/blob/0a5ec8711840528a4960c388825fb883fabddd76/api/lib/auth_jwt_sign.js#L18)
+
+If you have ***any questions*** on this please post an issue/question on GitHub:
+https://github.com/dwyl/hapi-auth-jwt2/issues  
+(*we are here to help get you started on your journey to **hapi**ness!*)
+
+<br />
+
+### Production-ready Example using Redis?
+
+Redis is *perfect* for storing session data that needs to be checked
+on every authenticated request.
+
+If you are unfamiliar with Redis or anyone on your team needs a refresher,
+please checkout: https://github.com/dwyl/learn-redis
+
+The ***code*** is at: https://github.com/dwyl/hapi-auth-jwt2-example
+and with tests. please ask additional questions if unclear!
+
+Having a more real-world example was *seconded* by [@manonthemat](https://github.com/manonthemat) see:
+[hapi-auth-jwt2/issues/9](https://github.com/dwyl/hapi-auth-jwt2/issues/9)
+
 
 - - -
 
@@ -342,8 +394,10 @@ Think of our module as the "***new, simplified and actively maintained version**
 
 ## Useful Links
 
-For more background on JWT see our post:
-https://github.com/docdis/learn-json-web-tokens
++ For more background on jsonwebtokens (JWTs) see our detailed overview:
+https://github.com/dwyl/learn-json-web-tokens
++ Securing Hapi Client Side Sessions:
+https://blog.liftsecurity.io/2014/11/26/securing-hapi-client-side-sessions
 
 ### Hapi.js Auth
 
@@ -354,7 +408,8 @@ We borrowed code from the following:
 + https://github.com/hapijs/hapi-auth-cookie
 + https://github.com/hapijs/hapi-auth-hawk
 + https://github.com/ryanfitz/hapi-auth-jwt
-(Ryan has made a good *starting point* - we tried to submit a [pull request](https://github.com/ryanfitz/hapi-auth-jwt/pull/27)  
-to improve it but got *ignored* ... an *authentication* plugin that [***ignores
-  security updates***](https://github.com/ryanfitz/hapi-auth-jwt/issues/26) in [dependencies](https://david-dm.org/ryanfitz/hapi-auth-jwt)
-  is a ***no-go*** for us; **security *matters***!)
+(Ryan made a good *start* - however, when we tried to submit a [pull request](https://github.com/ryanfitz/hapi-auth-jwt/pull/27)  
+to improve (_security_) it was *ignored* for _weeks_ ... an *authentication* plugin that [***ignores security updates***](https://github.com/ryanfitz/hapi-auth-jwt/issues/26) in [dependencies](https://david-dm.org/ryanfitz/hapi-auth-jwt)
+  is a ***no-go*** for us; **security *matters***!) If you spot _any_
+  issue in ***hapi-auth-jwt2*** please create an issue: https://github.com/dwyl/hapi-auth-jwt2/issues
+  so we can get it _resolved_ ASAP!

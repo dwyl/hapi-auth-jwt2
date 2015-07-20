@@ -2,7 +2,7 @@ var test   = require('tape');
 var JWT    = require('jsonwebtoken');
 var secret = 'NeverShareYourSecret';
 
-var server = require('./url-token-server.js');
+var server = require('./server.js');
 
 test("Attempt to access restricted content (without auth token)", function(t) {
   var options = {
@@ -33,8 +33,8 @@ test("Try using an incorrect secret to sign the JWT", function(t) {
   // use the token as the 'authorization' header in requests
   var token = JWT.sign({ id:123,"name":"Charlie" }, 'incorrectSecret');
   token = "?token="+token
-  console.log(" - - - - - - token  - - - - -")
-  console.log(token);
+  // console.log(" - - - - - - token  - - - - -")
+  // console.log(token);
   var options = {
     method: "POST",
     url: "/privado"+token
