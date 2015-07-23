@@ -271,7 +271,7 @@ reply({text: 'You have been authenticated!'})
 For a detailed example please see:
 https://github.com/nelsonic/hapi-auth-jwt2-cookie-example
 
-### Backgroun Reading
+### Background Reading
 
 + Wikipedia has a good intro (general): https://en.wikipedia.org/wiki/HTTP_cookie
 + Cookies Explained (by Nicholas C. Zakas - JavaScript über-master) http://www.nczonline.net/blog/2009/05/05/http-cookies-explained/
