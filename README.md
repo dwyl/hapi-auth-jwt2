@@ -408,8 +408,8 @@ We borrowed code from the following:
 + https://github.com/hapijs/hapi-auth-cookie
 + https://github.com/hapijs/hapi-auth-hawk
 + https://github.com/ryanfitz/hapi-auth-jwt
-(Ryan made a good *start* - however, when we tried to submit a [pull request](https://github.com/ryanfitz/hapi-auth-jwt/pull/27)  
+(Ryan made a good *start* - however, when we tried to submit a [pull request](https://github.com/ryanfitz/hapi-auth-jwt/pull/27)
 to improve (_security_) it was *ignored* for _weeks_ ... an *authentication* plugin that [***ignores security updates***](https://github.com/ryanfitz/hapi-auth-jwt/issues/26) in [dependencies](https://david-dm.org/ryanfitz/hapi-auth-jwt)
-  is a ***no-go*** for us; **security *matters***!) If you spot _any_
+  is a ***no-go*** for us; **security** ***matters***!) If you spot _any_
   issue in ***hapi-auth-jwt2*** please create an issue: https://github.com/dwyl/hapi-auth-jwt2/issues
   so we can get it _resolved_ ASAP!
