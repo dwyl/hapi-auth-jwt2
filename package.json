@@ -15,10 +15,12 @@
     "JWT"
   ],
   "author": "@nelsonic <contact.nelsonic@gmail.com> (https://github.com/nelsonic)",
-  "contributors": [{
-    "name": "Kevin Wu",
-    "email": "kevindwusf@gmail.com"
-  }],
+  "contributors": [
+    {
+      "name": "Kevin Wu",
+      "email": "kevindwusf@gmail.com"
+    }
+  ],
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/dwyl/hapi-auth-jwt2/issues"
@@ -26,6 +28,7 @@
   "homepage": "https://github.com/dwyl/hapi-auth-jwt2",
   "dependencies": {
     "boom": "^2.8.0",
+    "cookie": "^0.1.3",
     "hoek": "^2.14.0",
     "jsonwebtoken": "^5.0.4"
   },
@@ -53,7 +56,7 @@
     "jshint": "./node_modules/jshint/bin/jshint -c .jshintrc --exclude-path .gitignore .",
     "codeclimate": "CODECLIMATE_REPO_TOKEN=6c47340a2888b54541779bd8bffcaad5577095a7ae888b72b4736fc68eb094f8 ./node_modules/codeclimate-test-reporter/bin/codeclimate.js < ./coverage/lcov.info",
     "start": "node example/server.js",
-    "report":"open coverage/lcov-report/index.html"
+    "report": "open coverage/lcov-report/index.html"
   },
   "pre-commit": [
     "jshint",
