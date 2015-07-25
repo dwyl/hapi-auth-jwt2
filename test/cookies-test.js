@@ -109,8 +109,6 @@ test("Valid Google Analytics cookie should be ignored", function(t) {
     }
   };
   server.inject(options, function(response) {
-    // console.log(' - - - - - - - - - - - - - - - response:')
-    // console.log(response);
     t.equal(response.statusCode, 200, "Ignores Google Analytics Cookie");
     t.end();
   });
@@ -129,6 +127,23 @@ test("Valid Google Analytics cookie should be ignored (BAD Header Token)", funct
   };
   server.inject(options, function(response) {
     t.equal(response.statusCode, 401, "Ignores GA but Invalid Auth Header still rejected");
+    t.end();
+  });
+});
+
+// Supply a VALID Token in Cookie A-N-D valid GA in Cookie!!
+test("Valid Google Analytics cookie should be ignored (BAD Header Token)", function(t) {
+  var GA = "gwcm=%7B%22expires%22%3Anull%2C%22clabel%22%3A%22SbNVCILRtFcQwcrE6gM%22%2C%22backoff%22%3A1437241242%7D; _ga=GA1.2.1363734468.1432273334"
+  var token    = JWT.sign({ id:123,"name":"Charlie" }, secret);
+  var options = {
+    method: "POST",
+    url: "/privado",
+    headers: {
+      cookie : "token=" + token + '; ' + GA
+    }
+  };
+  server.inject(options, function(response) {
+    t.equal(response.statusCode, 200, "Valid Cookie Token Succeeds (Ignores GA)");
     t.end();
   });
 });
