@@ -172,9 +172,9 @@ server.auth.strategy('jwt', 'jwt', true,
 
 Read more about this at: [jsonwebtoken verify options]( https://github.com/auth0/node-jsonwebtoken#jwtverifytoken-secretorpublickey-options-callback)
 
-### Specify Encoding/Decoding Algorithm (_Optional but higlhy recommended_)
+### Specify Signing Algorithm (_Optional but highly recommended_)
 
-For [security reasons](https://auth0.com/blog/2015/03/31/critical-vulnerabilities-in-json-web-token-libraries/) its recommended to specify the allowed algorithms you used when signing the tokens:
+For [security reasons](https://auth0.com/blog/2015/03/31/critical-vulnerabilities-in-json-web-token-libraries/) it is recommended that you specify the allowed algorithms used when signing the tokens:
 ```js
 server.auth.strategy('jwt', 'jwt', true,
 { key: 'YourSuperLongKeyHere', // Never Share your secret key
