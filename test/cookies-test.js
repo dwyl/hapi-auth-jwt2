@@ -20,7 +20,7 @@ test("Attempt to access restricted content using inVALID Cookie Token", function
     url: "/privado",
     headers: { cookie : "token=" + token}
   };
-
+  console.log(options);
   server.inject(options, function(response) {
     t.equal(response.statusCode, 401, "Invalid token should error!");
     t.end();
@@ -69,6 +69,81 @@ test("Access restricted content with VALID Token Cookie (With Options!)", functi
     // console.log(' - - - - - - - - - - - - - - - response:')
     // console.log(response);
     t.equal(response.statusCode, 200, "VALID COOKIE Token (With Options!) should succeed!");
+    t.end();
+  });
+});
+
+/** Regressions Tests for https://github.com/dwyl/hapi-auth-jwt2/issues/65 **/
+
+// supply valid Token Auth Header but invalid Cookie
+// should succeed because Auth Header is first
+test("Authorization Header should take precedence over any cookie", function(t) {
+  var token    = JWT.sign({ id:123,"name":"Charlie" }, secret);
+  var options = {
+    method: "POST",
+    url: "/privado",
+    headers: {
+      authorization: "Bearer "+token,
+      cookie : "token=malformed.token" + cookie_options
+    }
+  };
+  server.inject(options, function(response) {
+    // console.log(' - - - - - - - - - - - - - - - response:')
+    // console.log(response);
+    t.equal(response.statusCode, 200, "Ignores cookie when Auth Header is set");
+    t.end();
+  });
+});
+
+// valid google analytics cookie but invalid auth header token
+// see: https://github.com/dwyl/hapi-auth-jwt2/issues/65#issuecomment-124791842
+test("Valid Google Analytics cookie should be ignored", function(t) {
+  var GA = "gwcm=%7B%22expires%22%3Anull%2C%22clabel%22%3A%22SbNVCILRtFcQwcrE6gM%22%2C%22backoff%22%3A1437241242%7D; _ga=GA1.2.1363734468.1432273334"
+  var token    = JWT.sign({ id:123,"name":"Charlie" }, secret);
+  var options = {
+    method: "POST",
+    url: "/privado",
+    headers: {
+      authorization: "Bearer "+token,
+      cookie : GA
+    }
+  };
+  server.inject(options, function(response) {
+    t.equal(response.statusCode, 200, "Ignores Google Analytics Cookie");
+    t.end();
+  });
+});
+
+test("Valid Google Analytics cookie should be ignored (BAD Header Token)", function(t) {
+  var GA = "gwcm=%7B%22expires%22%3Anull%2C%22clabel%22%3A%22SbNVCILRtFcQwcrE6gM%22%2C%22backoff%22%3A1437241242%7D; _ga=GA1.2.1363734468.1432273334"
+  var token    = JWT.sign({ id:123,"name":"Charlie" }, 'invalid');
+  var options = {
+    method: "POST",
+    url: "/privado",
+    headers: {
+      authorization: "Bearer "+token,
+      cookie : GA
+    }
+  };
+  server.inject(options, function(response) {
+    t.equal(response.statusCode, 401, "Ignores GA but Invalid Auth Header still rejected");
+    t.end();
+  });
+});
+
+// Supply a VALID Token in Cookie A-N-D valid GA in Cookie!!
+test("Valid Google Analytics cookie should be ignored (BAD Header Token)", function(t) {
+  var GA = "gwcm=%7B%22expires%22%3Anull%2C%22clabel%22%3A%22SbNVCILRtFcQwcrE6gM%22%2C%22backoff%22%3A1437241242%7D; _ga=GA1.2.1363734468.1432273334"
+  var token    = JWT.sign({ id:123,"name":"Charlie" }, secret);
+  var options = {
+    method: "POST",
+    url: "/privado",
+    headers: {
+      cookie : "token=" + token + '; ' + GA
+    }
+  };
+  server.inject(options, function(response) {
+    t.equal(response.statusCode, 200, "Valid Cookie Token Succeeds (Ignores GA)");
     t.end();
   });
 });
