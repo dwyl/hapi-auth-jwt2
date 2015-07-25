@@ -206,8 +206,8 @@ test("Auth mode 'required' should should pass with valid token", function(t) {
   };
   // server.inject lets us similate an http request
   server.inject(options, function(response) {
-    console.log(" - - - - RESPONSE: ")
-    console.log(response.result);
+    // console.log(" - - - - RESPONSE: ")
+    // console.log(response.result);
     t.equal(response.statusCode, 200, "Valid token should succeed!");
     t.end();
   });

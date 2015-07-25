@@ -172,10 +172,12 @@ server.auth.strategy('jwt', 'jwt', true,
 
 Read more about this at: [jsonwebtoken verify options]( https://github.com/auth0/node-jsonwebtoken#jwtverifytoken-secretorpublickey-options-callback)
 
-For [security reasons](https://auth0.com/blog/2015/03/31/critical-vulnerabilities-in-json-web-token-libraries/) you might want to specify the allowed algorithms you used when signing the tokens:
+### Specify Signing Algorithm (_Optional but highly recommended_)
+
+For [security reasons](https://auth0.com/blog/2015/03/31/critical-vulnerabilities-in-json-web-token-libraries/) it is recommended that you specify the allowed algorithms used when signing the tokens:
 ```js
 server.auth.strategy('jwt', 'jwt', true,
-{ key: 'NeverShareYourSecret', // Never Share your secret key
+{ key: 'YourSuperLongKeyHere', // Never Share your secret key
   validateFunc: validate,      // validate function defined above
   verifyOptions: { algorithms: [ 'HS256' ] }  // only allow HS256 algorithm
 });
@@ -408,8 +410,8 @@ We borrowed code from the following:
 + https://github.com/hapijs/hapi-auth-cookie
 + https://github.com/hapijs/hapi-auth-hawk
 + https://github.com/ryanfitz/hapi-auth-jwt
-(Ryan made a good *start* - however, when we tried to submit a [pull request](https://github.com/ryanfitz/hapi-auth-jwt/pull/27)  
+(Ryan made a good *start* - however, when we tried to submit a [pull request](https://github.com/ryanfitz/hapi-auth-jwt/pull/27)
 to improve (_security_) it was *ignored* for _weeks_ ... an *authentication* plugin that [***ignores security updates***](https://github.com/ryanfitz/hapi-auth-jwt/issues/26) in [dependencies](https://david-dm.org/ryanfitz/hapi-auth-jwt)
-  is a ***no-go*** for us; **security *matters***!) If you spot _any_
+  is a ***no-go*** for us; **security** ***matters***!) If you spot _any_
   issue in ***hapi-auth-jwt2*** please create an issue: https://github.com/dwyl/hapi-auth-jwt2/issues
   so we can get it _resolved_ ASAP!
