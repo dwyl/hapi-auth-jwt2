@@ -152,9 +152,8 @@ signature `function(decoded, callback)` where:
     - `audience` - do not enforce token [*audience*](http://self-issued.info/docs/draft-ietf-oauth-json-web-token.html#audDef)
     - `issuer` - do not require the issuer to be valid
     - `algorithms` - list of allowed algorithms
-- `url tokens` - if you prefer to pass your token in via url, simply add a `token` url parameter to your reqest.
-- `cookie token` - If you prefer to use cookies in your hapi.js app,
-simply set the cookie `token=your.jsonwebtoken.here`
+- `urlKey` - (***optional***) if you prefer to pass your token via url, simply add a `token` url parameter to your request or use a custom parameter by setting `urlKey`
+- `cookieKey` - (***optional***) if you prefer to pass your token via a cookie, simply set the cookie `token=your.jsonwebtoken.here` or use a custom key by setting `cookieKey`
 
 ### verifyOptions let you define how to Verify the Tokens (*Optional*)
 
