@@ -20,7 +20,7 @@ test("Attempt to access restricted content (with an INVALID URL Token)", functio
   var token = "?token=my.invalid.token";
   var options = {
     method: "POST",
-    url: "/privado"
+    url: "/privado" + token
   };
   // server.inject lets us similate an http request
   server.inject(options, function(response) {
