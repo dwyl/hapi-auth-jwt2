@@ -1,6 +1,6 @@
 {
   "name": "hapi-auth-jwt2",
-  "version": "4.8.1",
+  "version": "4.9.0",
   "description": "Hapi.js Authentication Plugin/Scheme using JSON Web Tokens (JWT)",
   "main": "lib/index.js",
   "repository": {
@@ -44,7 +44,7 @@
     "pre-commit": "^1.1.1",
     "redis": "^0.12.1",
     "tap-spec": "^4.0.2",
-    "tape": "^4.0.1"
+    "tape": "^4.0.2"
   },
   "engines": {
     "node": ">=0.10"
