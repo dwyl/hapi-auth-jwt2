@@ -45,7 +45,7 @@ var validate = function (decoded, request, callback) {
     return callback(null, true, credentials);
   }
   else {
-    return callback('fail', false);
+    return callback(null, false);
   }
 };
 

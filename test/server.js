@@ -18,7 +18,7 @@ var validate = function (decoded, request, callback) {
     return callback(null, true);
   }
   else {
-    return callback('fail', false);
+    return callback(null, false);
   }
 };
 
