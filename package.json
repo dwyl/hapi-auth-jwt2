@@ -1,6 +1,6 @@
 {
   "name": "hapi-auth-jwt2",
-  "version": "4.9.0",
+  "version": "5.0.0",
   "description": "Hapi.js Authentication Plugin/Scheme using JSON Web Tokens (JWT)",
   "main": "lib/index.js",
   "repository": {
@@ -18,7 +18,11 @@
   "contributors": [
     {
       "name": "Kevin Wu",
-      "email": "kevindwusf@gmail.com"
+      "email": "@eventhough <kevindwusf@gmail.com>"
+    },
+    {
+      "name": "Alan Shaw",
+      "email": "@alanshaw <alan@tableflip.io>"
     }
   ],
   "license": "ISC",
@@ -43,7 +47,7 @@
     "pre-commit": "^1.1.1",
     "redis": "^0.12.1",
     "tap-spec": "^4.0.2",
-    "tape": "^4.0.2"
+    "tape": "^4.0.3"
   },
   "engines": {
     "node": ">=0.10"
