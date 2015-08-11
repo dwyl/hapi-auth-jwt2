@@ -14,7 +14,7 @@ var db = {
 // defining our own validate function lets us do something
 // useful/custom with the decodedToken before reply(ing)
 var validate = function (decoded, request, callback) {
-  return db[decoded.id].allowed ? callback(null, true) : callback('fail', false);
+  return db[decoded.id].allowed ? callback(null, true) : callback(null, false);
 };
 
 var home = function(req, reply) {
