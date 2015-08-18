@@ -19,10 +19,10 @@ This node.js module (Hapi plugin) lets you use JSON Web Tokens (JWTs)
 for authentication in your [Hapi.js](http://hapijs.com/)
 web application.
 
-If you are totally new to JWTs, we wrote an introductory post explaining
+If you are totally new to JWTs, we wrote an introductory post explaining  
 the concepts & benefits: https://github.com/dwyl/learn-json-web-tokens
 
-If you (or anyone on your team) are unfamiliar with **Hapi.js** we have a
+If you (or anyone on your team) are unfamiliar with **Hapi.js** we have a  
 quick guide for that too: https://github.com/nelsonic/learn-hapi
 
 ## Usage
@@ -146,7 +146,7 @@ signature `function(decoded, callback)` where:
 - `validateFunc` - (***required***) the function which is run once the Token has been decoded with
  signature `function(decoded, request, callback)` where:
     - `decoded` - (***required***) is the ***decoded*** and ***verified*** JWT received from the client in **request.headers.authorization**
-    - `request` - (***required***) is the original ***request*** received from the client
+    - `request` - (***required***) is the original ***request*** received from the client  
     - `callback` - (***required***) a callback function with the signature `function(err, isValid, credentials)` where:
         - `err` - an internal error.
         - `valid` - `true` if the JWT was valid, otherwise `false`.
@@ -241,7 +241,7 @@ The _easist_ way is to simply copy paste a _**strong random string**_ of alpha-n
 
 [@benjaminlees](https://github.com/benjaminlees)
 requested the ability to send tokens as cookies:
-https://github.com/dwyl/hapi-auth-jwt2/issues/55
+https://github.com/dwyl/hapi-auth-jwt2/issues/55  
 So we added the ability to *optionally* send/store your tokens in cookies
 to simplify building your *web app*.
 
@@ -288,15 +288,15 @@ http://tools.ietf.org/html/rfc6265
 
 ## Frequently Asked Questions (FAQ)
 
-1. Do I need to include **jsonwebtoken** in my project? asked in  [hapi-auth-jwt2/issues/32](https://github.com/dwyl/hapi-auth-jwt2/issues/32)
+1. Do I need to include **jsonwebtoken** in my project? asked in  [hapi-auth-jwt2/issues/32](https://github.com/dwyl/hapi-auth-jwt2/issues/32)  
 **Q**: Must I include the **jsonwebtoken** package in my project
-[given that **hapi-auth-jwt2** plugin already includes it] ?
+[given that **hapi-auth-jwt2** plugin already includes it] ?  
 **A**: Yes, you need to *manually* install the **jsonwebtoken**
-node module from NPM with `npm install jsonwebtoken --save` if you want to ***sign*** JWTs in your app.
+node module from NPM with `npm install jsonwebtoken --save` if you want to ***sign*** JWTs in your app.  
 Even though **hapi-auth-jwt2** includes it
-as a **dependency** your app does not know where to find it in the **node_modules** tree for your project.
+as a **dependency** your app does not know where to find it in the **node_modules** tree for your project.  
 Unless you include it via ***relative path*** e.g:
-`var JWT = require('./node_modules/hapi-auth-jwt2/node_modules/jsonwebtoken');`
+`var JWT = require('./node_modules/hapi-auth-jwt2/node_modules/jsonwebtoken');`  
 we *recommend* including it in your **package.json** ***explicitly*** as a **dependency** for your project.
 
 > *If you have a question*, ***please post an issue/question on GitHub***:
@@ -323,7 +323,7 @@ if the [session record is ***found*** (valid) and ***not ended***](https://githu
   [api/lib/auth_jwt_sign.js](https://github.com/dwyl/time/blob/0a5ec8711840528a4960c388825fb883fabddd76/api/lib/auth_jwt_sign.js#L18)
 
 If you have ***any questions*** on this please post an issue/question on GitHub:
-https://github.com/dwyl/hapi-auth-jwt2/issues
+https://github.com/dwyl/hapi-auth-jwt2/issues  
 (*we are here to help get you started on your journey to **hapi**ness!*)
 
 <br />
@@ -347,7 +347,7 @@ Having a more real-world example was *seconded* by [@manonthemat](https://github
 
 ## Contributing [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dwyl/hapi-auth-jwt2/issues)
 
-If you spot an area for improvement, please raise an issue: https://github.com/dwyl/hapi-auth-jwt2/issues
+If you spot an area for improvement, please raise an issue: https://github.com/dwyl/hapi-auth-jwt2/issues  
 *Someone* in the dwyl team is *always* online so we will usually answer within a few hours.
 
 ### Running the tests requires environment variables
@@ -368,7 +368,7 @@ export REDISCLOUD_URL='redis://rediscloud:OhEJjWvSgna@pub-redis-1046.eu-west-1-2
 ## Motivation
 
 While making [***Time***](https://github.com/dwyl/time) we want to ensure
-our app (and API) is as ***simple*** as *possible* to use.
+our app (and API) is as ***simple*** as *possible* to use.  
 This lead us to using JSON Web Tokens for ***Stateless*** Authentication.
 
 We did a *extensive* [research](https://www.npmjs.com/search?q=hapi+auth+jwt)
@@ -376,7 +376,7 @@ into *existing* modules that *might* solve our problem; there are *many* on NPM:
 ![npm search for hapi+jwt](http://i.imgur.com/xIj3Xpa.png)
 
 but they were invariably ***too complicated***, poorly documented and
-had *useless* (non-real-world) "examples"!
+had *useless* (non-real-world) "examples"!  
 
 Also, none of the *existing* modules exposed the **request** object
 to the **validateFunc** which we thought might be handy.
@@ -387,14 +387,14 @@ So we decided to write our own module addressing all these issues.
 
 ### *Guiding Principal*
 
-> "***perfection*** *is* ***attained*** *not when there is nothing more to add,
+> "***perfection*** *is* ***attained*** *not when there is nothing more to add,  
 > but when there is* ***nothing more to remove***" ~
 [Antoine de Saint-Exupéry](http://en.wikiquote.org/wiki/Antoine_de_Saint_Exup%C3%A9ry#Quotes)
 
 
 ## Why hapi-auth-jwt2 ?
 
-The name we wanted was taken.
+The name we wanted was taken.  
 Think of our module as the "***new, simplified and actively maintained version***"
 
 ## Useful Links
