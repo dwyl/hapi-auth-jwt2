@@ -61,6 +61,29 @@ test("Malformed JWT", function(t) {
   });
 });
 
+test("Try using a token with missing characters in body", function(t) {
+  // use the token as the 'authorization' header in requests
+  var token = JWT.sign({ id:123,"name":"Charlie" }, secret);
+  // delete some characters in body
+  var tokenData = token.split('.');
+  var header = tokenData[0],
+      body = tokenData[1],
+      signature = tokenData[2];
+  token = header + '.' + body.substring(0, body.length - 1) + '.' + signature;
+  /*console.log(" - - - - - - token  - - - - -");
+  console.log(token);*/
+  var options = {
+    method: "POST",
+    url: "/privado",
+    headers: { authorization: "Bearer "+token  }
+  };
+  // server.inject lets us similate an http request
+  server.inject(options, function(response) {
+    t.equal(response.statusCode, 401, "INVALID Token should fail");
+    t.end();
+  });
+});
+
 test("Try using an incorrect secret to sign the JWT", function(t) {
   // use the token as the 'authorization' header in requests
   var token = JWT.sign({ id:123,"name":"Charlie" }, 'incorrectSecret');
