@@ -28,10 +28,12 @@ server.register(require('../lib'), function (err) {
       console.log(err);
     }
 
-    server.auth.strategy('jwt', 'jwt', true,
+    server.auth.strategy('jwt', 'jwt',
     { key: 'NeverShareYourSecret', // Never Share your secret key
       validateFunc: validate       // validate function defined above
     });
+    
+    server.auth.default('jwt');
 
     server.route([
       {
