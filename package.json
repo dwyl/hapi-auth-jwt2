@@ -49,7 +49,7 @@
     "tape": "^4.2.0"
   },
   "engines": {
-    "node": ">=0.10"
+    "node": ">=0.12"
   },
   "scripts": {
     "quick": "./node_modules/tape/bin/tape ./test/*.js | node_modules/tap-spec/bin/cmd.js",
