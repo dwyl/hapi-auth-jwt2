@@ -5,3 +5,7 @@ node_js:
   - 'iojs-v2.1.0'
 env:
   - JWT_SECRET="EverythingIsAwesome!"
+before_install:
+  - pip install --user codecov
+after_success:
+  - codecov --file coverage/lcov.info --disable search
