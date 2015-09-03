@@ -40,12 +40,12 @@
   },
   "devDependencies": {
     "aguid": "^1.0.3",
-    "hapi": "^9.0.3",
+    "hapi": "^9.0.4",
     "codeclimate-test-reporter": "^0.1.0",
-    "istanbul": "^0.3.18",
+    "istanbul": "^0.3.19",
     "jshint": "^2.8.0",
     "pre-commit": "^1.1.1",
-    "tap-spec": "^4.0.2",
+    "tap-spec": "^4.1.0",
     "tape": "^4.2.0"
   },
   "engines": {
