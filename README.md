@@ -6,7 +6,7 @@
 [![Build Status](https://travis-ci.org/dwyl/hapi-auth-jwt2.svg "Build Status = Tests Passing")](https://travis-ci.org/dwyl/hapi-auth-jwt2)
 [![Test Coverage](https://codeclimate.com/github/dwyl/hapi-auth-jwt2/badges/coverage.svg "All Lines Tested")](https://codeclimate.com/github/dwyl/hapi-auth-jwt2)
 [![Code Climate](https://codeclimate.com/github/dwyl/hapi-auth-jwt2/badges/gpa.svg "No Nasty Code")](https://codeclimate.com/github/dwyl/hapi-auth-jwt2)
-[![HAPI 9.0.2](http://img.shields.io/badge/hapi-9.0.2-brightgreen.svg "Latest Hapi.js")](http://hapijs.com)
+[![HAPI 9.3.0](http://img.shields.io/badge/hapi-9.3.0-brightgreen.svg "Latest Hapi.js")](http://hapijs.com)
 [![Node.js Version](https://img.shields.io/node/v/hapi-auth-jwt2.svg?style=flat "Node.js 10 & 12 and io.js latest both supported")](http://nodejs.org/download/)
 [![npm](https://img.shields.io/npm/v/hapi-auth-jwt2.svg)](https://www.npmjs.com/package/hapi-auth-jwt2)
 
@@ -78,7 +78,7 @@ server.register(require('hapi-auth-jwt2'), function (err) {
       validateFunc: validate,            // validate function defined above
       verifyOptions: { algorithms: [ 'HS256' ] } // pick a strong algorithm
     });
-    
+
     server.auth.default('jwt');
 
     server.route([
@@ -303,11 +303,12 @@ we *recommend* including it in your **package.json** ***explicitly*** as a **dep
 
 ### Compatibility
 
-`hapi-auth-jwt2` is compatible with both Hapi `9.x.x` and `8.x.x` however we
-recommend using the latest version of Hapi for security/performance updates.
+`hapi-auth-jwt2` is compatible with *both* Hapi `9.x.x` and `8.x.x` however we
+*recommend* using the [*latest version*](https://github.com/hapijs/hapi/) of Hapi for security/performance updates.
 
-> *If you have a question*, ***please post an issue/question on GitHub***:
-https://github.com/dwyl/hapi-auth-jwt2/issues
+> *If you have a question*, ***please post an issue/question on  
+GitHub***: https://github.com/dwyl/hapi-auth-jwt2/issues *or*
+[![Join the chat at https://gitter.im/dwyl/chat](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/dwyl/chat/?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 <br />
 <br />
