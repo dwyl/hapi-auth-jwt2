@@ -301,6 +301,11 @@ Unless you include it via ***relative path*** e.g:
 `var JWT = require('./node_modules/hapi-auth-jwt2/node_modules/jsonwebtoken');`  
 we *recommend* including it in your **package.json** ***explicitly*** as a **dependency** for your project.
 
+### Compatibility
+
+`hapi-auth-jwt2` is compatible with both Hapi `9.x.x` and `8.x.x` however we
+recommend using the latest version of Hapi for security/performance updates.
+
 > *If you have a question*, ***please post an issue/question on GitHub***:
 https://github.com/dwyl/hapi-auth-jwt2/issues
 

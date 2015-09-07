@@ -35,9 +35,6 @@
     "cookie": "^0.2.0",
     "jsonwebtoken": "^5.0.5"
   },
-  "peerDependencies": {
-    "hapi": ">=9.x.x"
-  },
   "devDependencies": {
     "aguid": "^1.0.3",
     "hapi": "^9.0.4",
