@@ -37,7 +37,7 @@
   },
   "devDependencies": {
     "aguid": "^1.0.3",
-    "hapi": "^9.3.0",
+    "hapi": "^10.0.0",
     "codeclimate-test-reporter": "^0.1.0",
     "istanbul": "^0.3.19",
     "jshint": "^2.8.0",
@@ -46,7 +46,7 @@
     "tape": "^4.2.0"
   },
   "engines": {
-    "node": ">=0.12"
+    "node": ">=4.0"
   },
   "scripts": {
     "quick": "./node_modules/tape/bin/tape ./test/*.js | node_modules/tap-spec/bin/cmd.js",
