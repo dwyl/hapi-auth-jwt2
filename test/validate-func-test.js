@@ -31,7 +31,7 @@ test('Should respond with 500 series error when validateFunc errs', function (t)
     var options = {
       method: 'POST',
       url: '/privado',
-      headers: {Authorization: JWT.sign({id: 138, name: 'Test'}, secret)}
+      headers: {Authorization: 'Bearer ' + JWT.sign({id: 138, name: 'Test'}, secret)}
     };
 
     server.inject(options, function (response) {
