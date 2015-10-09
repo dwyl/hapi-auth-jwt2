@@ -42,10 +42,10 @@ server.register(hapiAuthJWT, function (err) {
   }
   // see: http://hapijs.com/api#serverauthschemename-scheme
   server.auth.strategy('jwt', 'jwt',
-  { key: secret,  validateFunc: validate,
+  { key: secret, validateFunc: validate,
     verifyOptions: { ignoreExpiration: true }
   });
-  
+
   server.auth.default('jwt');
 
   server.route([

@@ -31,13 +31,13 @@ test("Attempt to access restricted content (with an INVALID URL Token)", functio
 
 test("Try using an incorrect secret to sign the JWT", function(t) {
   // use the token as the 'authorization' header in requests
-  var token = JWT.sign({ id:123,"name":"Charlie" }, 'incorrectSecret');
-  token = "?token="+token
+  var token = JWT.sign({ id: 123, "name": "Charlie" }, 'incorrectSecret');
+  token = "?token=" + token;
   // console.log(" - - - - - - token  - - - - -")
   // console.log(token);
   var options = {
     method: "POST",
-    url: "/privado"+token
+    url: "/privado" + token
   };
   // server.inject lets us similate an http request
   server.inject(options, function(response) {
@@ -49,11 +49,11 @@ test("Try using an incorrect secret to sign the JWT", function(t) {
 test("URL Token is well formed but is allowed=false so should be denied", function(t) {
   // use the token as the 'authorization' header in requests
   // var token = jwt.sign({ "id": 1 ,"name":"Old Greg" }, 'incorrectSecret');
-  var token = JWT.sign({ id:321,"name":"Old Gregg" }, secret);
-  token = "?token="+token
+  var token = JWT.sign({ id: 321, "name": "Old Gregg" }, secret);
+  token = "?token=" + token;
   var options = {
     method: "POST",
-    url: "/privado"+token
+    url: "/privado" + token
   };
   // server.inject lets us similate an http request
   server.inject(options, function(response) {
@@ -64,11 +64,11 @@ test("URL Token is well formed but is allowed=false so should be denied", functi
 
 test("Access restricted content (with VALID Token)", function(t) {
   // use the token as the 'authorization' header in requests
-  var token = JWT.sign({ id:123,"name":"Charlie" }, secret);
-  token = "?token="+token
+  var token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
+  token = "?token=" + token;
   var options = {
     method: "POST",
-    url: "/privado"+token
+    url: "/privado" + token
   };
   // server.inject lets us similate an http request
   server.inject(options, function(response) {

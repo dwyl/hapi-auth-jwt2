@@ -32,7 +32,7 @@ server.register(require('../lib'), function (err) {
     { key: 'NeverShareYourSecret', // Never Share your secret key
       validateFunc: validate       // validate function defined above
     });
-    
+
     server.auth.default('jwt');
 
     server.route([

@@ -1,6 +1,5 @@
 var test   = require('tape');
 var Hapi   = require('hapi');
-var Boom   = require('boom');
 var JWT    = require('jsonwebtoken');
 var secret = 'NeverShareYourSecret';
 

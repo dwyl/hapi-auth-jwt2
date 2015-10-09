@@ -1,9 +1,8 @@
-var Hapi   = require('hapi');
-var Boom   = require('boom');
-var JWT    = require('jsonwebtoken');
+var Hapi = require('hapi');
+var Boom = require('boom');
 
 // for debug options see: http://hapijs.com/tutorials/logging
-var server = new Hapi.Server({ debug: false })
+var server = new Hapi.Server({ debug: false });
 server.connection();
 
 var multiTenantSecretKeys = {
@@ -12,9 +11,9 @@ var multiTenantSecretKeys = {
 };
 
 var db = {
-  "123" : { allowed: true,  "name":"Charlie"  },
-  "321" : { allowed: false, "name":"Old Gregg"}
- }
+  "123": { allowed: true,  "name": "Charlie"   },
+  "321": { allowed: false, "name": "Old Gregg" }
+};
 
 var keyFunc = function (decoded, callback) {
   if (decoded.tenant) {
@@ -51,7 +50,7 @@ var validate = function (decoded, request, callback) {
 
 var home = function(req, reply) {
   return reply('Hai!');
-}
+};
 
 var privado = function(req, reply) {
   var data = (req.auth.credentials.extraInfo) ? req.auth.credentials.extraInfo : null;
@@ -60,7 +59,7 @@ var privado = function(req, reply) {
     message: 'success',
     data: data
   });
-}
+};
 
 server.register(require('../'), function (err) {
 

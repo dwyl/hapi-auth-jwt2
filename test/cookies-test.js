@@ -2,7 +2,7 @@ var test   = require('tape');
 var JWT    = require('jsonwebtoken');
 var secret = 'NeverShareYourSecret';
 var server = require('./server.js');
-var cookie_options = '; Max-Age=31536000;' //' Expires=Mon, 18 Jul 2016 05:29:45 GMT; Secure; HttpOnly';
+var cookie_options = '; Max-Age=31536000;'; //' Expires=Mon, 18 Jul 2016 05:29:45 GMT; Secure; HttpOnly';
 
 // var cookie_options = {
 //   ttl: 365 * 30 * 7 * 24 * 60 * 60 * 1000, // in the distant future ...
@@ -14,11 +14,11 @@ var cookie_options = '; Max-Age=31536000;' //' Expires=Mon, 18 Jul 2016 05:29:45
 // }
 
 test("Attempt to access restricted content using inVALID Cookie Token", function(t) {
-  var token = JWT.sign({ id:123,"name":"Charlie" }, 'badsecret');
+  var token = JWT.sign({ id: 123, "name": "Charlie" }, 'badsecret');
   var options = {
     method: "POST",
     url: "/privado",
-    headers: { cookie : "token=" + token}
+    headers: { cookie: "token=" + token }
   };
   console.log(options);
   server.inject(options, function(response) {
@@ -28,11 +28,11 @@ test("Attempt to access restricted content using inVALID Cookie Token", function
 });
 
 test("Attempt to access restricted content with VALID Token but malformed Cookie", function(t) {
-  var token  = JWT.sign({ id:123,"name":"Charlie" }, secret);
+  var token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
   var options = {
     method: "POST",
     url: "/privado",
-    headers: { cookie : token }
+    headers: { cookie: token }
   };
   // server.inject lets us similate an http request
   server.inject(options, function(response) {
@@ -42,11 +42,11 @@ test("Attempt to access restricted content with VALID Token but malformed Cookie
 });
 
 test("Access restricted content with VALID Token Cookie", function(t) {
-  var token  = JWT.sign({ id:123,"name":"Charlie" }, secret);
+  var token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
   var options = {
     method: "POST",
     url: "/privado",
-    headers: { cookie : "token=" + token }
+    headers: { cookie: "token=" + token }
   };
   // server.inject lets us similate an http request
   server.inject(options, function(response) {
@@ -56,11 +56,11 @@ test("Access restricted content with VALID Token Cookie", function(t) {
 });
 
 test("Access restricted content with VALID Token Cookie (With Options!)", function(t) {
-  var token  = JWT.sign({ id:123,"name":"Charlie" }, secret);
+  var token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
   var options = {
     method: "POST",
     url: "/privado",
-    headers: { cookie : "token=" + token + cookie_options  }
+    headers: { cookie: "token=" + token + cookie_options }
   };
   // console.log(' - - - - - - - - - - - - - - - OPTIONS:')
   // console.log(options);
@@ -78,13 +78,13 @@ test("Access restricted content with VALID Token Cookie (With Options!)", functi
 // supply valid Token Auth Header but invalid Cookie
 // should succeed because Auth Header is first
 test("Authorization Header should take precedence over any cookie", function(t) {
-  var token    = JWT.sign({ id:123,"name":"Charlie" }, secret);
+  var token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
   var options = {
     method: "POST",
     url: "/privado",
     headers: {
-      authorization: "Bearer "+token,
-      cookie : "token=malformed.token" + cookie_options
+      authorization: "Bearer " + token,
+      cookie: "token=malformed.token" + cookie_options
     }
   };
   server.inject(options, function(response) {
@@ -98,14 +98,14 @@ test("Authorization Header should take precedence over any cookie", function(t) 
 // valid google analytics cookie but invalid auth header token
 // see: https://github.com/dwyl/hapi-auth-jwt2/issues/65#issuecomment-124791842
 test("Valid Google Analytics cookie should be ignored", function(t) {
-  var GA = "gwcm=%7B%22expires%22%3Anull%2C%22clabel%22%3A%22SbNVCILRtFcQwcrE6gM%22%2C%22backoff%22%3A1437241242%7D; _ga=GA1.2.1363734468.1432273334"
-  var token    = JWT.sign({ id:123,"name":"Charlie" }, secret);
+  var GA = "gwcm=%7B%22expires%22%3Anull%2C%22clabel%22%3A%22SbNVCILRtFcQwcrE6gM%22%2C%22backoff%22%3A1437241242%7D; _ga=GA1.2.1363734468.1432273334";
+  var token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
   var options = {
     method: "POST",
     url: "/privado",
     headers: {
-      authorization: "Bearer "+token,
-      cookie : GA
+      authorization: "Bearer " + token,
+      cookie: GA
     }
   };
   server.inject(options, function(response) {
@@ -115,14 +115,14 @@ test("Valid Google Analytics cookie should be ignored", function(t) {
 });
 
 test("Valid Google Analytics cookie should be ignored (BAD Header Token)", function(t) {
-  var GA = "gwcm=%7B%22expires%22%3Anull%2C%22clabel%22%3A%22SbNVCILRtFcQwcrE6gM%22%2C%22backoff%22%3A1437241242%7D; _ga=GA1.2.1363734468.1432273334"
-  var token    = JWT.sign({ id:123,"name":"Charlie" }, 'invalid');
+  var GA = "gwcm=%7B%22expires%22%3Anull%2C%22clabel%22%3A%22SbNVCILRtFcQwcrE6gM%22%2C%22backoff%22%3A1437241242%7D; _ga=GA1.2.1363734468.1432273334";
+  var token = JWT.sign({ id: 123, "name": "Charlie" }, 'invalid');
   var options = {
     method: "POST",
     url: "/privado",
     headers: {
-      authorization: "Bearer "+token,
-      cookie : GA
+      authorization: "Bearer " + token,
+      cookie: GA
     }
   };
   server.inject(options, function(response) {
@@ -133,13 +133,13 @@ test("Valid Google Analytics cookie should be ignored (BAD Header Token)", funct
 
 // Supply a VALID Token in Cookie A-N-D valid GA in Cookie!!
 test("Valid Google Analytics cookie should be ignored (BAD Header Token)", function(t) {
-  var GA = "gwcm=%7B%22expires%22%3Anull%2C%22clabel%22%3A%22SbNVCILRtFcQwcrE6gM%22%2C%22backoff%22%3A1437241242%7D; _ga=GA1.2.1363734468.1432273334"
-  var token    = JWT.sign({ id:123,"name":"Charlie" }, secret);
+  var GA = "gwcm=%7B%22expires%22%3Anull%2C%22clabel%22%3A%22SbNVCILRtFcQwcrE6gM%22%2C%22backoff%22%3A1437241242%7D; _ga=GA1.2.1363734468.1432273334";
+  var token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
   var options = {
     method: "POST",
     url: "/privado",
     headers: {
-      cookie : "token=" + token + '; ' + GA
+      cookie: "token=" + token + '; ' + GA
     }
   };
   server.inject(options, function(response) {
