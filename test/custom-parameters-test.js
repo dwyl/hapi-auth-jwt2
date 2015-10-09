@@ -76,7 +76,7 @@ test("Authorization Header should take precedence over any cookie - custom param
     method: "POST",
     url: "/privado",
     headers: {
-      authorization: "Bearer "+token,
+      authorization: "MyAuthScheme " + token,
       cookie : "customCookieKey=malformed.token" + cookie_options
     }
   };
@@ -97,7 +97,7 @@ test("Valid Google Analytics cookie should be ignored - custom parameters", func
     method: "POST",
     url: "/privado",
     headers: {
-      authorization: "Bearer "+token,
+      authorization: "MyAuthScheme "+token,
       cookie : GA
     }
   };
@@ -114,7 +114,7 @@ test("Valid Google Analytics cookie should be ignored (BAD Header Token) - custo
     method: "POST",
     url: "/privado",
     headers: {
-      authorization: "Bearer "+token,
+      authorization: "MyAuthScheme "+token,
       cookie : GA
     }
   };
@@ -197,6 +197,33 @@ test("Access restricted content (with VALID Token) - custom parameters", functio
     url: "/privado" + token
   };
   // server.inject lets us similate an http request
+  server.inject(options, function(response) {
+    t.equal(response.statusCode, 200, "VALID Token should succeed!");
+    t.end();
+  });
+});
+
+test("Attempt to access restricted content using inVALID header tokenType - custom parameters", function(t) {
+  var token = JWT.sign({ id:123,"name":"Charlie" }, 'badsecret');
+  var options = {
+    method: "POST",
+    url: "/privado",
+    headers: { Authorization : "InvalidAuthScheme " + token }
+  };
+  server.inject(options, function(response) {
+    t.equal(response.statusCode, 401, "Invalid token should error!");
+    t.end();
+  });
+});
+
+test("Access restricted content (with VALID Token and header tokenType) - custom parameters", function(t) {
+  var token = JWT.sign({ id:123,"name":"Charlie" }, secret);
+  var options = {
+    method: "POST",
+    url: "/privado",
+    headers: { Authorization : "MyAuthScheme " + token }
+  };
+
   server.inject(options, function(response) {
     t.equal(response.statusCode, 200, "VALID Token should succeed!");
     t.end();

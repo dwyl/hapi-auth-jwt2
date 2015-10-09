@@ -32,7 +32,8 @@ server.register(require('../'), function (err) {
     validateFunc: validate,
     verifyOptions: { algorithms: [ 'HS256' ] },
     urlKey: 'customUrlKey', // This is really what we are testing here
-    cookieKey: 'customCookieKey' // idem
+    cookieKey: 'customCookieKey',  // idem
+    tokenType: 'MyAuthScheme'
   });
 
   server.route([
