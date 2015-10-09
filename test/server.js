@@ -38,7 +38,7 @@ server.register(require('../'), function () {
   });
 
   server.route([
-    { method: 'GET',  path: '/', handler: home, config:{ auth: false } },
+    { method: 'GET',  path: '/', handler: home, config: { auth: false } },
     { method: 'POST', path: '/privado', handler: privado, config: { auth: 'jwt' } },
     { method: 'POST', path: '/required', handler: privado, config: { auth: { mode: 'required', strategy: 'jwt' } } },
     { method: 'POST', path: '/optional', handler: privado, config: { auth: { mode: 'optional', strategy: 'jwt' } } },

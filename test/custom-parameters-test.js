@@ -175,7 +175,7 @@ test("Try using an incorrect secret to sign the JWT - custom parameters", functi
 test("URL Token is well formed but is allowed=false so should be denied - custom parameters", function(t) {
   // use the token as the 'authorization' header in requests
   // var token = jwt.sign({ "id": 1 ,"name":"Old Greg" }, 'incorrectSecret');
-  var token = JWT.sign({ id: 321,"name": "Old Gregg" }, secret);
+  var token = JWT.sign({ id: 321, "name": "Old Gregg" }, secret);
   token = "?customUrlKey=" + token;
   var options = {
     method: "POST",

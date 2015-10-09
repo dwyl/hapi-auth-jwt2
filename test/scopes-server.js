@@ -6,8 +6,8 @@ var server = new Hapi.Server({ debug: false });
 server.connection();
 
 var db = {
-  "123": { allowed: true,  "name": "Charlie"  },
-  "321": { allowed: false, "name": "Old Gregg"}
+  "123": { allowed: true,  "name": "Charlie"   },
+  "321": { allowed: false, "name": "Old Gregg" }
 };
 
 var scopesDb = {

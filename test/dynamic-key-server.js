@@ -61,12 +61,12 @@ var privado = function(req, reply) {
   });
 };
 
-server.register(require('../'), function (err) {
+server.register(require('../'), function () {
 
   server.auth.strategy('jwt', 'jwt', { key: keyFunc, validateFunc: validate });
 
   server.route([
-    { method: 'GET',  path: '/', handler: home, config:{ auth: false } },
+    { method: 'GET',  path: '/', handler: home, config: { auth: false } },
     { method: 'POST', path: '/privado', handler: privado, config: { auth: 'jwt' } }
   ]);
 
