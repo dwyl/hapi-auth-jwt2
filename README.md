@@ -160,6 +160,7 @@ signature `function(decoded, callback)` where:
     - `algorithms` - list of allowed algorithms
 - `urlKey` - (***optional***) if you prefer to pass your token via url, simply add a `token` url parameter to your request or use a custom parameter by setting `urlKey`
 - `cookieKey` - (***optional***) if you prefer to pass your token via a cookie, simply set the cookie `token=your.jsonwebtoken.here` or use a custom key by setting `cookieKey`
+- `tokenType` - (**optinal**) allow custom token type, e.g. Authorization: \<tokenType> 12345678, default is none.
 
 ### verifyOptions let you define how to Verify the Tokens (*Optional*)
 
