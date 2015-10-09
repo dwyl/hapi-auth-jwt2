@@ -63,7 +63,7 @@ test("Malformed JWT", function(t) {
 
 test("Try using a token with missing characters in body", function(t) {
   // use the token as the 'authorization' header in requests
-  var token = JWT.sign({ id:123,"name":"Charlie" }, secret);
+  var token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
   // delete some characters in body
   var tokenData = token.split('.');
   var header = tokenData[0],
@@ -75,7 +75,7 @@ test("Try using a token with missing characters in body", function(t) {
   var options = {
     method: "POST",
     url: "/privado",
-    headers: { authorization: "Bearer "+token  }
+    headers: { authorization: "Bearer " + token  }
   };
   // server.inject lets us similate an http request
   server.inject(options, function(response) {
@@ -86,13 +86,13 @@ test("Try using a token with missing characters in body", function(t) {
 
 test("Try using an incorrect secret to sign the JWT", function(t) {
   // use the token as the 'authorization' header in requests
-  var token = JWT.sign({ id:123,"name":"Charlie" }, 'incorrectSecret');
+  var token = JWT.sign({ id: 123, "name": "Charlie" }, 'incorrectSecret');
   // console.log(" - - - - - - token  - - - - -")
   // console.log(token);
   var options = {
     method: "POST",
     url: "/privado",
-    headers: { authorization: "Bearer "+token  }
+    headers: { authorization: "Bearer " + token  }
   };
   // server.inject lets us similate an http request
   server.inject(options, function(response) {
@@ -103,13 +103,13 @@ test("Try using an incorrect secret to sign the JWT", function(t) {
 
 test("Try using an expired token", function(t) {
   // use the token as the 'authorization' header in requests
-  var token = JWT.sign({ id:123,"name":"Charlie" }, secret, { expiresInSeconds: 1 });
+  var token = JWT.sign({ id: 123, "name": "Charlie" }, secret, { expiresInSeconds: 1 });
   // console.log(" - - - - - - token  - - - - -")
   // console.log(token);
   var options = {
     method: "POST",
     url: "/privado",
-    headers: { authorization: "Bearer "+token  }
+    headers: { authorization: "Bearer " + token  }
   };
   // server.inject lets us similate an http request
   setTimeout(function () {
@@ -124,11 +124,11 @@ test("Try using an expired token", function(t) {
 test("Token is well formed but is allowed=false so should be denied", function(t) {
   // use the token as the 'authorization' header in requests
   // var token = jwt.sign({ "id": 1 ,"name":"Old Greg" }, 'incorrectSecret');
-  var token = JWT.sign({ id:321,"name":"Old Gregg" }, secret);
+  var token = JWT.sign({ id: 321, "name": "Old Gregg" }, secret);
   var options = {
     method: "POST",
     url: "/privado",
-    headers: { authorization: "Bearer "+token }
+    headers: { authorization: "Bearer " + token }
   };
   // server.inject lets us similate an http request
   server.inject(options, function(response) {
@@ -139,11 +139,11 @@ test("Token is well formed but is allowed=false so should be denied", function(t
 
 test("Access restricted content (with VALID Token)", function(t) {
   // use the token as the 'authorization' header in requests
-  var token = JWT.sign({ id:123,"name":"Charlie" }, secret);
+  var token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
   var options = {
     method: "POST",
     url: "/privado",
-    headers: { authorization: "Bearer "+token }
+    headers: { authorization: "Bearer " + token }
   };
   // server.inject lets us similate an http request
   server.inject(options, function(response) {
@@ -156,11 +156,11 @@ test("Access restricted content (with VALID Token)", function(t) {
 
 test("Access restricted content (with Well-formed but invalid Token)", function(t) {
   // use the token as the 'authorization' header in requests
-  var token = JWT.sign({ id:123,"name":"Charlie" }, 'badsecret');
+  var token = JWT.sign({ id: 123, "name": "Charlie" }, 'badsecret');
   var options = {
     method: "POST",
     url: "/privado",
-    headers: { authorization: "Bearer "+token }
+    headers: { authorization: "Bearer " + token }
   };
   // server.inject lets us similate an http request
   server.inject(options, function(response) {
@@ -173,8 +173,6 @@ test("Access restricted content (with Well-formed but invalid Token)", function(
 
 // see: https://github.com/ideaq/hapi-auth-jwt2/issues/28
 test("Request with undefined auth header should 401", function(t) {
-  // use the token as the 'authorization' header in requests
-  var token = JWT.sign({ id:321,"name":"Charlie" }, secret);
   var options = {
     method: "POST",
     url: "/privado",
@@ -204,11 +202,11 @@ test("Auth mode 'required' should require authentication header", function(t) {
 
 test("Auth mode 'required' should fail with invalid token", function(t) {
   // use the token as the 'authorization' header in requests
-  var token = JWT.sign({ id:123,"name":"Charlie" }, 'badsecret');
+  var token = JWT.sign({ id: 123, "name": "Charlie" }, 'badsecret');
   var options = {
     method: "POST",
     url: "/required",
-    headers: { authorization: "Bearer "+token }
+    headers: { authorization: "Bearer " + token }
   };
   // server.inject lets us similate an http request
   server.inject(options, function(response) {
@@ -221,11 +219,11 @@ test("Auth mode 'required' should fail with invalid token", function(t) {
 
 test("Auth mode 'required' should should pass with valid token", function(t) {
   // use the token as the 'authorization' header in requests
-  var token = JWT.sign({ id:123,"name":"Charlie" }, secret);
+  var token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
   var options = {
     method: "POST",
     url: "/required",
-    headers: { authorization: "Bearer "+token }
+    headers: { authorization: "Bearer " + token }
   };
   // server.inject lets us similate an http request
   server.inject(options, function(response) {
@@ -251,11 +249,11 @@ test("Auth mode 'optional' should pass when no auth header specified", function(
 
 test("Auth mode 'optional' should fail with invalid token", function(t) {
   // use the token as the 'authorization' header in requests
-  var token = JWT.sign({ id:123,"name":"Charlie" }, 'badsecret');
+  var token = JWT.sign({ id: 123, "name": "Charlie" }, 'badsecret');
   var options = {
     method: "POST",
     url: "/optional",
-    headers: { authorization: "Bearer "+token }
+    headers: { authorization: "Bearer " + token }
   };
   // server.inject lets us similate an http request
   server.inject(options, function(response) {
@@ -268,12 +266,12 @@ test("Auth mode 'optional' should fail with invalid token", function(t) {
 
 test("Auth mode 'optional' should pass with valid token", function(t) {
   // use the token as the 'authorization' header in requests
-  // var token = JWT.sign({ id:123,"name":"Charlie" }, secret);
-  var token = JWT.sign({ id:123,"name":"Charlie" }, secret);
+  // var token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
+  var token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
   var options = {
     method: "POST",
     url: "/optional",
-    headers: { authorization: "Bearer "+token }
+    headers: { authorization: "Bearer " + token }
   };
   // server.inject lets us similate an http request
   server.inject(options, function(response) {
@@ -299,11 +297,11 @@ test("Auth mode 'try' should pass when no auth header specified", function(t) {
 
 test("Auth mode 'try' should pass with invalid token", function(t) {
   // use the token as the 'authorization' header in requests
-  var token = JWT.sign({ id:123,"name":"Charlie" }, 'badsecret');
+  var token = JWT.sign({ id: 123, "name": "Charlie" }, 'badsecret');
   var options = {
     method: "POST",
     url: "/try",
-    headers: { authorization: "Bearer "+token }
+    headers: { authorization: "Bearer " + token }
   };
   // server.inject lets us similate an http request
   server.inject(options, function(response) {
@@ -316,11 +314,11 @@ test("Auth mode 'try' should pass with invalid token", function(t) {
 
 test("Auth mode 'try' should pass with valid token", function(t) {
   // use the token as the 'authorization' header in requests
-  var token = JWT.sign({ id:123,"name":"Charlie" }, secret);
+  var token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
   var options = {
     method: "POST",
     url: "/try",
-    headers: { authorization: "Bearer "+token }
+    headers: { authorization: "Bearer " + token }
   };
   // server.inject lets us similate an http request
   server.inject(options, function(response) {
