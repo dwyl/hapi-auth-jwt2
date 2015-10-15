@@ -24,9 +24,9 @@ test('Auth mode \'try\' should not set isAuthenticated to true when no token sen
       method: 'GET',
       path: '/try',
       handler: function (request, reply) {
-        console.log(' - - - - - - - - - - - - - - - - - - - - - - -')
-        console.log(request.auth);
-        console.log(' - - - - - - - - - - - - - - - - - - - - - - -')
+        // console.log(' - - - - - - - - - - - - - - - - - - - - - - -')
+        // console.log(request.auth);
+        // console.log(' - - - - - - - - - - - - - - - - - - - - - - -')
         t.notOk(request.auth.isAuthenticated, 'isAuthenticated is false')
         reply('TRY');
       },
