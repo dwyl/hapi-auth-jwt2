@@ -37,7 +37,7 @@
   },
   "devDependencies": {
     "aguid": "^1.0.3",
-    "hapi": "^10.4.1",
+    "hapi": "^11.0.0",
     "codeclimate-test-reporter": "^0.1.1",
     "istanbul": "^0.3.22",
     "jshint": "^2.8.0",
