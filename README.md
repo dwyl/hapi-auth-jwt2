@@ -6,7 +6,7 @@
 [![Build Status](https://travis-ci.org/dwyl/hapi-auth-jwt2.svg "Build Status = Tests Passing")](https://travis-ci.org/dwyl/hapi-auth-jwt2)
 [![Test Coverage](https://codeclimate.com/github/dwyl/hapi-auth-jwt2/badges/coverage.svg "All Lines Tested")](https://codeclimate.com/github/dwyl/hapi-auth-jwt2)
 [![Code Climate](https://codeclimate.com/github/dwyl/hapi-auth-jwt2/badges/gpa.svg "No Nasty Code")](https://codeclimate.com/github/dwyl/hapi-auth-jwt2)
-[![HAPI 10.4.1](http://img.shields.io/badge/hapi-10.4.1-brightgreen.svg "Latest Hapi.js")](http://hapijs.com)
+[![HAPI 11.0.0](http://img.shields.io/badge/hapi-11.0.0-brightgreen.svg "Latest Hapi.js")](http://hapijs.com)
 [![Node.js Version](https://img.shields.io/node/v/hapi-auth-jwt2.svg?style=flat "Node.js 10 & 12 and io.js latest both supported")](http://nodejs.org/download/)
 [![npm](https://img.shields.io/npm/v/hapi-auth-jwt2.svg)](https://www.npmjs.com/package/hapi-auth-jwt2)
 
@@ -304,7 +304,7 @@ we *recommend* including it in your **package.json** ***explicitly*** as a **dep
 
 ### Compatibility
 
-`hapi-auth-jwt2` is compatible with Hapi.js versions `10.x.x` `9.x.x` and `8.x.x` as there was no change to how the Hapi plugin system works
+`hapi-auth-jwt2` is compatible with Hapi.js versions `11.x.x` `10.x.x` `9.x.x` and `8.x.x` as there was no change to how the Hapi plugin system works
 for the past two versions.
 See the release notes for more details:
 + Hapi Version 10: https://github.com/hapijs/hapi/issues/2764
