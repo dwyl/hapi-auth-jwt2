@@ -31,19 +31,19 @@
   },
   "homepage": "https://github.com/dwyl/hapi-auth-jwt2",
   "dependencies": {
-    "boom": "^2.9.0",
-    "cookie": "^0.2.2",
-    "jsonwebtoken": "^5.4.0"
+    "boom": "^3.0.0",
+    "cookie": "^0.2.3",
+    "jsonwebtoken": "^5.4.1"
   },
   "devDependencies": {
     "aguid": "^1.0.3",
-    "hapi": "^11.0.0",
+    "hapi": "^11.0.3",
     "codeclimate-test-reporter": "^0.1.1",
     "istanbul": "^0.4.0",
     "jshint": "^2.8.0",
-    "pre-commit": "^1.1.1",
+    "pre-commit": "^1.1.2",
     "tap-spec": "^4.1.0",
-    "tape": "^4.2.1"
+    "tape": "^4.2.2"
   },
   "engines": {
     "node": ">=4.0"
