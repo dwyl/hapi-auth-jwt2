@@ -29,6 +29,10 @@ var privado = function(req, reply) {
   return reply('worked');
 };
 
+var sendToken = function(req, reply) {
+  return reply(req.auth.token);
+};
+
 server.register(require('../'), function () {
 
   server.auth.strategy('jwt', 'jwt', {
@@ -39,6 +43,7 @@ server.register(require('../'), function () {
 
   server.route([
     { method: 'GET',  path: '/', handler: home, config: { auth: false } },
+    { method: 'GET', path: '/token', handler: sendToken, config: { auth: 'jwt' } },
     { method: 'POST', path: '/privado', handler: privado, config: { auth: 'jwt' } },
     { method: 'POST', path: '/required', handler: privado, config: { auth: { mode: 'required', strategy: 'jwt' } } },
     { method: 'POST', path: '/optional', handler: privado, config: { auth: { mode: 'optional', strategy: 'jwt' } } },

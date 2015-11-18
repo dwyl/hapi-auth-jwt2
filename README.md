@@ -240,6 +240,18 @@ There are _several_ options for generating secret keys.
 The _easist_ way is to simply copy paste a _**strong random string**_ of alpha-numeric characters from https://www.grc.com/passwords.htm
 (_if you want a longer key simply refresh the page and copy-paste multiple random strings_)
 
+## Want to access the JWT token after validation?
+
+[@mcortesi](https://github.com/mcortesi) requested the ability to
+[access the JWT token](https://github.com/dwyl/hapi-auth-jwt2/issues/55) used for authentication.
+
+We added support for that. You can access the extracted JWT token in your handler or any other function
+within the request lifecycle with the `request.auth.token` property.
+
+Take in consideration, that this is the *encoded token*, and it's only useful if you want to use to make
+request to other servers using the user's token. For information inside the token, just use the
+`request.auth.credentials` property.
+
 ## Want to send/store your JWT in a Cookie?
 
 [@benjaminlees](https://github.com/benjaminlees)

@@ -328,3 +328,20 @@ test("Auth mode 'try' should pass with valid token", function(t) {
     t.end();
   });
 });
+
+test("Scheme should set token in request.auth.token", function(t) {
+  // use the token as the 'authorization' header in requests
+  var token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
+  var options = {
+    method: "GET",
+    url: "/token",
+    headers: { authorization: "Bearer " + token }
+  };
+  // server.inject lets us similate an http request
+  server.inject(options, function(response) {
+    // console.log(" - - - - RESPONSE: ")
+    // console.log(response.result);
+    t.equal(response.result, token, 'Token is accesible from handler');
+    t.end();
+  });
+});
