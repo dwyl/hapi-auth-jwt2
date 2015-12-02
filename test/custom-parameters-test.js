@@ -229,3 +229,30 @@ test("Access restricted content (with VALID Token and header tokenType) - custom
     t.end();
   });
 });
+
+test("Attempt to access restricted content using inVALID custom header customHeader - custom parameters", function(t) {
+  var token = JWT.sign({ id: 123, "name": "Charlie" }, 'badsecret');
+  var options = {
+    method: "POST",
+    url: "/privado",
+    headers: { 'x-invalid-custom-header': token }
+  };
+  server.inject(options, function(response) {
+    t.equal(response.statusCode, 401, "Invalid custom token should error!");
+    t.end();
+  });
+});
+
+test("Access restricted content (with VALID Token and custom header customHeader) - custom parameters", function(t) {
+  var token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
+  var options = {
+    method: "POST",
+    url: "/privado",
+    headers: { 'x-valid-custom-token': token }
+  };
+
+  server.inject(options, function(response) {
+    t.equal(response.statusCode, 200, "VALID custom token should succeed!");
+    t.end();
+  });
+});
