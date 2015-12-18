@@ -2,7 +2,7 @@ var test   = require('tape');
 var JWT    = require('jsonwebtoken');
 // var secret = 'NeverShareYourSecret';
 
-var server = require('./verify_bypass_server'); // test server which in turn loads our module
+var server = require('./custom_verify_server'); // test server which in turn loads our module
 
 test("Access a route that has no auth strategy", function(t) {
   var options = {
