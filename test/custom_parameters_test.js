@@ -1,7 +1,7 @@
 var test   = require('tape');
 var JWT    = require('jsonwebtoken');
 var secret = 'NeverShareYourSecret';
-var server = require('./custom-parameters-server.js');
+var server = require('./custom_parameters_server.js');
 var cookie_options = '; Max-Age=31536000;'; //' Expires=Mon, 18 Jul 2016 05:29:45 GMT; Secure; HttpOnly';
 
 // Those tests are the same as cookie-test and url-token-test but with custom parameters in cookie or URL

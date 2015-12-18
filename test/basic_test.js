@@ -2,7 +2,7 @@ var test   = require('tape');
 var JWT    = require('jsonwebtoken');
 var secret = 'NeverShareYourSecret';
 
-var server = require('./server'); // test server which in turn loads our module
+var server = require('./basic_server'); // test server which in turn loads our module
 
 test("Warm Up the Engine", function(t) {
   var options = {

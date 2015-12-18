@@ -1,7 +1,7 @@
 var test   = require('tape');
 var JWT    = require('jsonwebtoken');
 var secret = 'NeverShareYourSecret'; // set by ENV Variable
-var server = require('./scopes-server'); // test server which in turn loads our module
+var server = require('./scopes_server'); // test server which in turn loads our module
 
 
 test("Access restricted content using scopes (with VALID Token and VALID scope)", function(t) {

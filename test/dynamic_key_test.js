@@ -1,7 +1,7 @@
 var test   = require('tape');
 var JWT    = require('jsonwebtoken');
 
-var server = require('./dynamic-key-server'); // test server which in turn loads our module
+var server = require('./dynamic_key_server'); // test server which in turn loads our module
 
 test("Access restricted content with a valid token and tenant", function(t) {
   // use the token as the 'authorization' header in requests
