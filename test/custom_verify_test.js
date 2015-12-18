@@ -16,8 +16,38 @@ test("Access a route that has no auth strategy", function(t) {
   });
 });
 
-test("Bypass Verification in 'try' mode ", function(t) {
-  var payload = { id: 123, "name": "Charlie" }
+test("customVerify simulate error condition", function(t) {
+  var payload = { id: 123, "name": "Charlie", error: true }
+  var token = JWT.sign(payload, 'SecretDoesNOTGetVerified');
+  var options = {
+    method: "GET",
+    url: "/required",
+    headers: { authorization: "Bearer " + token  }
+  };
+  // server.inject lets us similate an http request
+  server.inject(options, function(response) {
+    t.equal(response.statusCode, 500, "customVerify force error");
+    t.end();
+  });
+});
+
+test("customVerify with fail condition", function(t) {
+  var payload = { id: 123, "name": "Charlie", some_property: false }
+  var token = JWT.sign(payload, 'SecretDoesNOTGetVerified');
+  var options = {
+    method: "GET",
+    url: "/required",
+    headers: { authorization: "Bearer " + token  }
+  };
+  // server.inject lets us similate an http request
+  server.inject(options, function(response) {
+    t.equal(response.statusCode, 401, "GET /required with customVerify rejected");
+    t.end();
+  });
+});
+
+test("Custom Verification in 'try' mode ", function(t) {
+  var payload = { id: 123, "name": "Charlie", some_property: true }
   var token = JWT.sign(payload, 'SecretDoesNOTGetVerified');
   var options = {
     method: "GET",
@@ -32,8 +62,8 @@ test("Bypass Verification in 'try' mode ", function(t) {
   });
 });
 
-test("Bypass Verification in 'optional' mode ", function(t) {
-  var payload = { id: 234, "name": "Oscar" }
+test("Custom Verification in 'optional' mode ", function(t) {
+  var payload = { id: 234, "name": "Oscar", some_property: true  }
   var token = JWT.sign(payload, 'SecretDoesNOTGetVerified');
   var options = {
     method: "GET",
@@ -48,8 +78,8 @@ test("Bypass Verification in 'optional' mode ", function(t) {
   });
 });
 
-test("Bypass Verification in 'required' mode ", function(t) {
-  var payload = { id: 345, "name": "Romeo" }
+test("Custom Verification in 'required' mode ", function(t) {
+  var payload = { id: 345, "name": "Romeo", some_property: true }
   var token = JWT.sign(payload, 'AnyStringWillDo');
   var options = {
     method: "GET",
