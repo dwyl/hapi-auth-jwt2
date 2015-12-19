@@ -38,7 +38,6 @@
   "devDependencies": {
     "aguid": "^1.0.4",
     "hapi": "^11.1.2",
-    "codeclimate-test-reporter": "^0.1.1",
     "istanbul": "^0.4.1",
     "jshint": "^2.8.0",
     "pre-commit": "^1.1.2",
