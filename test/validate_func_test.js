@@ -4,7 +4,6 @@ var JWT    = require('jsonwebtoken');
 var secret = 'NeverShareYourSecret';
 
 test('Should respond with 500 series error when validateFunc errs', function (t) {
-  t.plan(2);
 
   var server = new Hapi.Server();
   server.connection();
