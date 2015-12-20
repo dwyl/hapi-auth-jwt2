@@ -1,12 +1,14 @@
-# Hapi Auth with JSON Web Tokens (JWT)
+# Hapi Auth using JSON Web Tokens (JWT)
 
 ***The*** authentication scheme/plugin for
 [**Hapi.js**](http://hapijs.com/) apps using **JSON Web Tokens**
 
+
+
 [![Build Status](https://travis-ci.org/dwyl/hapi-auth-jwt2.svg "Build Status = Tests Passing")](https://travis-ci.org/dwyl/hapi-auth-jwt2)
 [![codecov.io Code Coverage](https://codecov.io/github/dwyl/hapi-auth-jwt2/coverage.svg?branch=master)](https://codecov.io/github/dwyl/hapi-auth-jwt2?branch=master)
 [![Code Climate](https://codeclimate.com/github/dwyl/hapi-auth-jwt2/badges/gpa.svg "No Nasty Code")](https://codeclimate.com/github/dwyl/hapi-auth-jwt2)
-[![HAPI 11.0.5](http://img.shields.io/badge/hapi-11.0.5-brightgreen.svg "Latest Hapi.js")](http://hapijs.com)
+[![HAPI 11.1.2](http://img.shields.io/badge/hapi-11.0.5-brightgreen.svg "Latest Hapi.js")](http://hapijs.com)
 [![Node.js Version](https://img.shields.io/node/v/hapi-auth-jwt2.svg?style=flat "Node.js 10 & 12 and io.js latest both supported")](http://nodejs.org/download/)
 [![npm](https://img.shields.io/npm/v/hapi-auth-jwt2.svg)](https://www.npmjs.com/package/hapi-auth-jwt2)
 
@@ -251,8 +253,8 @@ We added support for that. You can access the extracted JWT token in your handle
 within the request lifecycle with the `request.auth.token` property.
 
 Take in consideration, that this is the *encoded token*, and it's only useful if you want to use to make
-request to other servers using the user's token. For information inside the token, just use the
-`request.auth.credentials` property.
+request to other servers using the user's token.  
+For the *decoded* version of the token, access the `request.auth.credentials` object.
 
 ## Want to send/store your JWT in a Cookie?
 
@@ -331,7 +333,7 @@ While *most* people using `hapi-auth-jwt2` will opt for the *simpler* use case
   which validates the JWT payload after it has been verified...*)
 others may need more control over the `verify` step.
 
-The [*internals*](https://github.com/dwyl/hapi-auth-jwt2/blob/eb9fff9fc384fde07ec2a1d2f0da520be902da2c/lib/index.js#L58)
+The [*internals*](https://github.com/dwyl/hapi-auth-jwt2/blob/eb9fff9fc384fde07ec2a1d2f0da520be902da2c/l˜/index.js#L58)
 of `hapi-auth-jwt2` use the `jsonwebtoken.verify` method to ***verify*** if the
 JTW was signed using the `JWT_SECRET` (*secret key*).
 
@@ -456,12 +458,6 @@ to the **validateFunc** which we thought might be handy.
 So we decided to write our own module addressing all these issues.
 
 *Don't take our word for it, do your own homework and decide which module you prefer.*
-
-### *Guiding Principal*
-
-> "***perfection*** *is* ***attained*** *not when there is nothing more to add,  
-> but when there is* ***nothing more to remove***" ~
-[Antoine de Saint-Exupéry](http://en.wikiquote.org/wiki/Antoine_de_Saint_Exup%C3%A9ry#Quotes)
 
 
 ## Why hapi-auth-jwt2 ?
