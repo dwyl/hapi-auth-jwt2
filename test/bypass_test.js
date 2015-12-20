@@ -3,12 +3,12 @@ var Hapi   = require('hapi');
 var JWT    = require('jsonwebtoken');
 var secret = 'NeverShareYourSecret';
 
-test('Should respond with 500 series error when validateFunc errs', function (t) {
+test('Should fail with 501 when no validateFunc or verifyFunc is registered', function (t) {
 
   var server = new Hapi.Server();
   server.connection();
 
-  server.register(require('../'), function (err) {
+  server.register(require('../lib'), function (err) {
     t.ifError(err, 'No error registering hapi-auth-jwt2 plugin without validateFunc or customVerify');
 
     server.auth.strategy('jwt', 'jwt', {
@@ -29,7 +29,7 @@ test('Should respond with 500 series error when validateFunc errs', function (t)
     };
 
     server.inject(options, function (response) {
-      t.equal(response.statusCode, 200, 'Pass when no validateFunc or customVerify set.');
+      t.equal(response.statusCode, 501, '501 when no validateFunc or verifyFunc set.');
       t.end();
     });
   });
