@@ -23,7 +23,7 @@ If you are totally new to JWTs, we wrote an introductory post explaining
 the concepts & benefits: https://github.com/dwyl/learn-json-web-tokens
 
 If you (or anyone on your team) are unfamiliar with **Hapi.js** we have a  
-quick guide for that too: https://github.com/nelsonic/learn-hapi
+quick guide for that too: https://github.com/dwyl/learn-hapi
 
 ## Usage
 
@@ -137,7 +137,8 @@ on the **decoded** token before allowing the visitor to proceed.
 
 ## Documentation
 
-- `key` - (***required***) the secret key used to check the signature of the token or a key lookup function with
+- `key` - (***required*** - *unless you have a `customVerify` function*) the secret key
+used to check the signature of the token ***or*** a **key lookup function** with
 signature `function(decoded, callback)` where:
     - `decoded` - the ***decoded*** but ***unverified*** JWT received from client
     - `callback` - callback function with the signature `function(err, key, extraInfo)` where:
@@ -161,6 +162,7 @@ signature `function(decoded, callback)` where:
 - `urlKey` - (***optional***) if you prefer to pass your token via url, simply add a `token` url parameter to your request or use a custom parameter by setting `urlKey`
 - `cookieKey` - (***optional***) if you prefer to pass your token via a cookie, simply set the cookie `token=your.jsonwebtoken.here` or use a custom key by setting `cookieKey`
 - `tokenType` - (**optinal**) allow custom token type, e.g. Authorization: \<tokenType> 12345678, default is none.
+
 
 ### verifyOptions let you define how to Verify the Tokens (*Optional*)
 
@@ -313,6 +315,7 @@ as a **dependency** your app does not know where to find it in the **node_module
 Unless you include it via ***relative path*** e.g:
 `var JWT = require('./node_modules/hapi-auth-jwt2/node_modules/jsonwebtoken');`  
 we *recommend* including it in your **package.json** ***explicitly*** as a **dependency** for your project.
+
 
 ### Compatibility
 

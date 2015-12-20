@@ -18,7 +18,7 @@ var privado = function(req, reply) {
 
 // defining our own validate function lets us do something
 // useful/custom with the decodedToken before reply(ing)
-var verify = function (decoded, request, callback) {
+var customVerifyFunc = function (decoded, request, callback) {
   if(decoded.error) {
     return callback(new Error('customVerify fails!'));
   }
@@ -33,7 +33,7 @@ var verify = function (decoded, request, callback) {
 server.register(require('../'), function () {
 
   server.auth.strategy('jwt', 'jwt', {
-    customVerify: verify // no validateFunc or key required.
+    verifyFunc: customVerifyFunc // no validateFunc or key required.
   });
 
   server.route([
