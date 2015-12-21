@@ -1,6 +1,6 @@
 {
   "name": "hapi-auth-jwt2",
-  "version": "5.2.1",
+  "version": "5.3.0",
   "description": "Hapi.js Authentication Plugin/Scheme using JSON Web Tokens (JWT)",
   "main": "lib/index.js",
   "repository": {
@@ -36,17 +36,16 @@
     "jsonwebtoken": "^5.4.1"
   },
   "devDependencies": {
-    "aguid": "^1.0.3",
-    "hapi": "^11.0.5",
-    "codeclimate-test-reporter": "^0.1.1",
-    "istanbul": "^0.4.0",
+    "aguid": "^1.0.4",
+    "hapi": "^11.1.2",
+    "istanbul": "^0.4.1",
     "jshint": "^2.8.0",
     "pre-commit": "^1.1.2",
     "tap-spec": "^4.1.0",
     "tape": "^4.2.2"
   },
   "engines": {
-    "node": ">=4.0"
+    "node": ">=4.2.3"
   },
   "scripts": {
     "quick": "./node_modules/tape/bin/tape ./test/*.js | node_modules/tap-spec/bin/cmd.js",

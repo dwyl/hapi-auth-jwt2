@@ -2,7 +2,7 @@ var test   = require('tape');
 var JWT    = require('jsonwebtoken');
 var secret = 'NeverShareYourSecret';
 
-var server = require('./server.js');
+var server = require('./basic_server.js');
 
 test("Attempt to access restricted content (without auth token)", function(t) {
   var options = {
