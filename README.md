@@ -3,7 +3,7 @@
 ***The*** authentication scheme/plugin for
 [**Hapi.js**](http://hapijs.com/) apps using **JSON Web Tokens**
 
-
+![hapi-auth-jwt2-diagram-verify](https://cloud.githubusercontent.com/assets/194400/11937081/00f9b4bc-a80a-11e5-9f71-a7e05e92f1ae.png)
 
 [![Build Status](https://travis-ci.org/dwyl/hapi-auth-jwt2.svg "Build Status = Tests Passing")](https://travis-ci.org/dwyl/hapi-auth-jwt2)
 [![codecov.io Code Coverage](https://codecov.io/github/dwyl/hapi-auth-jwt2/coverage.svg?branch=master)](https://codecov.io/github/dwyl/hapi-auth-jwt2?branch=master)
