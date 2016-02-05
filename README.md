@@ -168,6 +168,12 @@ signature `function(decoded, callback)` where:
 - `cookieKey` - (***optional***) if you prefer to pass your token via a cookie, simply set the cookie `token=your.jsonwebtoken.here` or use a custom key by setting `cookieKey`
 - `tokenType` - (**optinal**) allow custom token type, e.g. Authorization: \<tokenType> 12345678, default is none.
 
+### Understanding the Request Flow
+
+At the simplest level this is the request flow through a Hapi App
+using `hapi-auth-jwt2`:
+
+![hapi auth request flow](https://cloud.githubusercontent.com/assets/443149/11938155/a5fa9554-a7cd-11e5-92b1-01efd6841ded.png)
 
 ### verifyOptions let you define how to Verify the Tokens (*Optional*)
 
