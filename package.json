@@ -37,15 +37,15 @@
   },
   "devDependencies": {
     "aguid": "^1.0.4",
-    "hapi": "^12.1.0",
-    "istanbul": "^0.4.1",
-    "jshint": "^2.8.0",
+    "hapi": "^13.0.0",
+    "istanbul": "^0.4.2",
+    "jshint": "^2.9.1",
     "pre-commit": "^1.1.2",
     "tap-spec": "^4.1.1",
     "tape": "^4.4.0"
   },
   "engines": {
-    "node": ">=4.2.3"
+    "node": ">=4.2.6"
   },
   "scripts": {
     "quick": "./node_modules/tape/bin/tape ./test/*.js | node_modules/tap-spec/bin/cmd.js",
