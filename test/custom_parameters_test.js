@@ -27,7 +27,7 @@ test("Attempt to access restricted content with VALID Token but malformed Cookie
     url: "/privado",
     headers: { cookie: token }
   };
-  // server.inject lets us similate an http request
+  // server.inject lets us simulate an http request
   server.inject(options, function(response) {
     t.equal(response.statusCode, 400, "Valid Token but inVALID COOKIE should fial!");
     t.end();
@@ -41,7 +41,7 @@ test("Access restricted content with VALID Token Cookie - custom parameters", fu
     url: "/privado",
     headers: { cookie: "customCookieKey=" + token }
   };
-  // server.inject lets us similate an http request
+  // server.inject lets us simulate an http request
   server.inject(options, function(response) {
     t.equal(response.statusCode, 200, "VALID COOKIE Token should succeed!");
     t.end();
@@ -57,7 +57,7 @@ test("Access restricted content with VALID Token Cookie (With Options!) - custom
   };
   // console.log(' - - - - - - - - - - - - - - - OPTIONS:')
   // console.log(options);
-  // server.inject lets us similate an http request
+  // server.inject lets us simulate an http request
   server.inject(options, function(response) {
     // console.log(' - - - - - - - - - - - - - - - response:')
     // console.log(response);
@@ -148,7 +148,7 @@ test("Attempt to access restricted content (with an INVALID URL Token) - custom 
     method: "POST",
     url: "/privado" + token
   };
-  // server.inject lets us similate an http request
+  // server.inject lets us simulate an http request
   server.inject(options, function(response) {
     t.equal(response.statusCode, 401, "INVALID Token should fail");
     t.end();
@@ -165,7 +165,7 @@ test("Try using an incorrect secret to sign the JWT - custom parameters", functi
     method: "POST",
     url: "/privado" + token
   };
-  // server.inject lets us similate an http request
+  // server.inject lets us simulate an http request
   server.inject(options, function(response) {
     t.equal(response.statusCode, 401, "URL Token signed with incorrect key fails");
     t.end();
@@ -181,7 +181,7 @@ test("URL Token is well formed but is allowed=false so should be denied - custom
     method: "POST",
     url: "/privado" + token
   };
-  // server.inject lets us similate an http request
+  // server.inject lets us simulate an http request
   server.inject(options, function(response) {
     t.equal(response.statusCode, 401, "User is Denied");
     t.end();
@@ -196,7 +196,7 @@ test("Access restricted content (with VALID Token) - custom parameters", functio
     method: "POST",
     url: "/privado" + token
   };
-  // server.inject lets us similate an http request
+  // server.inject lets us simulate an http request
   server.inject(options, function(response) {
     t.equal(response.statusCode, 200, "VALID Token should succeed!");
     t.end();

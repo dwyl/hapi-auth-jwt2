@@ -9,7 +9,7 @@ test("Access a route that has no auth strategy", function(t) {
     method: "GET",
     url: "/"
   };
-  // server.inject lets us similate an http request
+  // server.inject lets us simulate an http request
   server.inject(options, function(response) {
     t.equal(response.statusCode, 200, "GET / still works without token.");
     t.end();
@@ -24,7 +24,7 @@ test("customVerify simulate error condition", function(t) {
     url: "/required",
     headers: { authorization: "Bearer " + token  }
   };
-  // server.inject lets us similate an http request
+  // server.inject lets us simulate an http request
   server.inject(options, function(response) {
     t.equal(response.statusCode, 500, "customVerify force error");
     t.end();
@@ -39,7 +39,7 @@ test("customVerify with fail condition", function(t) {
     url: "/required",
     headers: { authorization: "Bearer " + token  }
   };
-  // server.inject lets us similate an http request
+  // server.inject lets us simulate an http request
   server.inject(options, function(response) {
     t.equal(response.statusCode, 401, "GET /required with customVerify rejected");
     t.end();
@@ -54,7 +54,7 @@ test("Custom Verification in 'try' mode ", function(t) {
     url: "/try",
     headers: { authorization: "Bearer " + token  }
   };
-  // server.inject lets us similate an http request
+  // server.inject lets us simulate an http request
   server.inject(options, function(response) {
     t.equal(response.result.id, payload.id, 'Decoded JWT returned by handler');
     t.equal(response.statusCode, 200, "GET /try bypasses verification");
@@ -70,7 +70,7 @@ test("Custom Verification in 'optional' mode ", function(t) {
     url: "/optional",
     headers: { authorization: "Bearer " + token  }
   };
-  // server.inject lets us similate an http request
+  // server.inject lets us simulate an http request
   server.inject(options, function(response) {
     t.equal(response.result.id, payload.id, 'Decoded JWT returned by handler');
     t.equal(response.statusCode, 200, "GET /optional bypasses verification");
@@ -86,7 +86,7 @@ test("Custom Verification in 'required' mode ", function(t) {
     url: "/required",
     headers: { authorization: "Bearer " + token  }
   };
-  // server.inject lets us similate an http request
+  // server.inject lets us simulate an http request
   server.inject(options, function(response) {
     // console.log(response.result);
     var credentials = JSON.parse(JSON.stringify(response.result));
