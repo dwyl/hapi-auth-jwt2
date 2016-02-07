@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  - "4.2.6"
+  - "4.2.3"
   - "5.5.0"
 env:
   - JWT_SECRET="EverythingIsAwesome!"
