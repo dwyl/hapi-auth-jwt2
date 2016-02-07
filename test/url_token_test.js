@@ -9,7 +9,7 @@ test("Attempt to access restricted content (without auth token)", function(t) {
     method: "POST",
     url: "/privado"
   };
-  // server.inject lets us similate an http request
+  // server.inject lets us simulate an http request
   server.inject(options, function(response) {
     t.equal(response.statusCode, 401, "No Token supplied > fails (as expected)");
     t.end();
@@ -22,7 +22,7 @@ test("Attempt to access restricted content (with an INVALID URL Token)", functio
     method: "POST",
     url: "/privado" + token
   };
-  // server.inject lets us similate an http request
+  // server.inject lets us simulate an http request
   server.inject(options, function(response) {
     t.equal(response.statusCode, 401, "INVALID Token should fail");
     t.end();
@@ -39,7 +39,7 @@ test("Try using an incorrect secret to sign the JWT", function(t) {
     method: "POST",
     url: "/privado" + token
   };
-  // server.inject lets us similate an http request
+  // server.inject lets us simulate an http request
   server.inject(options, function(response) {
     t.equal(response.statusCode, 401, "URL Token signed with incorrect key fails");
     t.end();
@@ -55,7 +55,7 @@ test("URL Token is well formed but is allowed=false so should be denied", functi
     method: "POST",
     url: "/privado" + token
   };
-  // server.inject lets us similate an http request
+  // server.inject lets us simulate an http request
   server.inject(options, function(response) {
     t.equal(response.statusCode, 401, "User is Denied");
     t.end();
@@ -70,7 +70,7 @@ test("Access restricted content (with VALID Token)", function(t) {
     method: "POST",
     url: "/privado" + token
   };
-  // server.inject lets us similate an http request
+  // server.inject lets us simulate an http request
   server.inject(options, function(response) {
     t.equal(response.statusCode, 200, "VALID Token should succeed!");
     t.end();

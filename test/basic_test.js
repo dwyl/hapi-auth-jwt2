@@ -4,30 +4,17 @@ var secret = 'NeverShareYourSecret';
 
 var server = require('./basic_server'); // test server which in turn loads our module
 
-test("Warm Up the Engine", function(t) {
-  var options = {
-    method: "GET",
-    url: "/"
-  };
-  // server.inject lets us similate an http request
-  server.inject(options, function(response) {
-    t.equal(response.statusCode, 200, "Welcome to Timer Land");
-    t.end();
-  });
-});
-
 test("Attempt to access restricted content (without auth token)", function(t) {
   var options = {
     method: "POST",
     url: "/privado"
   };
-  // server.inject lets us similate an http request
+  // server.inject lets us simulate an http request
   server.inject(options, function(response) {
     t.equal(response.statusCode, 401, "No Token should fail");
     t.end();
   });
 });
-
 
 test("Attempt to access restricted content (with an INVALID Token)", function(t) {
   var options = {
@@ -35,7 +22,7 @@ test("Attempt to access restricted content (with an INVALID Token)", function(t)
     url: "/privado",
     headers: { authorization: "Bearer fails.validation" }
   };
-  // server.inject lets us similate an http request
+  // server.inject lets us simulate an http request
   server.inject(options, function(response) {
     t.equal(response.statusCode, 401, "INVALID Token should fail");
     t.end();
@@ -51,7 +38,7 @@ test("Malformed JWT", function(t) {
     url: "/privado",
     headers: { authorization: "Bearer my.invalid.token" }
   };
-  // server.inject lets us similate an http request
+  // server.inject lets us simulate an http request
   server.inject(options, function(response) {
     // console.log(response.result);
     // console.log(' '); // blank line
@@ -77,7 +64,7 @@ test("Try using a token with missing characters in body", function(t) {
     url: "/privado",
     headers: { authorization: "Bearer " + token  }
   };
-  // server.inject lets us similate an http request
+  // server.inject lets us simulate an http request
   server.inject(options, function(response) {
     t.equal(response.statusCode, 401, "INVALID Token should fail");
     t.end();
@@ -94,7 +81,7 @@ test("Try using an incorrect secret to sign the JWT", function(t) {
     url: "/privado",
     headers: { authorization: "Bearer " + token  }
   };
-  // server.inject lets us similate an http request
+  // server.inject lets us simulate an http request
   server.inject(options, function(response) {
     t.equal(response.statusCode, 401, "Token signed with incorrect key fails");
     t.end();
@@ -111,7 +98,7 @@ test("Try using an expired token", function(t) {
     url: "/privado",
     headers: { authorization: "Bearer " + token  }
   };
-  // server.inject lets us similate an http request
+  // server.inject lets us simulate an http request
   setTimeout(function () {
     server.inject(options, function(response) {
       t.equal(response.statusCode, 401, "Expired token should be invalid");
@@ -130,7 +117,7 @@ test("Token is well formed but is allowed=false so should be denied", function(t
     url: "/privado",
     headers: { authorization: "Bearer " + token }
   };
-  // server.inject lets us similate an http request
+  // server.inject lets us simulate an http request
   server.inject(options, function(response) {
     t.equal(response.statusCode, 401, "Denied");
     t.end();
@@ -145,7 +132,7 @@ test("Access restricted content (with VALID Token)", function(t) {
     url: "/privado",
     headers: { authorization: "Bearer " + token }
   };
-  // server.inject lets us similate an http request
+  // server.inject lets us simulate an http request
   server.inject(options, function(response) {
     // console.log(" - - - - RESPONSE: ")
     // console.log(response.result);
@@ -162,7 +149,7 @@ test("Access restricted content (with Well-formed but invalid Token)", function(
     url: "/privado",
     headers: { authorization: "Bearer " + token }
   };
-  // server.inject lets us similate an http request
+  // server.inject lets us simulate an http request
   server.inject(options, function(response) {
     // console.log(" - - - - RESPONSE: ")
     // console.log(response.result);
@@ -178,7 +165,7 @@ test("Request with undefined auth header should 401", function(t) {
     url: "/privado",
     headers: { authorization: "Bearer " }
   };
-  // server.inject lets us similate an http request
+  // server.inject lets us simulate an http request
   server.inject(options, function(response) {
     // console.log(" - - - - RESPONSE: ")
     // console.log(response.result);
@@ -193,7 +180,7 @@ test("Auth mode 'required' should require authentication header", function(t) {
     method: "POST",
     url: "/required"
   };
-  // server.inject lets us similate an http request
+  // server.inject lets us simulate an http request
   server.inject(options, function(response) {
     t.equal(response.statusCode, 401, "No token header should fail in auth 'required' mode");
     t.end();
@@ -208,7 +195,7 @@ test("Auth mode 'required' should fail with invalid token", function(t) {
     url: "/required",
     headers: { authorization: "Bearer " + token }
   };
-  // server.inject lets us similate an http request
+  // server.inject lets us simulate an http request
   server.inject(options, function(response) {
     // console.log(" - - - - RESPONSE: ")
     // console.log(response.result);
@@ -225,7 +212,7 @@ test("Auth mode 'required' should should pass with valid token", function(t) {
     url: "/required",
     headers: { authorization: "Bearer " + token }
   };
-  // server.inject lets us similate an http request
+  // server.inject lets us simulate an http request
   server.inject(options, function(response) {
     // console.log(" - - - - RESPONSE: ")
     // console.log(response.result);
@@ -255,7 +242,7 @@ test("Auth mode 'optional' should fail with invalid token", function(t) {
     url: "/optional",
     headers: { authorization: "Bearer " + token }
   };
-  // server.inject lets us similate an http request
+  // server.inject lets us simulate an http request
   server.inject(options, function(response) {
     // console.log(" - - - - RESPONSE: ")
     // console.log(response.result);
@@ -273,7 +260,7 @@ test("Auth mode 'optional' should pass with valid token", function(t) {
     url: "/optional",
     headers: { authorization: "Bearer " + token }
   };
-  // server.inject lets us similate an http request
+  // server.inject lets us simulate an http request
   server.inject(options, function(response) {
     // console.log(" - - - - RESPONSE: ")
     // console.log(response.result);
@@ -303,7 +290,7 @@ test("Auth mode 'try' should pass with invalid token", function(t) {
     url: "/try",
     headers: { authorization: "Bearer " + token }
   };
-  // server.inject lets us similate an http request
+  // server.inject lets us simulate an http request
   server.inject(options, function(response) {
     // console.log(" - - - - RESPONSE: ")
     // console.log(response.result);
@@ -320,7 +307,7 @@ test("Auth mode 'try' should pass with valid token", function(t) {
     url: "/try",
     headers: { authorization: "Bearer " + token }
   };
-  // server.inject lets us similate an http request
+  // server.inject lets us simulate an http request
   server.inject(options, function(response) {
     // console.log(" - - - - RESPONSE: ")
     // console.log(response);
@@ -337,7 +324,7 @@ test("Scheme should set token in request.auth.token", function(t) {
     url: "/token",
     headers: { authorization: "Bearer " + token }
   };
-  // server.inject lets us similate an http request
+  // server.inject lets us simulate an http request
   server.inject(options, function(response) {
     // console.log(" - - - - RESPONSE: ")
     // console.log(response.result);
