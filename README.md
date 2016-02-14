@@ -302,7 +302,7 @@ reply({text: 'You have been authenticated!'})
 ```
 
 For a *detailed* example please see:
-https://github.com/dwyl/hapi-auth-jwt2-cookie-example
+https://github.com/nelsonic/hapi-auth-jwt2-cookie-example
 
 ### Background Reading
 
