@@ -208,6 +208,20 @@ they are all optional.
 
 This feature was requested in: [issues/29](https://github.com/dwyl/hapi-auth-jwt2/issues/29)
 
+### Using Base64 encoded secret keys
+
+Some authentication services (like Auth0) provide secret keys encoded in base64, To find out if your authentication service is one of these services, please try and experiment with the base64 encoded secret options on the validator at http://jwt.io/
+
+If your key is base64 encoded, then for JWT2 to use it you need to convert it to a buffer.  Following is an example of how to do this.
+
+```js
+server.auth.strategy('jwt', 'jwt', true,
+{ key: Buffer('<Your Base64 encoded secret key>', 'base64'), // Never Share your secret key
+  validateFunc: validate,      // validate function defined above
+  verifyOptions: { algorithms: [ 'HS256' ] }  // only allow HS256 algorithm
+});
+```
+
 ### Authentication Modes
 
 This plugin supports [authentication modes](http://hapijs.com/api#route-options) on routes.
