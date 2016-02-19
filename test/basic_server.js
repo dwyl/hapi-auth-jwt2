@@ -41,18 +41,18 @@ server.register(require('../'), function () {
     verifyOptions: { algorithms: [ 'HS256' ] } // only allow HS256 algorithm
   });
 
-  server.auth.strategy('jwt-url', 'jwt', {
+  server.auth.strategy('jwt-nourl', 'jwt', {
     key: secret,
     validateFunc: validate,
     verifyOptions: { algorithms: [ 'HS256' ] }, // only allow HS256 algorithm
-    urlKey: 'urltoken'
+    allowUrlToken: false
   });
 
   server.route([
     { method: 'GET',  path: '/', handler: home, config: { auth: false } },
     { method: 'GET', path: '/token', handler: sendToken, config: { auth: 'jwt' } },
     { method: 'POST', path: '/privado', handler: privado, config: { auth: 'jwt' } },
-    { method: 'POST', path: '/privadourl', handler: privado, config: { auth: 'jwt-url' } },
+    { method: 'POST', path: '/privadonourl', handler: privado, config: { auth: 'jwt-nourl' } },
     { method: 'POST', path: '/required', handler: privado, config: { auth: { mode: 'required', strategy: 'jwt' } } },
     { method: 'POST', path: '/optional', handler: privado, config: { auth: { mode: 'optional', strategy: 'jwt' } } },
     { method: 'POST', path: '/try', handler: privado, config: { auth: { mode: 'try', strategy: 'jwt' } } }

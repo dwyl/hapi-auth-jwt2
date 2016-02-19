@@ -7,7 +7,7 @@ var server = require('./basic_server.js');
 test("Attempt to access restricted content (without auth token)", function(t) {
   var options = {
     method: "POST",
-    url: "/privadourl"
+    url: "/privado"
   };
   // server.inject lets us simulate an http request
   server.inject(options, function(response) {
@@ -17,10 +17,10 @@ test("Attempt to access restricted content (without auth token)", function(t) {
 });
 
 test("Attempt to access restricted content (with an INVALID URL Token)", function(t) {
-  var token = "?urltoken=my.invalid.token";
+  var token = "?token=my.invalid.token";
   var options = {
     method: "POST",
-    url: "/privadourl" + token
+    url: "/privado" + token
   };
   // server.inject lets us simulate an http request
   server.inject(options, function(response) {
@@ -32,12 +32,12 @@ test("Attempt to access restricted content (with an INVALID URL Token)", functio
 test("Try using an incorrect secret to sign the JWT", function(t) {
   // use the token as the 'authorization' header in requests
   var token = JWT.sign({ id: 123, "name": "Charlie" }, 'incorrectSecret');
-  token = "?urltoken=" + token;
+  token = "?token=" + token;
   // console.log(" - - - - - - token  - - - - -")
   // console.log(token);
   var options = {
     method: "POST",
-    url: "/privadourl" + token
+    url: "/privado" + token
   };
   // server.inject lets us simulate an http request
   server.inject(options, function(response) {
@@ -50,10 +50,10 @@ test("URL Token is well formed but is allowed=false so should be denied", functi
   // use the token as the 'authorization' header in requests
   // var token = jwt.sign({ "id": 1 ,"name":"Old Greg" }, 'incorrectSecret');
   var token = JWT.sign({ id: 321, "name": "Old Gregg" }, secret);
-  token = "?urltoken=" + token;
+  token = "?token=" + token;
   var options = {
     method: "POST",
-    url: "/privadourl" + token
+    url: "/privado" + token
   };
   // server.inject lets us simulate an http request
   server.inject(options, function(response) {
@@ -65,10 +65,10 @@ test("URL Token is well formed but is allowed=false so should be denied", functi
 test("Access restricted content (with VALID Token)", function(t) {
   // use the token as the 'authorization' header in requests
   var token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
-  token = "?urltoken=" + token;
+  token = "?token=" + token;
   var options = {
     method: "POST",
-    url: "/privadourl" + token
+    url: "/privado" + token
   };
   // server.inject lets us simulate an http request
   server.inject(options, function(response) {
@@ -77,13 +77,13 @@ test("Access restricted content (with VALID Token)", function(t) {
   });
 });
 
-test("Uring route with no configured urlKey so should be denied (no default urlKey enabled)", function(t) {
+test("Using route with allowUrlToken=false should be denied", function(t) {
   // use the token as the 'authorization' header in requests
   var token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
   token = "?token=" + token;
   var options = {
     method: "POST",
-    url: "/privado" + token
+    url: "/privadonourl" + token
   };
   // server.inject lets us simulate an http request
   server.inject(options, function(response) {
