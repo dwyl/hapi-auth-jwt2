@@ -164,8 +164,8 @@ signature `function(decoded, callback)` where:
 - `responseFunc` - (***optional***) optional function called to decorate the response with authentication headers before the response headers or payload is written where:
     - `request` - the request object.
     - `reply(err, response)`- is called if an error occurred
-- `urlKey` - (***optional***) if you prefer to pass your token via url, simply add a `token` url parameter to your request or use a custom parameter by setting `urlKey`
-- `cookieKey` - (***optional***) if you prefer to pass your token via a cookie, simply set the cookie `token=your.jsonwebtoken.here` or use a custom key by setting `cookieKey`
+- `urlKey` - (***optional*** *default: disabled*) if you prefer to pass your token via url, simply add a `token` url parameter to your request or use a custom parameter by setting `urlKey`
+- `cookieKey` - (***optional*** *default: 'token'*) if you prefer to pass your token via a cookie, simply set the cookie `token=your.jsonwebtoken.here` or use a custom key by setting `cookieKey`
 - `tokenType` - (**optinal**) allow custom token type, e.g. Authorization: \<tokenType> 12345678, default is none.
 
 ### Understanding the Request Flow
