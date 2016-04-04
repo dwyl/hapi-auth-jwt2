@@ -166,8 +166,8 @@ signature `function(decoded, callback)` where:
     - `reply(err, response)`- is called if an error occurred
 - `urlKey` - (***optional***) if you prefer to pass your token via url, simply add a `token` url parameter to your request or use a custom parameter by setting `urlKey`
 - `cookieKey` - (***optional***) if you prefer to pass your token via a cookie, simply set the cookie `token=your.jsonwebtoken.here` or use a custom key by setting `cookieKey`
-- `tokenType` - (**optional**) allow custom token type, e.g. Authorization: \<tokenType> 12345678, default is none.
-- `completeToken` - (**optional**) set to `true` to receive the complete token (`decoded.header`, `decoded.payload` and `decoded.signature`) as `decoded` argument to key lookup and verifyFunc callbacks (but not validateFunc)
+- `tokenType` - (***optional***) allow custom token type, e.g. Authorization: \<tokenType> 12345678, default is none.
+- `complete` - (***optional*** *defaults to* `false`) set to `true` to receive the complete token (`decoded.header`, `decoded.payload` and `decoded.signature`) as `decoded` argument to key lookup and verifyFunc callbacks (but not validateFunc)
 
 ### Understanding the Request Flow
 
@@ -242,7 +242,7 @@ This plugin supports [authentication modes](http://hapijs.com/api#route-options)
 ## URL (URI) Token
 
 Several people requested the ability pass in JSNOWebTokens via request URL:
-https://github.com/dwyl/hapi-auth-jwt2/issues/19
+[dwyl/hapi-auth-jwt2/issues/**19**](https://github.com/dwyl/hapi-auth-jwt2/issues/19)
 
 ### Usage
 
@@ -260,31 +260,44 @@ var token = JWT.sign(obj, secret);
 var url   = "/path?token="+token;
 ```
 
+> What if I want to *disable* the ability to pass JWTs in via the URL?
+(*asked by* @bitcloud in [issue #146](https://github.com/dwyl/hapi-auth-jwt2/pull/146))  
+> simply set your `urlKey` to something *impossible* to guess see:
+[*example*](https://github.com/dwyl/hapi-auth-jwt2/pull/146#issuecomment-205481751)
+
 ## Generating Your Secret Key
 
-@skota asked "_How to generate secret key_?" in: https://github.com/dwyl/hapi-auth-jwt2/issues/48
+@skota asked "***How to generate secret key***?" in: [dwyl/hapi-auth-jwt2/issues/**48**](https://github.com/dwyl/hapi-auth-jwt2/issues/48)
 
-There are _several_ options for generating secret keys.
-The _easist_ way is to simply copy paste a _**strong random string**_ of alpha-numeric characters from https://www.grc.com/passwords.htm
-(_if you want a longer key simply refresh the page and copy-paste multiple random strings_)
+There are _several_ options for generating secret keys.  
+The _easist_ way is to run node's crypto hash in your terminal:
+```js
+node -e "console.log(require('crypto').randomBytes(256).toString('base64'));
+```
+and copy the resulting base64 key and use it as your JWT secret.  
+If you are *curious* how strong that key is watch: https://youtu.be/koJQQWHI-ZA
 
-## Want to access the JWT token after validation?
+
+## Want to access the JWT token *after* validation?
 
 [@mcortesi](https://github.com/mcortesi) requested the ability to
-[access the JWT token](https://github.com/dwyl/hapi-auth-jwt2/issues/55) used for authentication.
+access the (*raw*) JWT token used for authentication.
+[dwyl/hapi-auth-jwt2/issues/**123**](https://github.com/dwyl/hapi-auth-jwt2/issues/123)
 
-We added support for that. You can access the extracted JWT token in your handler or any other function
+You can access the extracted JWT token in your handler or any other function
 within the request lifecycle with the `request.auth.token` property.
 
-Take in consideration, that this is the *encoded token*, and it's only useful if you want to use to make
+*Note* that this is the ***encoded token***,
+and it's only useful if you want to use to make
 request to other servers using the user's token.  
-For the *decoded* version of the token, access the `request.auth.credentials` object.
+
+The *decoded* version of the token, accessible via `request.auth.credentials`
 
 ## Want to send/store your JWT in a Cookie?
 
 [@benjaminlees](https://github.com/benjaminlees)
-requested the ability to send tokens as cookies:
-https://github.com/dwyl/hapi-auth-jwt2/issues/55  
+requested the ability to send/receive tokens as cookies:
+[dwyl/hapi-auth-jwt2/issues/**55**](https://github.com/dwyl/hapi-auth-jwt2/issues/55)  
 So we added the ability to *optionally* send/store your tokens in cookies
 to simplify building your *web app*.
 
