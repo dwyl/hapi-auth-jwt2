@@ -8,7 +8,7 @@
 [![Build Status](https://travis-ci.org/dwyl/hapi-auth-jwt2.svg "Build Status = Tests Passing")](https://travis-ci.org/dwyl/hapi-auth-jwt2)
 [![codecov.io Code Coverage](https://codecov.io/github/dwyl/hapi-auth-jwt2/coverage.svg?branch=master)](https://codecov.io/github/dwyl/hapi-auth-jwt2?branch=master)
 [![Code Climate](https://codeclimate.com/github/dwyl/hapi-auth-jwt2/badges/gpa.svg "No Nasty Code")](https://codeclimate.com/github/dwyl/hapi-auth-jwt2)
-[![HAPI 13.0.0](http://img.shields.io/badge/hapi-12.1.0-brightgreen.svg "Latest Hapi.js")](http://hapijs.com)
+[![HAPI 13.3.0](http://img.shields.io/badge/hapi-13.3.0-brightgreen.svg "Latest Hapi.js")](http://hapijs.com)
 [![Node.js Version](https://img.shields.io/node/v/hapi-auth-jwt2.svg?style=flat "Node.js 10 & 12 and io.js latest both supported")](http://nodejs.org/download/)
 [![npm](https://img.shields.io/npm/v/hapi-auth-jwt2.svg)](https://www.npmjs.com/package/hapi-auth-jwt2)
 
