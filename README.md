@@ -166,7 +166,8 @@ signature `function(decoded, callback)` where:
     - `reply(err, response)`- is called if an error occurred
 - `urlKey` - (***optional***) if you prefer to pass your token via url, simply add a `token` url parameter to your request or use a custom parameter by setting `urlKey`
 - `cookieKey` - (***optional***) if you prefer to pass your token via a cookie, simply set the cookie `token=your.jsonwebtoken.here` or use a custom key by setting `cookieKey`
-- `tokenType` - (**optinal**) allow custom token type, e.g. Authorization: \<tokenType> 12345678, default is none.
+- `tokenType` - (**optional**) allow custom token type, e.g. Authorization: \<tokenType> 12345678, default is none.
+- `completeToken` - (**optional**) set to `true` to receive the complete token (`decoded.header`, `decoded.payload` and `decoded.signature`) as `decoded` argument to key lookup and verifyFunc callbacks (but not validateFunc)
 
 ### Understanding the Request Flow
 
@@ -234,7 +235,7 @@ This plugin supports [authentication modes](http://hapijs.com/api#route-options)
 
 ### Additional notes on key lookup functions
 
-- This option to look up a secret key was added to support "multi-tenant" environments. One use case would be companies that white label API services for their customers and cannot use a shared secret key.
+- This option to look up a secret key was added to support "multi-tenant" environments. One use case would be companies that white label API services for their customers and cannot use a shared secret key. If the key lookup function needs to use fields from the token header (e.g. [x5t header](http://self-issued.info/docs/draft-jones-json-web-token-01.html#ReservedHeaderParameterName), set option `completeToken` to `true`.
 
 - The reason why you might want to pass back `extraInfo` in the callback is because you likely need to do a database call to get the key which also probably returns useful user data. This could save you another call in `validateFunc`.
 
