@@ -18,7 +18,7 @@ test('Full token payload (header + payload + signature) is available to key look
 		var signatureKey = keyDict[decoded.header.x5t]; // Look dynamically for key based on JWT header field
         return callback(null, signatureKey);
       },
-	  completeToken: true,
+	  complete: true,
       validateFunc: function (decoded, request, callback) {
         return callback(null, true);
       },
