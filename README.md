@@ -166,8 +166,10 @@ signature `function(decoded, callback)` where:
     - `reply(err, response)`- is called if an error occurred
 - `urlKey` - (***optional***) if you prefer to pass your token via url, simply add a `token` url parameter to your request or use a custom parameter by setting `urlKey`
 - `cookieKey` - (***optional***) if you prefer to pass your token via a cookie, simply set the cookie `token=your.jsonwebtoken.here` or use a custom key by setting `cookieKey`
+- `headerKey` - (***optional***  *defaults to authorization*) if you want to set a custom key for your header token use the `headerKey` option.
 - `tokenType` - (***optional***) allow custom token type, e.g. Authorization: \<tokenType> 12345678, default is none.
 - `complete` - (***optional*** *defaults to* `false`) set to `true` to receive the complete token (`decoded.header`, `decoded.payload` and `decoded.signature`) as `decoded` argument to key lookup and verifyFunc callbacks (but not validateFunc)
+
 
 ### Understanding the Request Flow
 
