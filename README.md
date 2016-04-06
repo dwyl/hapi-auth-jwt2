@@ -156,19 +156,23 @@ signature `function(decoded, callback)` where:
         - `err` - an internal error.
         - `valid` - `true` if the JWT was valid, otherwise `false`.
         - `credentials` - (***optional***) alternative credentials to be set instead of `decoded`.
-- `verifyOptions` - (***optional***) settings to define how tokens are verified by jsonwebtoken library
+
+### *Optional* Parameters
+
+- `verifyOptions` - (***optional*** *defaults to none*) settings to define how tokens are verified by the
+[jsonwebtoken](https://github.com/auth0/node-jsonwebtoken#jwtverifytoken-secretorpublickey-options-callback) library
     - `ignoreExpiration` - ignore expired tokens
     - `audience` - do not enforce token [*audience*](http://self-issued.info/docs/draft-ietf-oauth-json-web-token.html#audDef)
     - `issuer` - do not require the issuer to be valid
     - `algorithms` - list of allowed algorithms
-- `responseFunc` - (***optional***) optional function called to decorate the response with authentication headers before the response headers or payload is written where:
+- `responseFunc` - (***optional***) function called to decorate the response with authentication headers before the response headers or payload is written where:
     - `request` - the request object.
     - `reply(err, response)`- is called if an error occurred
-- `urlKey` - (***optional***) if you prefer to pass your token via url, simply add a `token` url parameter to your request or use a custom parameter by setting `urlKey`
-- `cookieKey` - (***optional***) if you prefer to pass your token via a cookie, simply set the cookie `token=your.jsonwebtoken.here` or use a custom key by setting `cookieKey`
-- `headerKey` - (***optional***  *defaults to authorization*) if you want to set a custom key for your header token use the `headerKey` option.
-- `tokenType` - (***optional***) allow custom token type, e.g. Authorization: \<tokenType> 12345678, default is none.
-- `complete` - (***optional*** *defaults to* `false`) set to `true` to receive the complete token (`decoded.header`, `decoded.payload` and `decoded.signature`) as `decoded` argument to key lookup and verifyFunc callbacks (but not validateFunc)
+- `urlKey` - (***optional***  *defaults to* `'token'`) - if you prefer to pass your token via url, simply add a `token` url parameter to your request or use a custom parameter by setting `urlKey`
+- `cookieKey` - (***optional*** *defaults to* `'token'`) if you prefer to set your own cookie key or your project has a cookie called `'token'` for another purpose, you can set a custom key for your cookie by setting `options.cookieKey='yourkeyhere'`.
+- `headerKey` - (***optional***  *defaults to* `'authorization'`) - if you want to set a custom key for your header token use the `headerKey` option.
+- `tokenType` - (***optional*** *defaults to noe*) allow custom token type, e.g. `Authorization: <tokenType> 12345678`.
+- `complete` - (***optional*** *defaults to* `false`) - set to `true` to receive the complete token (`decoded.header`, `decoded.payload` and `decoded.signature`) as `decoded` argument to key lookup and `verifyFunc` callbacks (*not `validateFunc`*)
 
 
 ### Understanding the Request Flow
@@ -274,7 +278,7 @@ var url   = "/path?token="+token;
 There are _several_ options for generating secret keys.  
 The _easist_ way is to run node's crypto hash in your terminal:
 ```js
-node -e "console.log(require('crypto').randomBytes(256).toString('base64'));
+node -e "console.log(require('crypto').randomBytes(256).toString('base64'))";
 ```
 and copy the resulting base64 key and use it as your JWT secret.  
 If you are *curious* how strong that key is watch: https://youtu.be/koJQQWHI-ZA
