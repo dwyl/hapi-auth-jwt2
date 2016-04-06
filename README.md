@@ -105,15 +105,29 @@ server.start(function () {
 });
 ```
 
-Run the server with: `node example/server.js`
+## *Quick Demo*
 
-Now use **curl** to access the two routes:
+Open your terminal and clone this repo:
+
+```sh
+git clone https://github.com/dwyl/hapi-auth-jwt2.git && cd hapi-auth-jwt2
+```
+
+Run the server with:
+
+```sh
+npm install && node example/server.js
+```
+
+Now (*in a different terminal window*) use `cURL` to access the two routes:
 
 #### No Token Required
 
 ```sh
 curl -v http://localhost:8000/
 ```
+
+
 
 #### Token Required
 
@@ -122,6 +136,9 @@ Try to access the /*restricted* content *without* supplying a Token
 ```sh
 curl -v http://localhost:8000/restricted
 ```
+or visit: http://localhost:8000/restricted in your web browser.
+(*both requests will be blocked and return a `401 Unauthorized` error*)
+
 
 Now access the url using the following format:
 `curl -H "Authorization: <TOKEN>" http://localhost:8000/restricted`
@@ -132,9 +149,13 @@ curl -v -H "Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFt
 http://localhost:8000/restricted
 ```
 
+or visit this url in your browser (*passing the token in url*):
+
+<small> http://localhost:8000/restricted?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6IkFudGhvbnkgVmFsaWQgVXNlciIsImlhdCI6MTQyNTQ3MzUzNX0.KA68l60mjiC8EXaC2odnjFwdIDxE__iDu5RwLdN1F2A </small>
+
 That's it.
 
-Write your own `validateFunc` with what ever checks you want to perform
+Now write your own `validateFunc` with what ever checks you want to perform
 on the **decoded** token before allowing the visitor to proceed.
 
 ## Documentation
@@ -247,17 +268,17 @@ This plugin supports [authentication modes](http://hapijs.com/api#route-options)
 
 ## URL (URI) Token
 
-Several people requested the ability pass in JSNOWebTokens via request URL:
+Several people requested the ability pass in JSNOWebTokens in the requested URL:
 [dwyl/hapi-auth-jwt2/issues/**19**](https://github.com/dwyl/hapi-auth-jwt2/issues/19)
 
 ### Usage
 
-Setup your hapi.js server as described above (_no special setup for using jwt tokens in urls_)
+Setup your hapi.js server as described above (_no special setup for using JWT tokens in urls_)
 
 ```sh
 https://yoursite.co/path?token=your.jsonwebtoken.here
 ```
-You will need to generage valid tokens for this to work.
+You will need to generate/supply a valid tokens for this to work.
 
 ```js
 var JWT   = require('jsonwebtoken');
@@ -278,7 +299,7 @@ var url   = "/path?token="+token;
 There are _several_ options for generating secret keys.  
 The _easist_ way is to run node's crypto hash in your terminal:
 ```js
-node -e "console.log(require('crypto').randomBytes(256).toString('base64'))";
+node -e "console.log(require('crypto').randomBytes(256).toString('base64'));"
 ```
 and copy the resulting base64 key and use it as your JWT secret.  
 If you are *curious* how strong that key is watch: https://youtu.be/koJQQWHI-ZA
@@ -422,6 +443,27 @@ GitHub***: https://github.com/dwyl/hapi-auth-jwt2/issues *or*
 <br />
 <br />
 
+
+### Production-ready Examples?
+
+#### Using PostgreSQL?
+
+See: https://github.com/dwyl/hapi-login-example-postgres
+
+#### Using Redis
+
+Redis is *perfect* for storing session data that needs to be checked
+on every authenticated request.
+
+If you are unfamiliar with Redis or anyone on your team needs a refresher,
+please checkout: https://github.com/dwyl/learn-redis
+
+The ***code*** is at: https://github.com/dwyl/hapi-auth-jwt2-example
+and with tests. please ask additional questions if unclear!
+
+Having a more real-world example was *seconded* by [@manonthemat](https://github.com/manonthemat) see:
+[hapi-auth-jwt2/issues/9](https://github.com/dwyl/hapi-auth-jwt2/issues/9)
+
 ### Real World Example ?
 
 If you would like to see a "***real world example***" of this plugin in use
@@ -444,21 +486,6 @@ https://github.com/dwyl/hapi-auth-jwt2/issues
 (*we are here to help get you started on your journey to **hapi**ness!*)
 
 <br />
-
-### Production-ready Example using Redis?
-
-Redis is *perfect* for storing session data that needs to be checked
-on every authenticated request.
-
-If you are unfamiliar with Redis or anyone on your team needs a refresher,
-please checkout: https://github.com/dwyl/learn-redis
-
-The ***code*** is at: https://github.com/dwyl/hapi-auth-jwt2-example
-and with tests. please ask additional questions if unclear!
-
-Having a more real-world example was *seconded* by [@manonthemat](https://github.com/manonthemat) see:
-[hapi-auth-jwt2/issues/9](https://github.com/dwyl/hapi-auth-jwt2/issues/9)
-
 
 - - -
 

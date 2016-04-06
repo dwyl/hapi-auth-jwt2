@@ -58,7 +58,7 @@ server.register(hapiAuthJWT, function (err) {
     {
       method: 'GET', path: '/restricted', config: { auth: 'jwt' },
       handler: function(request, reply) {
-        reply({text: 'You used a Token!'})
+        reply({message: 'You used a Valid JWT Token to access /restricted endpoint!'})
         .header("Authorization", request.headers.authorization);
       }
     }
