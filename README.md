@@ -268,17 +268,17 @@ This plugin supports [authentication modes](http://hapijs.com/api#route-options)
 
 ## URL (URI) Token
 
-Several people requested the ability pass in JSNOWebTokens via request URL:
+Several people requested the ability pass in JSNOWebTokens in the requested URL:
 [dwyl/hapi-auth-jwt2/issues/**19**](https://github.com/dwyl/hapi-auth-jwt2/issues/19)
 
 ### Usage
 
-Setup your hapi.js server as described above (_no special setup for using jwt tokens in urls_)
+Setup your hapi.js server as described above (_no special setup for using JWT tokens in urls_)
 
 ```sh
 https://yoursite.co/path?token=your.jsonwebtoken.here
 ```
-You will need to generage valid tokens for this to work.
+You will need to generate/supply a valid tokens for this to work.
 
 ```js
 var JWT   = require('jsonwebtoken');
@@ -443,6 +443,27 @@ GitHub***: https://github.com/dwyl/hapi-auth-jwt2/issues *or*
 <br />
 <br />
 
+
+### Production-ready Examples?
+
+#### Using PostgreSQL?
+
+See: https://github.com/dwyl/hapi-login-example-postgres
+
+#### Using Redis
+
+Redis is *perfect* for storing session data that needs to be checked
+on every authenticated request.
+
+If you are unfamiliar with Redis or anyone on your team needs a refresher,
+please checkout: https://github.com/dwyl/learn-redis
+
+The ***code*** is at: https://github.com/dwyl/hapi-auth-jwt2-example
+and with tests. please ask additional questions if unclear!
+
+Having a more real-world example was *seconded* by [@manonthemat](https://github.com/manonthemat) see:
+[hapi-auth-jwt2/issues/9](https://github.com/dwyl/hapi-auth-jwt2/issues/9)
+
 ### Real World Example ?
 
 If you would like to see a "***real world example***" of this plugin in use
@@ -465,21 +486,6 @@ https://github.com/dwyl/hapi-auth-jwt2/issues
 (*we are here to help get you started on your journey to **hapi**ness!*)
 
 <br />
-
-### Production-ready Example using Redis?
-
-Redis is *perfect* for storing session data that needs to be checked
-on every authenticated request.
-
-If you are unfamiliar with Redis or anyone on your team needs a refresher,
-please checkout: https://github.com/dwyl/learn-redis
-
-The ***code*** is at: https://github.com/dwyl/hapi-auth-jwt2-example
-and with tests. please ask additional questions if unclear!
-
-Having a more real-world example was *seconded* by [@manonthemat](https://github.com/manonthemat) see:
-[hapi-auth-jwt2/issues/9](https://github.com/dwyl/hapi-auth-jwt2/issues/9)
-
 
 - - -
 
