@@ -147,3 +147,33 @@ test("Valid Google Analytics cookie should be ignored (BAD Header Token)", funct
     t.end();
   });
 });
+
+test("Attempt to access restricted content with cookieKey=false", function(t) {
+  var token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
+  var options = {
+    method: "POST",
+    url: "/privadonocookie",
+    headers: { cookie: "token=" + token }
+  };
+  // server.inject lets us simulate an http request
+  server.inject(options, function(response) {
+    t.equal(response.statusCode, 401, "Disabled cookie auth shouldn't accept valid token!");
+    t.end();
+  });
+});
+
+
+test("Attempt to access restricted content with cookieKey=''", function(t) {
+  var token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
+  var options = {
+    method: "POST",
+    url: "/privadonocookie2",
+    headers: { cookie: "=" + token }
+  };
+  // server.inject lets us simulate an http request
+  server.inject(options, function(response) {
+    t.equal(response.statusCode, 400, "Disabled cookie auth shouldn't accept valid token!");
+    t.end();
+  });
+});
+
