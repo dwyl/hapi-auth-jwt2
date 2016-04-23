@@ -8,7 +8,7 @@
 [![Build Status](https://travis-ci.org/dwyl/hapi-auth-jwt2.svg "Build Status = Tests Passing")](https://travis-ci.org/dwyl/hapi-auth-jwt2)
 [![codecov.io Code Coverage](https://codecov.io/github/dwyl/hapi-auth-jwt2/coverage.svg?branch=master)](https://codecov.io/github/dwyl/hapi-auth-jwt2?branch=master)
 [![Code Climate](https://codeclimate.com/github/dwyl/hapi-auth-jwt2/badges/gpa.svg "No Nasty Code")](https://codeclimate.com/github/dwyl/hapi-auth-jwt2)
-[![HAPI 13.0.0](http://img.shields.io/badge/hapi-12.1.0-brightgreen.svg "Latest Hapi.js")](http://hapijs.com)
+[![HAPI 13.3.0](http://img.shields.io/badge/hapi-13.3.0-brightgreen.svg "Latest Hapi.js")](http://hapijs.com)
 [![Node.js Version](https://img.shields.io/node/v/hapi-auth-jwt2.svg?style=flat "Node.js 10 & 12 and io.js latest both supported")](http://nodejs.org/download/)
 [![npm](https://img.shields.io/npm/v/hapi-auth-jwt2.svg)](https://www.npmjs.com/package/hapi-auth-jwt2)
 
@@ -105,15 +105,29 @@ server.start(function () {
 });
 ```
 
-Run the server with: `node example/server.js`
+## *Quick Demo*
 
-Now use **curl** to access the two routes:
+Open your terminal and clone this repo:
+
+```sh
+git clone https://github.com/dwyl/hapi-auth-jwt2.git && cd hapi-auth-jwt2
+```
+
+Run the server with:
+
+```sh
+npm install && node example/server.js
+```
+
+Now (*in a different terminal window*) use `cURL` to access the two routes:
 
 #### No Token Required
 
 ```sh
 curl -v http://localhost:8000/
 ```
+
+
 
 #### Token Required
 
@@ -122,6 +136,9 @@ Try to access the /*restricted* content *without* supplying a Token
 ```sh
 curl -v http://localhost:8000/restricted
 ```
+or visit: http://localhost:8000/restricted in your web browser.
+(*both requests will be blocked and return a `401 Unauthorized` error*)
+
 
 Now access the url using the following format:
 `curl -H "Authorization: <TOKEN>" http://localhost:8000/restricted`
@@ -132,9 +149,13 @@ curl -v -H "Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFt
 http://localhost:8000/restricted
 ```
 
+or visit this url in your browser (*passing the token in url*):
+
+<small> http://localhost:8000/restricted?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6IkFudGhvbnkgVmFsaWQgVXNlciIsImlhdCI6MTQyNTQ3MzUzNX0.KA68l60mjiC8EXaC2odnjFwdIDxE__iDu5RwLdN1F2A </small>
+
 That's it.
 
-Write your own `validateFunc` with what ever checks you want to perform
+Now write your own `validateFunc` with what ever checks you want to perform
 on the **decoded** token before allowing the visitor to proceed.
 
 ## Documentation
@@ -156,17 +177,24 @@ signature `function(decoded, callback)` where:
         - `err` - an internal error.
         - `valid` - `true` if the JWT was valid, otherwise `false`.
         - `credentials` - (***optional***) alternative credentials to be set instead of `decoded`.
-- `verifyOptions` - (***optional***) settings to define how tokens are verified by jsonwebtoken library
+
+### *Optional* Parameters
+
+- `verifyOptions` - (***optional*** *defaults to none*) settings to define how tokens are verified by the
+[jsonwebtoken](https://github.com/auth0/node-jsonwebtoken#jwtverifytoken-secretorpublickey-options-callback) library
     - `ignoreExpiration` - ignore expired tokens
     - `audience` - do not enforce token [*audience*](http://self-issued.info/docs/draft-ietf-oauth-json-web-token.html#audDef)
     - `issuer` - do not require the issuer to be valid
     - `algorithms` - list of allowed algorithms
-- `responseFunc` - (***optional***) optional function called to decorate the response with authentication headers before the response headers or payload is written where:
+- `responseFunc` - (***optional***) function called to decorate the response with authentication headers before the response headers or payload is written where:
     - `request` - the request object.
     - `reply(err, response)`- is called if an error occurred
-- `urlKey` - (***optional*** *default: 'token'*) if you prefer to pass your token via url, simply add a `token` url parameter to your request or use a custom parameter by setting `urlKey`. To disable the url parameter set urlKey to `false` or ''.
-- `cookieKey` - (***optional*** *default: 'token'*) if you prefer to pass your token via a cookie, simply set the cookie `token=your.jsonwebtoken.here` or use a custom key by setting `cookieKey`. To disable cookies set cookieKey to `false` or ''.
-- `tokenType` - (**optinal** *default: none*) allow custom token type, e.g. Authorization: \<tokenType> 12345678, default is none.
+- `urlKey` - (***optional***  *defaults to* `'token'`) - if you prefer to pass your token via url, simply add a `token` url parameter to your request or use a custom parameter by setting `urlKey`. To disable the url parameter set urlKey to `false` or ''.
+- `cookieKey` - (***optional*** *defaults to* `'token'`) - if you prefer to set your own cookie key or your project has a cookie called `'token'` for another purpose, you can set a custom key for your cookie by setting `options.cookieKey='yourkeyhere'`. To disable cookies set cookieKey to `false` or ''.
+- `headerKey` - (***optional***  *defaults to* `'authorization'`) - if you want to set a custom key for your header token use the `headerKey` option. To disable header token set headerKey to `false` or ''.
+- `tokenType` - (***optional*** *defaults to none*) - allow custom token type, e.g. `Authorization: <tokenType> 12345678`.
+- `complete` - (***optional*** *defaults to* `false`) - set to `true` to receive the complete token (`decoded.header`, `decoded.payload` and `decoded.signature`) as `decoded` argument to key lookup and `verifyFunc` callbacks (*not `validateFunc`*)
+
 
 ### Understanding the Request Flow
 
@@ -234,23 +262,23 @@ This plugin supports [authentication modes](http://hapijs.com/api#route-options)
 
 ### Additional notes on key lookup functions
 
-- This option to look up a secret key was added to support "multi-tenant" environments. One use case would be companies that white label API services for their customers and cannot use a shared secret key.
+- This option to look up a secret key was added to support "multi-tenant" environments. One use case would be companies that white label API services for their customers and cannot use a shared secret key. If the key lookup function needs to use fields from the token header (e.g. [x5t header](http://self-issued.info/docs/draft-jones-json-web-token-01.html#ReservedHeaderParameterName), set option `completeToken` to `true`.
 
 - The reason why you might want to pass back `extraInfo` in the callback is because you likely need to do a database call to get the key which also probably returns useful user data. This could save you another call in `validateFunc`.
 
 ## URL (URI) Token
 
-Several people requested the ability pass in JSNOWebTokens via request URL:
-https://github.com/dwyl/hapi-auth-jwt2/issues/19
+Several people requested the ability pass in JSNOWebTokens in the requested URL:
+[dwyl/hapi-auth-jwt2/issues/**19**](https://github.com/dwyl/hapi-auth-jwt2/issues/19)
 
 ### Usage
 
-Setup your hapi.js server as described above (_no special setup for using jwt tokens in urls_)
+Setup your hapi.js server as described above (_no special setup for using JWT tokens in urls_)
 
 ```sh
 https://yoursite.co/path?token=your.jsonwebtoken.here
 ```
-You will need to generage valid tokens for this to work.
+You will need to generate/supply a valid tokens for this to work.
 
 ```js
 var JWT   = require('jsonwebtoken');
@@ -259,31 +287,44 @@ var token = JWT.sign(obj, secret);
 var url   = "/path?token="+token;
 ```
 
+> What if I want to *disable* the ability to pass JWTs in via the URL?
+(*asked by* @bitcloud in [issue #146](https://github.com/dwyl/hapi-auth-jwt2/pull/146))
+> simply set your `urlKey` to something *impossible* to guess see:
+[*example*](https://github.com/dwyl/hapi-auth-jwt2/pull/146#issuecomment-205481751)
+
 ## Generating Your Secret Key
 
-@skota asked "_How to generate secret key_?" in: https://github.com/dwyl/hapi-auth-jwt2/issues/48
+@skota asked "***How to generate secret key***?" in: [dwyl/hapi-auth-jwt2/issues/**48**](https://github.com/dwyl/hapi-auth-jwt2/issues/48)
 
 There are _several_ options for generating secret keys.
-The _easist_ way is to simply copy paste a _**strong random string**_ of alpha-numeric characters from https://www.grc.com/passwords.htm
-(_if you want a longer key simply refresh the page and copy-paste multiple random strings_)
+The _easist_ way is to run node's crypto hash in your terminal:
+```js
+node -e "console.log(require('crypto').randomBytes(256).toString('base64'));"
+```
+and copy the resulting base64 key and use it as your JWT secret.
+If you are *curious* how strong that key is watch: https://youtu.be/koJQQWHI-ZA
 
-## Want to access the JWT token after validation?
+
+## Want to access the JWT token *after* validation?
 
 [@mcortesi](https://github.com/mcortesi) requested the ability to
-[access the JWT token](https://github.com/dwyl/hapi-auth-jwt2/issues/55) used for authentication.
+access the (*raw*) JWT token used for authentication.
+[dwyl/hapi-auth-jwt2/issues/**123**](https://github.com/dwyl/hapi-auth-jwt2/issues/123)
 
-We added support for that. You can access the extracted JWT token in your handler or any other function
+You can access the extracted JWT token in your handler or any other function
 within the request lifecycle with the `request.auth.token` property.
 
-Take in consideration, that this is the *encoded token*, and it's only useful if you want to use to make
+*Note* that this is the ***encoded token***,
+and it's only useful if you want to use to make
 request to other servers using the user's token.
-For the *decoded* version of the token, access the `request.auth.credentials` object.
+
+The *decoded* version of the token, accessible via `request.auth.credentials`
 
 ## Want to send/store your JWT in a Cookie?
 
 [@benjaminlees](https://github.com/benjaminlees)
-requested the ability to send tokens as cookies:
-https://github.com/dwyl/hapi-auth-jwt2/issues/55
+requested the ability to send/receive tokens as cookies:
+[dwyl/hapi-auth-jwt2/issues/**55**](https://github.com/dwyl/hapi-auth-jwt2/issues/55)
 So we added the ability to *optionally* send/store your tokens in cookies
 to simplify building your *web app*.
 
@@ -402,6 +443,27 @@ GitHub***: https://github.com/dwyl/hapi-auth-jwt2/issues *or*
 <br />
 <br />
 
+
+### Production-ready Examples?
+
+#### Using PostgreSQL?
+
+See: https://github.com/dwyl/hapi-login-example-postgres
+
+#### Using Redis
+
+Redis is *perfect* for storing session data that needs to be checked
+on every authenticated request.
+
+If you are unfamiliar with Redis or anyone on your team needs a refresher,
+please checkout: https://github.com/dwyl/learn-redis
+
+The ***code*** is at: https://github.com/dwyl/hapi-auth-jwt2-example
+and with tests. please ask additional questions if unclear!
+
+Having a more real-world example was *seconded* by [@manonthemat](https://github.com/manonthemat) see:
+[hapi-auth-jwt2/issues/9](https://github.com/dwyl/hapi-auth-jwt2/issues/9)
+
 ### Real World Example ?
 
 If you would like to see a "***real world example***" of this plugin in use
@@ -424,21 +486,6 @@ https://github.com/dwyl/hapi-auth-jwt2/issues
 (*we are here to help get you started on your journey to **hapi**ness!*)
 
 <br />
-
-### Production-ready Example using Redis?
-
-Redis is *perfect* for storing session data that needs to be checked
-on every authenticated request.
-
-If you are unfamiliar with Redis or anyone on your team needs a refresher,
-please checkout: https://github.com/dwyl/learn-redis
-
-The ***code*** is at: https://github.com/dwyl/hapi-auth-jwt2-example
-and with tests. please ask additional questions if unclear!
-
-Having a more real-world example was *seconded* by [@manonthemat](https://github.com/manonthemat) see:
-[hapi-auth-jwt2/issues/9](https://github.com/dwyl/hapi-auth-jwt2/issues/9)
-
 
 - - -
 
