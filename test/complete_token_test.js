@@ -5,10 +5,11 @@ var secret = 'NeverShareYourSecret';
 
 var keyDict = { 5678: secret };
 
-test('Full token payload (header + payload + signature) is available to key lookup function using completeToken option', function (t) {
+var server = new Hapi.Server();
+server.connection();
 
-  var server = new Hapi.Server();
-  server.connection();
+
+test('Full token payload (header + payload + signature) is available to key lookup function using completeToken option', function (t) {
 
   server.register(require('../'), function (err) {
     t.ifError(err, 'No error registering hapi-auth-jwt2 plugin');
@@ -35,7 +36,7 @@ test('Full token payload (header + payload + signature) is available to key look
     var options = {
       method: 'POST',
       url: '/',
-      headers: {Authorization: JWT.sign({ id: 1234 }, secret, { headers: { x5t: 5678 } })} // set custom JWT header field "x5t"
+      headers: {Authorization: JWT.sign({ id: 1234 }, secret, { header: { x5t: 5678 } })} // set custom JWT header field "x5t"
     };
 
     server.inject(options, function (response) {
@@ -44,3 +45,8 @@ test('Full token payload (header + payload + signature) is available to key look
     });
   });
 });
+
+
+test.onFinish(function () {
+  server.stop(function(){});
+})
