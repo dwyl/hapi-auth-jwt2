@@ -76,3 +76,33 @@ test("Access restricted content (with VALID Token)", function(t) {
     t.end();
   });
 });
+
+test("Using route with urlKey=false should be denied", function(t) {
+  // use the token as the 'authorization' header in requests
+  var token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
+  token = "?token=" + token;
+  var options = {
+    method: "POST",
+    url: "/privadonourl" + token
+  };
+  // server.inject lets us simulate an http request
+  server.inject(options, function(response) {
+    t.equal(response.statusCode, 401, "No urlKey configured so URL-Tokens should be denied");
+    t.end();
+  });
+});
+
+test("Using route with urlKey='' should be denied", function(t) {
+  // use the token as the 'authorization' header in requests
+  var token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
+  token = "?=" + token;
+  var options = {
+    method: "POST",
+    url: "/privadonourl2" + token
+  };
+  // server.inject lets us simulate an http request
+  server.inject(options, function(response) {
+    t.equal(response.statusCode, 401, "No urlKey configured so URL-Tokens should be denied");
+    t.end();
+  });
+});

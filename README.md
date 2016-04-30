@@ -21,10 +21,10 @@ This node.js module (Hapi plugin) lets you use JSON Web Tokens (JWTs)
 for authentication in your [Hapi.js](http://hapijs.com/)
 web application.
 
-If you are totally new to JWTs, we wrote an introductory post explaining  
+If you are totally new to JWTs, we wrote an introductory post explaining
 the concepts & benefits: https://github.com/dwyl/learn-json-web-tokens
 
-If you (or anyone on your team) are unfamiliar with **Hapi.js** we have a  
+If you (or anyone on your team) are unfamiliar with **Hapi.js** we have a
 quick guide for that too: https://github.com/dwyl/learn-hapi
 
 ## Usage
@@ -172,7 +172,7 @@ signature `function(decoded, callback)` where:
 - `validateFunc` - (***required***) the function which is run once the Token has been decoded with
  signature `function(decoded, request, callback)` where:
     - `decoded` - (***required***) is the ***decoded*** and ***verified*** JWT received from the client in **request.headers.authorization**
-    - `request` - (***required***) is the original ***request*** received from the client  
+    - `request` - (***required***) is the original ***request*** received from the client
     - `callback` - (***required***) a callback function with the signature `function(err, isValid, credentials)` where:
         - `err` - an internal error.
         - `valid` - `true` if the JWT was valid, otherwise `false`.
@@ -189,10 +189,10 @@ signature `function(decoded, callback)` where:
 - `responseFunc` - (***optional***) function called to decorate the response with authentication headers before the response headers or payload is written where:
     - `request` - the request object.
     - `reply(err, response)`- is called if an error occurred
-- `urlKey` - (***optional***  *defaults to* `'token'`) - if you prefer to pass your token via url, simply add a `token` url parameter to your request or use a custom parameter by setting `urlKey`
-- `cookieKey` - (***optional*** *defaults to* `'token'`) if you prefer to set your own cookie key or your project has a cookie called `'token'` for another purpose, you can set a custom key for your cookie by setting `options.cookieKey='yourkeyhere'`.
-- `headerKey` - (***optional***  *defaults to* `'authorization'`) - if you want to set a custom key for your header token use the `headerKey` option.
-- `tokenType` - (***optional*** *defaults to noe*) allow custom token type, e.g. `Authorization: <tokenType> 12345678`.
+- `urlKey` - (***optional***  *defaults to* `'token'`) - if you prefer to pass your token via url, simply add a `token` url parameter to your request or use a custom parameter by setting `urlKey`. To disable the url parameter set urlKey to `false` or ''.
+- `cookieKey` - (***optional*** *defaults to* `'token'`) - if you prefer to set your own cookie key or your project has a cookie called `'token'` for another purpose, you can set a custom key for your cookie by setting `options.cookieKey='yourkeyhere'`. To disable cookies set cookieKey to `false` or ''.
+- `headerKey` - (***optional***  *defaults to* `'authorization'`) - if you want to set a custom key for your header token use the `headerKey` option. To disable header token set headerKey to `false` or ''.
+- `tokenType` - (***optional*** *defaults to none*) - allow custom token type, e.g. `Authorization: <tokenType> 12345678`.
 - `complete` - (***optional*** *defaults to* `false`) - set to `true` to receive the complete token (`decoded.header`, `decoded.payload` and `decoded.signature`) as `decoded` argument to key lookup and `verifyFunc` callbacks (*not `validateFunc`*)
 
 
@@ -288,7 +288,7 @@ var url   = "/path?token="+token;
 ```
 
 > What if I want to *disable* the ability to pass JWTs in via the URL?
-(*asked by* @bitcloud in [issue #146](https://github.com/dwyl/hapi-auth-jwt2/pull/146))  
+(*asked by* @bitcloud in [issue #146](https://github.com/dwyl/hapi-auth-jwt2/pull/146))
 > simply set your `urlKey` to something *impossible* to guess see:
 [*example*](https://github.com/dwyl/hapi-auth-jwt2/pull/146#issuecomment-205481751)
 
@@ -296,12 +296,12 @@ var url   = "/path?token="+token;
 
 @skota asked "***How to generate secret key***?" in: [dwyl/hapi-auth-jwt2/issues/**48**](https://github.com/dwyl/hapi-auth-jwt2/issues/48)
 
-There are _several_ options for generating secret keys.  
+There are _several_ options for generating secret keys.
 The _easist_ way is to run node's crypto hash in your terminal:
 ```js
 node -e "console.log(require('crypto').randomBytes(256).toString('base64'));"
 ```
-and copy the resulting base64 key and use it as your JWT secret.  
+and copy the resulting base64 key and use it as your JWT secret.
 If you are *curious* how strong that key is watch: https://youtu.be/koJQQWHI-ZA
 
 
@@ -316,7 +316,7 @@ within the request lifecycle with the `request.auth.token` property.
 
 *Note* that this is the ***encoded token***,
 and it's only useful if you want to use to make
-request to other servers using the user's token.  
+request to other servers using the user's token.
 
 The *decoded* version of the token, accessible via `request.auth.credentials`
 
@@ -324,7 +324,7 @@ The *decoded* version of the token, accessible via `request.auth.credentials`
 
 [@benjaminlees](https://github.com/benjaminlees)
 requested the ability to send/receive tokens as cookies:
-[dwyl/hapi-auth-jwt2/issues/**55**](https://github.com/dwyl/hapi-auth-jwt2/issues/55)  
+[dwyl/hapi-auth-jwt2/issues/**55**](https://github.com/dwyl/hapi-auth-jwt2/issues/55)
 So we added the ability to *optionally* send/store your tokens in cookies
 to simplify building your *web app*.
 
@@ -371,29 +371,29 @@ http://tools.ietf.org/html/rfc6265
 
 ## Frequently Asked Questions (FAQ)
 
-1. Do I need to include **jsonwebtoken** in my project? asked in  [hapi-auth-jwt2/issues/32](https://github.com/dwyl/hapi-auth-jwt2/issues/32)  
+1. Do I need to include **jsonwebtoken** in my project? asked in  [hapi-auth-jwt2/issues/32](https://github.com/dwyl/hapi-auth-jwt2/issues/32)
 **Q**: Must I include the **jsonwebtoken** package in my project
-[given that **hapi-auth-jwt2** plugin already includes it] ?  
+[given that **hapi-auth-jwt2** plugin already includes it] ?
 **A**: Yes, you need to *manually* install the **jsonwebtoken**
-node module from NPM with `npm install jsonwebtoken --save` if you want to ***sign*** JWTs in your app.  
+node module from NPM with `npm install jsonwebtoken --save` if you want to ***sign*** JWTs in your app.
 Even though **hapi-auth-jwt2** includes it
-as a **dependency** your app does not know where to find it in the **node_modules** tree for your project.  
+as a **dependency** your app does not know where to find it in the **node_modules** tree for your project.
 Unless you include it via ***relative path*** e.g:
-`var JWT = require('./node_modules/hapi-auth-jwt2/node_modules/jsonwebtoken');`  
+`var JWT = require('./node_modules/hapi-auth-jwt2/node_modules/jsonwebtoken');`
 we *recommend* including it in your **package.json** ***explicitly*** as a **dependency** for your project.
 
-2. Can we supply a ***Custom Verification*** function instead of using the **JWT.verify** method?  
+2. Can we supply a ***Custom Verification*** function instead of using the **JWT.verify** method?
 asked by *both* [Marcus Stong](https://github.com/stongo) & [Kevin Stewart](https://github.com/kdstew)
-in [issue #120](https://github.com/dwyl/hapi-auth-jwt2/issues/120) and [issue #130](https://github.com/dwyl/hapi-auth-jwt2/issues/130) respectively.  
-**Q**: Does this module support custom verification function or disabling verification?  
-**A**: Yes, it *does now*! (*see: "Advanced Usage" below*) the inclusion of a `verifyFunc`  
+in [issue #120](https://github.com/dwyl/hapi-auth-jwt2/issues/120) and [issue #130](https://github.com/dwyl/hapi-auth-jwt2/issues/130) respectively.
+**Q**: Does this module support custom verification function or disabling verification?
+**A**: Yes, it *does now*! (*see: "Advanced Usage" below*) the inclusion of a `verifyFunc`
 gives you *complete control* over the verification of the incoming JWT.
 
 
 ## *Advanced/Alternative* Usage => Bring Your Own `verifyFunc`
 
 While *most* people using `hapi-auth-jwt2` will opt for the *simpler* use case
-(*using a* ***Validation Function*** *`validateFunc` - see: Basic Usage example above -  
+(*using a* ***Validation Function*** *`validateFunc` - see: Basic Usage example above -
   which validates the JWT payload after it has been verified...*)
 others may need more control over the `verify` step.
 
@@ -407,19 +407,19 @@ while you are initializing the plugin.
 - `verifyFunc` - (***optional***) the function which is run once the Token has been decoded
 (*instead of a `validateFunc`*) with signature `function(decoded, request, callback)` where:
     - `decoded` - (***required***) is the ***decoded*** and ***verified*** JWT received from the client in **request.headers.authorization**
-    - `request` - (***required***) is the original ***request*** received from the client  
+    - `request` - (***required***) is the original ***request*** received from the client
     - `callback` - (***required***) a callback function with the signature `function(err, isValid, credentials)` where:
         - `err` - an internal error.
         - `valid` - `true` if the JWT was valid, otherwise `false`.
         - `credentials` - (***optional***) alternative credentials to be set instead of `decoded`.
 
 The advantage of this approach is that it allows people to write a
-custom verification function or to bypass the `JWT.verify` *completely*.  
+custom verification function or to bypass the `JWT.verify` *completely*.
 For more detail, see: use-case discussion in https://github.com/dwyl/hapi-auth-jwt2/issues/120
 
 
 > ***Note***: *nobody has requested the ability to use* ***both*** *a*
-`validateFunc` ***and*** `verifyFunc`.  
+`validateFunc` ***and*** `verifyFunc`.
 This should not be *necessary*
 because with a `verifyFunc` you can incorporate your own custom-logic.
 
@@ -436,7 +436,7 @@ See the release notes for more details:
 However in the interest of
  security/performance we *recommend* using the [*latest version*](https://github.com/hapijs/hapi/) of Hapi.
 
-> *If you have a question, or need help getting started* ***please post an issue/question on  
+> *If you have a question, or need help getting started* ***please post an issue/question on
 GitHub***: https://github.com/dwyl/hapi-auth-jwt2/issues *or*
 [![Join the chat at https://gitter.im/dwyl/chat](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/dwyl/chat/?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -482,7 +482,7 @@ if the [session record is ***found*** (valid) and ***not ended***](https://githu
   [api/lib/auth_jwt_sign.js](https://github.com/dwyl/time/blob/0a5ec8711840528a4960c388825fb883fabddd76/api/lib/auth_jwt_sign.js#L18)
 
 If you have ***any questions*** on this please post an issue/question on GitHub:
-https://github.com/dwyl/hapi-auth-jwt2/issues  
+https://github.com/dwyl/hapi-auth-jwt2/issues
 (*we are here to help get you started on your journey to **hapi**ness!*)
 
 <br />
@@ -491,7 +491,7 @@ https://github.com/dwyl/hapi-auth-jwt2/issues
 
 ## Contributing [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dwyl/hapi-auth-jwt2/issues)
 
-If you spot an area for improvement, please raise an issue: https://github.com/dwyl/hapi-auth-jwt2/issues  
+If you spot an area for improvement, please raise an issue: https://github.com/dwyl/hapi-auth-jwt2/issues
 *Someone* in the dwyl team is *always* online so we will usually answer within a few hours.
 
 ### Running the tests requires environment variables
@@ -512,7 +512,7 @@ export REDISCLOUD_URL='redis://rediscloud:OhEJjWvSgna@pub-redis-1046.eu-west-1-2
 ## Motivation
 
 While making [***Time***](https://github.com/dwyl/time) we want to ensure
-our app (and API) is as ***simple*** as *possible* to use.  
+our app (and API) is as ***simple*** as *possible* to use.
 This lead us to using JSON Web Tokens for ***Stateless*** Authentication.
 
 We did a *extensive* [research](https://www.npmjs.com/search?q=hapi+auth+jwt)
@@ -520,7 +520,7 @@ into *existing* modules that *might* solve our problem; there are *many* on NPM:
 ![npm search for hapi+jwt](http://i.imgur.com/xIj3Xpa.png)
 
 but they were invariably ***too complicated***, poorly documented and
-had *useless* (non-real-world) "examples"!  
+had *useless* (non-real-world) "examples"!
 
 Also, none of the *existing* modules exposed the **request** object
 to the **validateFunc** which we thought might be handy.
@@ -532,7 +532,7 @@ So we decided to write our own module addressing all these issues.
 
 ## Why hapi-auth-jwt2 ?
 
-The name we wanted was taken.  
+The name we wanted was taken.
 Think of our module as the "***new, simplified and actively maintained version***"
 
 ## Useful Links
