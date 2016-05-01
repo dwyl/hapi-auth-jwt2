@@ -37,7 +37,7 @@ test('When using a custom header key full token payload (header + payload + sign
     var options = {
       method: 'POST',
       url: '/',
-      headers: {auths: JWT.sign({ id: 1234 }, secret, { headers: { x5t: 5678 } })} // set custom JWT header field "x5t"
+      headers: {auths: JWT.sign({ id: 1234 }, secret, { header: { x5t: 5678 } })} // set custom JWT header field "x5t"
     };
 
     server.inject(options, function (response) {
