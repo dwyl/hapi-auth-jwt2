@@ -256,7 +256,7 @@ This plugin supports [authentication modes](http://hapijs.com/api#route-options)
 
 - `required` - requires Authorization header to be sent with every request
 
-- `optional` - if no Authorization header is provided, request will pass with `request.auth.isAuthenticated` set to `true` and `request.auth.credentials` set to empty object
+- `optional` - if no Authorization header is provided, request will pass with `request.auth.isAuthenticated` set to `false` and `request.auth.credentials` set to null
 
 - `try` - similar to `optional` but invalid Authorization header will pass with `request.auth.isAuthenticated` set to false and failed credentials provided in `request.auth.credentials`
 
