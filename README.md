@@ -288,9 +288,7 @@ var url   = "/path?token="+token;
 ```
 
 > What if I want to *disable* the ability to pass JWTs in via the URL?
-(*asked by* @bitcloud in [issue #146](https://github.com/dwyl/hapi-auth-jwt2/pull/146))
-> simply set your `urlKey` to something *impossible* to guess see:
-[*example*](https://github.com/dwyl/hapi-auth-jwt2/pull/146#issuecomment-205481751)
+> Set your `urlKey` to `false` or ''. (*added by* @bitcloud: [issue #146](https://github.com/dwyl/hapi-auth-jwt2/pull/146))
 
 ## Generating Your Secret Key
 
