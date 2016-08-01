@@ -404,7 +404,7 @@ while you are initializing the plugin.
 
 - `verifyFunc` - (***optional***) the function which is run once the Token has been decoded
 (*instead of a `validateFunc`*) with signature `function(decoded, request, callback)` where:
-    - `decoded` - (***required***) is the ***decoded*** and ***verified*** JWT received from the client in **request.headers.authorization**
+    - `decoded` - (***required***) is the decoded but ***unverified*** JWT received from the client in `request.headers.authorization`.
     - `request` - (***required***) is the original ***request*** received from the client
     - `callback` - (***required***) a callback function with the signature `function(err, isValid, credentials)` where:
         - `err` - an internal error.
