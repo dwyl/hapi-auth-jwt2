@@ -399,12 +399,11 @@ The [*internals*](https://github.com/dwyl/hapi-auth-jwt2/blob/eb9fff9fc384fde07e
 of `hapi-auth-jwt2` use the `jsonwebtoken.verify` method to ***verify*** if the
 JTW was signed using the `JWT_SECRET` (*secret key*).
 
-If you prefer specify your own verification steps instead of having a `validateFunc` simply define a `verifyFunc` ***instead***
-while you are initializing the plugin.
+If you prefer specifying your own verification logic instead of having a `validateFunc`, simply define a `verifyFunc` instead when initializing the plugin.
 
 - `verifyFunc` - (***optional***) the function which is run once the Token has been decoded
 (*instead of a `validateFunc`*) with signature `function(decoded, request, callback)` where:
-    - `decoded` - (***required***) is the ***decoded*** and ***verified*** JWT received from the client in **request.headers.authorization**
+    - `decoded` - (***required***) is the decoded but ***unverified*** JWT received from the client in `request.headers.authorization`.
     - `request` - (***required***) is the original ***request*** received from the client
     - `callback` - (***required***) a callback function with the signature `function(err, isValid, credentials)` where:
         - `err` - an internal error.
