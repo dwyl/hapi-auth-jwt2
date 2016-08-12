@@ -295,7 +295,7 @@ var url   = "/path?token="+token;
 @skota asked "***How to generate secret key***?" in: [dwyl/hapi-auth-jwt2/issues/**48**](https://github.com/dwyl/hapi-auth-jwt2/issues/48)
 
 There are _several_ options for generating secret keys.
-The _easist_ way is to run node's crypto hash in your terminal:
+The _easiest_ way is to run node's crypto hash in your terminal:
 ```js
 node -e "console.log(require('crypto').randomBytes(256).toString('base64'));"
 ```
