@@ -11,7 +11,7 @@
 [![HAPI 14.2.0](http://img.shields.io/badge/hapi-14.2.0-brightgreen.svg "Latest Hapi.js")](http://hapijs.com)
 [![Node.js Version](https://img.shields.io/node/v/hapi-auth-jwt2.svg?style=flat "Node.js 10 & 12 and io.js latest both supported")](http://nodejs.org/download/)
 [![Dependency Status](https://david-dm.org/dwyl/hapi-auth-jwt2.svg "Dependencies Checked & Updated Regularly (Security is Important!)")](https://david-dm.org/dwyl/hapi-auth-jwt2)
-[![devDependency Status](https://david-dm.org/dwyl/hapi-auth-jwt2/dev-status.svg)](https://david-dm.org/dwyl/hapi-auth-jwt2#info=devDependencies)
+[![devDependencies Status](https://david-dm.org/dwyl/hapi-auth-jwt2/dev-status.svg)](https://david-dm.org/dwyl/hapi-auth-jwt2?type=dev)
 [![npm package version](https://img.shields.io/npm/v/hapi-auth-jwt2.svg)](https://www.npmjs.com/package/hapi-auth-jwt2)
 
 This node.js module (Hapi plugin) lets you use JSON Web Tokens (JWTs)
@@ -372,9 +372,11 @@ http://tools.ietf.org/html/rfc6265
 
 ## Frequently Asked Questions (FAQ) [![Join the chat at https://gitter.im/dwyl/chat](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/dwyl/chat/?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-1. Do I need to include **jsonwebtoken** in my project? asked in  [hapi-auth-jwt2/issues/32](https://github.com/dwyl/hapi-auth-jwt2/issues/32)
+
+### Do I need to include **jsonwebtoken** in my project?
+
 **Q**: Must I include the **jsonwebtoken** package in my project
-[given that **hapi-auth-jwt2** plugin already includes it] ?
+[given that **hapi-auth-jwt2** plugin already includes it] ? asked in [hapi-auth-jwt2/issues/32](https://github.com/dwyl/hapi-auth-jwt2/issues/32)  
 **A**: Yes, you need to *manually* install the **jsonwebtoken**
 node module from NPM with `npm install jsonwebtoken --save` if you want to ***sign*** JWTs in your app.
 Even though **hapi-auth-jwt2** includes it
@@ -383,12 +385,23 @@ Unless you include it via ***relative path*** e.g:
 `var JWT = require('./node_modules/hapi-auth-jwt2/node_modules/jsonwebtoken');`
 we *recommend* including it in your **package.json** ***explicitly*** as a **dependency** for your project.
 
-2. Can we supply a ***Custom Verification*** function instead of using the **JWT.verify** method?
+### ***Custom Verification*** ?
+
+Can we supply a ***Custom Verification*** function instead of using the **JWT.verify** method?  
 asked by *both* [Marcus Stong](https://github.com/stongo) & [Kevin Stewart](https://github.com/kdstew)
 in [issue #120](https://github.com/dwyl/hapi-auth-jwt2/issues/120) and [issue #130](https://github.com/dwyl/hapi-auth-jwt2/issues/130) respectively.
 **Q**: Does this module support custom verification function or disabling verification?
 **A**: Yes, it *does now*! (*see: "Advanced Usage" below*) the inclusion of a `verifyFunc`
 gives you *complete control* over the verification of the incoming JWT.
+
+### Can I use `hapi-auth-jwt2` with [`glue`](https://github.com/hapijs/glue)
+
+Several people asked us if this plugin is compatible with
+Hapi's "Server Composer" [`glue`](https://github.com/hapijs/glue)
+
+The answer is ***Yes***! For an example of how to do this,
+see [@avanslaars](https://github.com/avanslaars) code example:
+https://github.com/dwyl/hapi-auth-jwt2/issues/151#issuecomment-218321212
 
 
 ## *Advanced/Alternative* Usage => Bring Your Own `verifyFunc`
@@ -427,11 +440,8 @@ because with a `verifyFunc` you can incorporate your own custom-logic.
 
 ### Compatibility
 
-`hapi-auth-jwt2` is compatible with Hapi.js versions `11.x.x` `10.x.x` `9.x.x` and `8.x.x` as there was no change to how the Hapi plugin system works
-for the past two versions.
-See the release notes for more details:
-+ Hapi Version 10: https://github.com/hapijs/hapi/issues/2764
-+ Hapi Version 9: https://github.com/hapijs/hapi/issues/2682
+`hapi-auth-jwt2` is compatible with Hapi.js versions `14.x.x` `13.x.x` `12.x.x` `11.x.x` `10.x.x` `9.x.x` and `8.x.x`
+as there have been ***no changes*** to how the Hapi plugin system works for a while!
 
 However in the interest of
  security/performance we *recommend* using the [*latest version*](https://github.com/hapijs/hapi/) of Hapi.
