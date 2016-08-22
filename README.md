@@ -448,6 +448,20 @@ But if you have any questions which are not answered there, feel free to [ask!](
 
 <br />
 
+### How to _redirect_ if a token has expired?
+
+@traducer & @goncalvesr2 both requested how to redirect after failed Auth in
+[hapi-auth-jwt2/issues/161](https://github.com/dwyl/hapi-auth-jwt2/issues/161)
+and [hapi-auth-jwt2/issues/148](https://github.com/dwyl/hapi-auth-jwt2/issues/148) respectively
+
+The [`hapi-error`](https://github.com/dwyl/hapi-error) lets
+you _easily_ redirect to any url you define if the Auth check fails
+(i.e. `statusCode 401`)
+see: https://github.com/dwyl/hapi-error#redirecting-to-another-endpoint
+(*code examples there.*)
+
+<br />
+
 ## *Advanced/Alternative* Usage => Bring Your Own `verifyFunc`
 
 While *most* people using `hapi-auth-jwt2` will opt for the *simpler* use case
