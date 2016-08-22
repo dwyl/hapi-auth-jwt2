@@ -23,7 +23,7 @@ var customVerifyFunc = function (decoded, request, callback) {
     return callback(new Error('customVerify fails!'));
   }
   else if (decoded.some_property) {
-    return callback(null, true, decoded);
+    return callback(null, true);
   }
   else {
     return callback(null, false, decoded);
