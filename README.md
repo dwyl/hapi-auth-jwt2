@@ -198,6 +198,14 @@ signature `function(decoded, callback)` where:
 - `tokenType` - (***optional*** *defaults to none*) - allow custom token type, e.g. `Authorization: <tokenType> 12345678`.
 - `complete` - (***optional*** *defaults to* `false`) - set to `true` to receive the complete token (`decoded.header`, `decoded.payload` and `decoded.signature`) as `decoded` argument to key lookup and `verifyFunc` callbacks (*not `validateFunc`*)
 
+### Useful Features
+
++ The *encoded* JWT (token) is extracted from the headers of the request and
+made available on the `request` object as `request.auth.token`,
+in case you need it later on in the request lifecycle.
+This feature was requested by @mcortesi in
+[hapi-auth-jwt2/issues/123](https://github.com/dwyl/hapi-auth-jwt2/issues/123)
+
 
 ### Understanding the Request Flow
 
