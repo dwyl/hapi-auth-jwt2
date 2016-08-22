@@ -360,7 +360,7 @@ reply({text: 'You have been authenticated!'})
 For a *detailed* example please see:
 https://github.com/nelsonic/hapi-auth-jwt2-cookie-example
 
-### Background Reading
+#### Background Reading (*Cookies*)
 
 + Wikipedia has a good intro (general): https://en.wikipedia.org/wiki/HTTP_cookie
 + Cookies Explained (by Nicholas C. Zakas - JavaScript über-master) http://www.nczonline.net/blog/2009/05/05/http-cookies-explained/
@@ -373,7 +373,7 @@ http://tools.ietf.org/html/rfc6265
 ## Frequently Asked Questions (FAQ) [![Join the chat at https://gitter.im/dwyl/chat](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/dwyl/chat/?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 
-### Do I need to include **jsonwebtoken** in my project?
+### Do I *need* to include `jsonwebtoken` in my project?
 
 **Q**: Must I include the **jsonwebtoken** package in my project
 [given that **hapi-auth-jwt2** plugin already includes it] ? asked in [hapi-auth-jwt2/issues/32](https://github.com/dwyl/hapi-auth-jwt2/issues/32)  
@@ -394,6 +394,8 @@ in [issue #120](https://github.com/dwyl/hapi-auth-jwt2/issues/120) and [issue #1
 **A**: Yes, it *does now*! (*see: "Advanced Usage" below*) the inclusion of a `verifyFunc`
 gives you *complete control* over the verification of the incoming JWT.
 
+<br />
+
 ### Can I use `hapi-auth-jwt2` with [`glue`](https://github.com/hapijs/glue)
 
 Several people asked us if this plugin is compatible with
@@ -403,6 +405,17 @@ The answer is ***Yes***! For an example of how to do this,
 see [@avanslaars](https://github.com/avanslaars) code example:
 https://github.com/dwyl/hapi-auth-jwt2/issues/151#issuecomment-218321212
 
+<br />
+
+### How do I *invalidate* an *existing token*?
+
+Asked by [@SanderElias](https://github.com/SanderElias) in [hapi-auth-jwt2/issues/126](https://github.com/dwyl/hapi-auth-jwt2/issues/126)
+
+We store our JWT-based sessions in a Redis datastore and lookup the session (`jti`) for the given JWT during the `validateFunc` (*validation function*) see: https://github.com/dwyl/hapi-auth-jwt2-example/blob/791b0d3906d4deb256daf23fcf8f5021905abe9e/index.js#L25
+This means we can invalidate the session in Redis and then reject a request that uses an "old" or invalid JWT. see: https://github.com/dwyl/hapi-auth-jwt2-example/blob/791b0d3906d4deb256daf23fcf8f5021905abe9e/index.js#L25
+
+
+<br />
 
 ## *Advanced/Alternative* Usage => Bring Your Own `verifyFunc`
 
