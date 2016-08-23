@@ -168,7 +168,7 @@ signature `function(decoded, callback)` where:
         `validateFunc` which can be accessed via `request.plugins['hapi-auth-jwt2'].extraInfo`
 - `validateFunc` - (***required***) the function which is run once the Token has been decoded with
  signature `function(decoded, request, callback)` where:
-    - `decoded` - (***required***) is the ***decoded*** and ***verified*** JWT received from the client in **request.headers.authorization**
+    - `decoded` - (***required***) is the decoded and verified JWT received in the request
     - `request` - (***required***) is the original ***request*** received from the client
     - `callback` - (***required***) a callback function with the signature `function(err, isValid, credentials)` where:
         - `err` - an internal error.
@@ -194,13 +194,13 @@ signature `function(decoded, callback)` where:
     - The function is expected to return the modified `errorContext` with all above fields defined.
 - `urlKey` - (***optional***  *defaults to* `'token'`) - if you prefer to pass your token via url, simply add a `token` url parameter to your request or use a custom parameter by setting `urlKey`. To disable the url parameter set urlKey to `false` or ''.
 - `cookieKey` - (***optional*** *defaults to* `'token'`) - if you prefer to set your own cookie key or your project has a cookie called `'token'` for another purpose, you can set a custom key for your cookie by setting `options.cookieKey='yourkeyhere'`. To disable cookies set cookieKey to `false` or ''.
-- `headerKey` - (***optional***  *defaults to* `'authorization'`) - if you want to set a custom key for your header token use the `headerKey` option. To disable header token set headerKey to `false` or ''.
+- `headerKey` - (***optional***  *defaults to* `'authorization'`) - The lowercase name of an HTTP header to read the token from. To disable reading the token from a header, set this to `false` or ''.
 - `tokenType` - (***optional*** *defaults to none*) - allow custom token type, e.g. `Authorization: <tokenType> 12345678`.
 - `complete` - (***optional*** *defaults to* `false`) - set to `true` to receive the complete token (`decoded.header`, `decoded.payload` and `decoded.signature`) as `decoded` argument to key lookup and `verifyFunc` callbacks (*not `validateFunc`*)
 
 ### Useful Features
 
-+ The *encoded* JWT (token) is extracted from the headers of the request and
++ The *encoded* JWT (token) is extracted from the request and
 made available on the `request` object as `request.auth.token`,
 in case you need it later on in the request lifecycle.
 This feature was requested by @mcortesi in
@@ -265,11 +265,11 @@ server.auth.strategy('jwt', 'jwt', true,
 
 This plugin supports [authentication modes](http://hapijs.com/api#route-options) on routes.
 
-- `required` - requires Authorization header to be sent with every request
+- `required` - requires JWT to be sent with every request
 
-- `optional` - if no Authorization header is provided, request will pass with `request.auth.isAuthenticated` set to `false` and `request.auth.credentials` set to null
+- `optional` - if no JWT is provided, request will pass with `request.auth.isAuthenticated` set to `false` and `request.auth.credentials` set to null
 
-- `try` - similar to `optional` but invalid Authorization header will pass with `request.auth.isAuthenticated` set to false and failed credentials provided in `request.auth.credentials`
+- `try` - similar to `optional`, but invalid JWT will pass with `request.auth.isAuthenticated` set to false and failed credentials provided in `request.auth.credentials`
 
 ### Additional notes on key lookup functions
 
@@ -485,7 +485,7 @@ If you prefer specifying your own verification logic instead of having a `valida
 
 - `verifyFunc` - (***optional***) the function which is run once the Token has been decoded
 (*instead of a `validateFunc`*) with signature `function(decoded, request, callback)` where:
-    - `decoded` - (***required***) is the decoded but ***unverified*** JWT received from the client in `request.headers.authorization`.
+    - `decoded` - (***required***) is the decoded but ***unverified*** JWT received in the request.
     - `request` - (***required***) is the original ***request*** received from the client
     - `callback` - (***required***) a callback function with the signature `function(err, isValid, credentials)` where:
         - `err` - an internal error.
