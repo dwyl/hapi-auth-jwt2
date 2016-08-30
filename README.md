@@ -474,7 +474,7 @@ see: https://github.com/dwyl/hapi-error#redirecting-to-another-endpoint
 
 For example:
 
-If the token was initially added to your  / endpoint initial request.auth.credentials object is:
+If the request.auth.credentials object initially added to your  `\` endpoint initial  was:
 
 ``` js
   { userId: 1,
