@@ -470,6 +470,36 @@ see: https://github.com/dwyl/hapi-error#redirecting-to-another-endpoint
 
 <br />
 
+### How do I change my token and re-state it without becoming unauthenticated? ###
+
+For example:
+
+If the token was initially added to your  / endpoint initial request.auth.credentials object is:
+
+``` js
+  { userId: 1,
+permission: 'ADMIN'}
+```
+
+And you want to change the user's permission to `SUPER_ADMIN`.
+
+Retrieve the initial session object added as a token to `/`  
+```js
+var session  = request.auth.credentials;
+```
+Change the object
+```js
+session.permission = 'SUPER_ADMIN';
+```
+Sign as a JWT token again
+```js
+var token = JWT.sign(session, process.env.JWT_SECRET);
+```
+Reply as usual whilst re-adding the token to your original endpoint `/`
+```js
+reply().state('token', token, { path: '/' }).redirect('/wherever');
+```
+
 ## *Advanced/Alternative* Usage => Bring Your Own `verifyFunc`
 
 While *most* people using `hapi-auth-jwt2` will opt for the *simpler* use case
