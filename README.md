@@ -474,11 +474,13 @@ see: https://github.com/dwyl/hapi-error#redirecting-to-another-endpoint
 
 For example:
 
-If the request.auth.credentials object initially added to your  `\` endpoint initial  was:
+If the request.auth.credentials object initially added to your `/` endpoint initial  was:
 
 ``` js
-  { userId: 1,
-permission: 'ADMIN'}
+{
+  userId: 1,
+  permission: 'ADMIN'
+}
 ```
 
 And you want to change the user's permission to `SUPER_ADMIN`.
