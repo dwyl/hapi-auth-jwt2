@@ -158,13 +158,13 @@ on the **decoded** token before allowing the visitor to proceed.
 
 ## Documentation
 
-- `key` - (***required*** - *unless you have a `customVerify` function*) the secret key
+- `key` - (***required*** - *unless you have a `customVerify` function*) the secret key (or array of potential keys)
 used to check the signature of the token ***or*** a **key lookup function** with
 signature `function(decoded, callback)` where:
     - `decoded` - the ***decoded*** but ***unverified*** JWT received from client
     - `callback` - callback function with the signature `function(err, key, extraInfo)` where:
         - `err` - an internal error
-        - `key` - the secret key
+        - `key` - the secret key (or array of keys to try)
         - `extraInfo` - (***optional***) any additional information that you would like to use in
         `validateFunc` which can be accessed via `request.plugins['hapi-auth-jwt2'].extraInfo`
 - `validateFunc` - (***required***) the function which is run once the Token has been decoded with
@@ -272,11 +272,21 @@ This plugin supports [authentication modes](http://hapijs.com/api#route-options)
 
 - `try` - similar to `optional`, but invalid JWT will pass with `request.auth.isAuthenticated` set to false and failed credentials provided in `request.auth.credentials`
 
-### Additional notes on key lookup functions
+### Additional notes on keys and key lookup functions
 
 - This option to look up a secret key was added to support "multi-tenant" environments. One use case would be companies that white label API services for their customers and cannot use a shared secret key. If the key lookup function needs to use fields from the token header (e.g. [x5t header](http://self-issued.info/docs/draft-jones-json-web-token-01.html#ReservedHeaderParameterName), set option `completeToken` to `true`.
 
 - The reason why you might want to pass back `extraInfo` in the callback is because you likely need to do a database call to get the key which also probably returns useful user data. This could save you another call in `validateFunc`.
+
+- The key or value returned by the key lookup function can also be an array of keys to try.  Keys will be tried until one of them successfully verifies the signature. The request will only be unauthorized if ALL of the keys fail to verify. This is useful if you want to support multiple valid keys (like continuing to accept a deprecated key while a client switches to a new key).
+
+```js
+server.auth.strategy('jwt', 'jwt', true,
+{ key: [ 'PrimareSecretKey', 'DeprecatedKeyStillAcceptableForNow' ],
+  validateFunc: validate,
+  verifyOptions: { algorithms: [ 'HS256' ] }
+});
+```
 
 ## URL (URI) Token
 
