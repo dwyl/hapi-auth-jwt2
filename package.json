@@ -49,6 +49,7 @@
   },
   "devDependencies": {
     "aguid": "^1.0.4",
+    "goodparts": "^1.2.0",
     "hapi": "^15.0.3",
     "istanbul": "^0.4.5",
     "jshint": "^2.9.3",
@@ -64,6 +65,7 @@
     "test": "istanbul cover ./node_modules/tape/bin/tape ./test/*.test.js  | node_modules/tap-spec/bin/cmd.js",
     "coverage": "istanbul cover ./node_modules/tape/bin/tape ./test/*.test.js && istanbul check-coverage --statements 100 --functions 100 --lines 100 --branches 100",
     "jshint": "./node_modules/jshint/bin/jshint -c .jshintrc --exclude-path .gitignore .",
+    "lint": "node_modules/.bin/goodparts lib",
     "start": "node example/server.js",
     "report": "open coverage/lcov-report/index.html"
   },
