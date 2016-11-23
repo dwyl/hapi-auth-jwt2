@@ -676,3 +676,7 @@ to improve (_security_) it was *ignored* for _weeks_ ... an *authentication* plu
   is a ***no-go*** for us; **security** ***matters***!) If you spot _any_
   issue in ***hapi-auth-jwt2*** please create an issue: https://github.com/dwyl/hapi-auth-jwt2/issues
   so we can get it _resolved_ ASAP!
+
+_Aparently, `.some` people like it..._:
+
+[![https://nodei.co/npm/hapi-auth-jwt2.png?downloads=true&downloadRank=true&stars=true](https://nodei.co/npm/hapi-auth-jwt2.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/hapi-auth-jwt2)
