@@ -50,7 +50,7 @@
   "devDependencies": {
     "aguid": "^1.0.4",
     "goodparts": "^1.2.0",
-    "hapi": "^15.0.3",
+    "hapi": "^15.2.0",
     "istanbul": "^0.4.5",
     "jshint": "^2.9.3",
     "pre-commit": "^1.1.3",
@@ -70,7 +70,7 @@
     "report": "open coverage/lcov-report/index.html"
   },
   "pre-commit": [
-    "jshint",
-    "coverage"
+    "coverage",
+    "jshint"
   ]
 }
