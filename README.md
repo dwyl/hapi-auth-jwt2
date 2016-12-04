@@ -11,7 +11,7 @@
 [![JavaScript Style Guide: Good Parts](https://img.shields.io/badge/code%20style-goodparts-brightgreen.svg?style=flat)](https://github.com/dwyl/goodparts "JavaScript The Good Parts")
 [![Inline docs](http://inch-ci.org/github/dwyl/hapi-auth-jwt2.svg?branch=master)](http://inch-ci.org/github/dwyl/hapi-auth-jwt2)
 [![Code Climate](https://codeclimate.com/github/dwyl/hapi-auth-jwt2/badges/gpa.svg "No Nasty Code")](https://codeclimate.com/github/dwyl/hapi-auth-jwt2)
-[![HAPI 15.2.0](http://img.shields.io/badge/hapi-15.2.0-brightgreen.svg "Latest Hapi.js")](http://hapijs.com)
+[![HAPI 16.0.1](http://img.shields.io/badge/hapi-16.0.1-brightgreen.svg "Latest Hapi.js")](http://hapijs.com)
 [![Node.js Version](https://img.shields.io/node/v/hapi-auth-jwt2.svg?style=flat "Node.js 10 & 12 and io.js latest both supported")](http://nodejs.org/download/)
 [![Dependency Status](https://david-dm.org/dwyl/hapi-auth-jwt2.svg "Dependencies Checked & Updated Regularly (Security is Important!)")](https://david-dm.org/dwyl/hapi-auth-jwt2)
 [![devDependencies Status](https://david-dm.org/dwyl/hapi-auth-jwt2/dev-status.svg)](https://david-dm.org/dwyl/hapi-auth-jwt2?type=dev)
@@ -551,7 +551,8 @@ because with a `verifyFunc` you can incorporate your own custom-logic.
 
 ### Compatibility
 
-`hapi-auth-jwt2` is compatible with Hapi.js versions `14.x.x` `13.x.x` `12.x.x` `11.x.x` `10.x.x` `9.x.x` and `8.x.x`
+`hapi-auth-jwt2` is compatible with Hapi.js versions `16.x.x`
+`15.x.x` `14.x.x` `13.x.x` `12.x.x` `11.x.x` `10.x.x` `9.x.x` and `8.x.x`
 as there have been ***no changes*** to how the Hapi plugin system works for a while!
 
 However in the interest of
