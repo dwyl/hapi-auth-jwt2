@@ -88,26 +88,24 @@ test("Try using an incorrect secret to sign the JWT", function(t) {
   });
 });
 
-// see: https://github.com/dwyl/hapi-auth-jwt2/issues/166
-// test.only("Try using an expired token", function(t) {
-//   // use the token as the 'authorization' header in requests
-//   var token = JWT.sign({ id: 123, "name": "Charlie" }, secret, { expiresInSeconds: 1 });
-//   console.log(" - - - - - - token  - - - - -")
-//   console.log(token);
-//   var options = {
-//     method: "POST",
-//     url: "/privado",
-//     headers: { authorization: "Bearer " + token  }
-//   };
-//   // server.inject lets us simulate an http request
-//   setTimeout(function () {
-//     server.inject(options, function(response) {
-//       t.equal(response.statusCode, 401, "Expired token should be invalid");
-//       t.equal(response.result.message, 'Token expired', 'Message should be "Token expired"');
-//       t.end();
-//     });
-//   }, 1000);
-// });
+test("Try using an expired token", function(t) {
+  // use the token as the 'authorization' header in requests
+  var token = JWT.sign({ id: 123, "name": "Charlie" }, secret, { expiresIn: '1s' });
+  console.log(" - - - - - - token  - - - - -")
+  console.log(token);
+  var options = {
+    method: "POST",
+    url: "/privado",
+    headers: { authorization: "Bearer " + token  }
+  };
+  // server.inject lets us simulate an http request
+  setTimeout(function () {
+    server.inject(options, function(response) {
+      t.equal(response.statusCode, 401, "Expired token should be invalid");
+      t.end();
+    });
+  }, 1100);
+});
 
 test("Token is well formed but is allowed=false so should be denied", function(t) {
   // use the token as the 'authorization' header in requests
