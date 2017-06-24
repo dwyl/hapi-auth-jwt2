@@ -50,7 +50,7 @@
   "devDependencies": {
     "aguid": "^2.0.0",
     "goodparts": "^1.2.1",
-    "hapi": "^16.1.1",
+    "hapi": "^16.4.3",
     "istanbul": "^0.4.5",
     "jshint": "^2.9.4",
     "pre-commit": "^1.2.2",
