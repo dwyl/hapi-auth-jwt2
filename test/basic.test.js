@@ -102,6 +102,7 @@ test("Try using an expired token", function(t) {
   setTimeout(function () {
     server.inject(options, function(response) {
       t.equal(response.statusCode, 401, "Expired token should be invalid");
+      t.equal(response.result.message, 'Expired token', 'Message should be "Expired token"');
       t.end();
     });
   }, 1100);
