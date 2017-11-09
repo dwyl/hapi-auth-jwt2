@@ -3,18 +3,18 @@ var Hapi   = require('hapi');
 var JWT    = require('jsonwebtoken');
 var secret = 'NeverShareYourSecret';
 
-test('Should respond with 500 series error when validateFunc errs', function (t) {
+test('Should respond with 500 series error when validateFunc errs', async function (t) {
 
   var server = new Hapi.Server();
-  server.connection();
-
-  server.register(require('../'), function (err) {
+  try {
+    await server.register(require('../'));
+  } catch(err) {
     t.ifError(err, 'No error registering hapi-auth-jwt2 plugin');
-
+  }
     server.auth.strategy('jwt', 'jwt', {
       key: secret,
-      validateFunc: function (decoded, request, callback) {
-        return callback(new Error('ASPLODE'));
+      validateFunc: function (decoded, request) {
+        throw new Error('ASPLODE');
       },
       verifyOptions: {algorithms: ['HS256']}
     });
@@ -22,7 +22,7 @@ test('Should respond with 500 series error when validateFunc errs', function (t)
     server.route({
       method: 'POST',
       path: '/privado',
-      handler: function (req, reply) { return reply('PRIVADO'); },
+      handler: function (req, h) { return 'PRIVADO'; },
       config: { auth: 'jwt' }
     });
 
@@ -32,9 +32,8 @@ test('Should respond with 500 series error when validateFunc errs', function (t)
       headers: {Authorization: JWT.sign({id: 138, name: 'Test'}, secret)}
     };
 
-    server.inject(options, function (response) {
+    const response = await server.inject(options);
       t.equal(response.statusCode, 500, 'Server returned 500 for validateFunc error');
       t.end();
-    });
-  });
+
 });

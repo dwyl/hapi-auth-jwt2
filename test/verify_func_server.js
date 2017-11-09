@@ -6,31 +6,30 @@ var debug;
 // debug = { debug: { 'request': ['error', 'uncaught'] } };
 debug = { debug: false };
 var server = new Hapi.Server(debug);
-server.connection();
 
-var sendToken = function(req, reply) {
-  return reply(req.auth.token);
+var sendToken = function(req, h) {
+  return req.auth.token || null;
 };
 
-var privado = function(req, reply) {
-  return reply(req.auth.credentials);
+var privado = function(req, h) {
+  return req.auth.credentials || null;
 };
 
 // defining our own validate function lets us do something
 // useful/custom with the decodedToken before reply(ing)
-var customVerifyFunc = function (decoded, request, callback) {
+var customVerifyFunc = function (decoded, request) {
   if(decoded.error) {
-    return callback(new Error('customVerify fails!'));
+    throw Error('customVerify fails!');
   }
   else if (decoded.some_property) {
-    return callback(null, true);
+    return decoded;
   }
   else {
-    return callback(null, false, decoded);
+    return false;
   }
 };
-
-server.register(require('../'), function () {
+const init = async() => {
+  await server.register(require('../'));
 
   server.auth.strategy('jwt', 'jwt', {
     verifyFunc: customVerifyFunc // no validateFunc or key required.
@@ -43,6 +42,8 @@ server.register(require('../'), function () {
     { method: 'GET', path: '/try', handler: privado, config: { auth: { mode: 'try', strategy: 'jwt' } } }
   ]);
 
-});
+};
+
+init();
 
 module.exports = server;

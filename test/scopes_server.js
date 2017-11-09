@@ -3,7 +3,6 @@ var secret = 'NeverShareYourSecret';
 
 // for debug options see: http://hapijs.com/tutorials/logging
 var server = new Hapi.Server({ debug: false });
-server.connection();
 
 var db = {
   "123": { allowed: true,  "name": "Charlie"   },
@@ -17,27 +16,27 @@ var scopesDb = {
 
 // defining our own validate function lets us do something
 // useful/custom with the decodedToken before reply(ing)
-var validate = function (decoded, request, callback) {
+var validate = function (decoded, request) {
 
     if (db[decoded.id].allowed) {
       var credentials = db[decoded.id];
       credentials.scope = scopesDb[decoded.id];
-      return callback(null, true, credentials);
+      return credentials;
     }
     else {
-      return callback(null, false);
+      return false;
     }
 };
 
-var home = function(req, reply) {
-  reply('Hai!');
+var home = function(req, h) {
+  return 'Hai!';
 };
 
 var privado = function(req, reply) {
-  reply('worked');
+  return 'worked';
 };
-
-server.register(require('../'), function () {
+const init = async() => {
+  await server.register(require('../'));
 
   server.auth.strategy('jwt', 'jwt', {
     key: secret,
@@ -50,6 +49,8 @@ server.register(require('../'), function () {
     { method: 'POST', path: '/privado-with-scope', handler: privado, config: { auth: { strategy: 'jwt', scope: [ 'Admin' ] } } }
   ]);
 
-});
+};
+
+init();
 
 module.exports = server;

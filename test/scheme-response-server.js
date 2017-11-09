@@ -3,7 +3,6 @@ var secret = 'NeverShareYourSecret';
 
 // for debug options see: http://hapijs.com/tutorials/logging
 var server = new Hapi.Server({ debug: false });
-server.connection();
 
 var db = {
     "123": { allowed: true,  "name": "Charlie"  },
@@ -14,36 +13,37 @@ var db = {
 // useful/custom with the decodedToken before reply(ing)
 var validate = function (decoded, request, callback) {
     if (db[decoded.id].allowed) {
-        return callback(null, true);
+        return true;
     }
     else {
-        return callback(null, false);
+        return false;
     }
 };
 
-var home = function(req, reply) {
-    return reply('Hai!');
+var home = function(req, h) {
+    return 'Hai!';
 };
 
-var privado = function(req, reply) {
-    return reply('worked');
+var privado = function(req, h) {
+    return 'worked';
 };
 
-var sendToken = function(req, reply) {
-    return reply(req.auth.token);
+var sendToken = function(req, h) {
+    return req.auth.token;
 };
 
-var responseFunction = function(req, reply, callback) {
+var responseFunction = function(req, h) {
     var error = null;
     if(req.headers.error === 'true') {
-        error = new Error('failed');
+        throw new Error('failed');
     } else {
         req.response.header('Authorization', 'from scheme response function');
     }
-    callback(error); //no error
 }
 
-server.register(require('../'), function () {
+const init = async() => {
+
+    await server.register(require('../'));
 
     server.auth.strategy('jwt', 'jwt', {
         key: secret,
@@ -92,6 +92,8 @@ server.register(require('../'), function () {
         }
     ]);
 
-});
+};
+
+init();
 
 module.exports = server;

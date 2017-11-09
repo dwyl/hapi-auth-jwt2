@@ -38,15 +38,16 @@ server.register(require('../lib'), function (err) {
     server.route([
       {
         method: "GET", path: "/", config: { auth: false },
-        handler: function(request, reply) {
-          reply({text: 'Token not required'});
+        handler: function(request, h) {
+          return {text: 'Token not required'};
         }
       },
       {
         method: 'GET', path: '/restricted', config: { auth: 'jwt' },
-        handler: function(request, reply) {
-          reply({text: 'You used a Token!'})
-          .header("Authorization", request.headers.authorization);
+        handler: function(request, h) {
+          const response = h.response({text: 'You used a Token!'});
+          response.header("Authorization", request.headers.authorization);
+          return response;
         }
       }
     ]);

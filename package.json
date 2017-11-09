@@ -43,27 +43,49 @@
   },
   "homepage": "https://github.com/dwyl/hapi-auth-jwt2",
   "dependencies": {
-    "boom": "^6.0.0",
+    "boom": "^7.1.1",
     "cookie": "^0.3.1",
     "jsonwebtoken": "^8.1.0"
   },
   "devDependencies": {
     "aguid": "^2.0.0",
     "goodparts": "^1.2.1",
-    "hapi": "^16.6.2",
+    "hapi": "^17.0.1",
     "istanbul": "^0.4.5",
     "jshint": "^2.9.4",
+    "nyc": "^11.3.0",
     "pre-commit": "^1.2.2",
+    "tap-nyc": "^1.0.3",
     "tap-spec": "^4.1.1",
     "tape": "^4.6.3"
   },
   "engines": {
-    "node": ">=6"
+    "node": ">=8.9.0"
+  },
+  "nyc": {
+    "check-coverage": true,
+    "lines": 100,
+    "statements": 100,
+    "functions": 100,
+    "branches": 100,
+    "include": [
+      "lib/**/*.js"
+    ],
+    "exclude": [
+      "test/**/*.spec.js"
+    ],
+    "reporter": [
+      "lcov",
+      "text-summary"
+    ],
+    "cache": false,
+    "all": true,
+    "report-dir": "./coverage"
   },
   "scripts": {
-    "quick": "./node_modules/tape/bin/tape ./test/*.test.js | node_modules/tap-spec/bin/cmd.js",
-    "test": "istanbul cover ./node_modules/tape/bin/tape ./test/*.test.js  | node_modules/tap-spec/bin/cmd.js",
-    "coverage": "istanbul cover ./node_modules/tape/bin/tape ./test/*.test.js && istanbul check-coverage --statements 100 --functions 100 --lines 100 --branches 100",
+    "quick": "./node_modules/tape/bin/tape ./test/*.test.js | tap-nyc",
+    "test": "nyc tape ./test/*.test.js | tap-nyc",
+    "coverage": "nyc tape ./test/*.test.js && nyc",
     "jshint": "./node_modules/jshint/bin/jshint -c .jshintrc --exclude-path .gitignore .",
     "lint": "node_modules/.bin/goodparts lib",
     "start": "node example/server.js",
