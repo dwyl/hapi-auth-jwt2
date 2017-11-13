@@ -20,7 +20,7 @@ test('When using a custom header key full token payload (header + payload + sign
     },
     complete: true,
     validateFunc: function (decoded, request) {
-      return true;
+      return { valid: true };
     },
     verifyOptions: {algorithms: ['HS256']},
     headerKey: 'auths'

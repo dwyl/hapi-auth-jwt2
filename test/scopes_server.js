@@ -21,10 +21,10 @@ var validate = function (decoded, request) {
     if (db[decoded.id].allowed) {
       var credentials = db[decoded.id];
       credentials.scope = scopesDb[decoded.id];
-      return credentials;
+      return {valid: true, credentials};
     }
     else {
-      return false;
+      return {valid:false};
     }
 };
 

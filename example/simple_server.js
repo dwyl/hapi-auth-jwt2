@@ -1,6 +1,6 @@
-var Hapi = require('hapi');
+const Hapi = require('hapi');
 
-var people = { // our "users database"
+const people = { // our "users database"
     1: {
       id: 1,
       name: 'Jen Jones'
@@ -8,51 +8,50 @@ var people = { // our "users database"
 };
 
 // bring your own validation function
-var validate = function (decoded, request, callback) {
+const validate = async function (decoded, request, h) {
 
     // do your checks to see if the person is valid
     if (!people[decoded.id]) {
-      return callback(null, false);
+      return { valid: false };
     }
     else {
-      return callback(null, true);
+      return { valid: true };
     }
 };
 
-var server = new Hapi.Server();
-server.connection({ port: 8000 });
-        // include our module here ↓↓
-server.register(require('../lib'), function (err) {
+const init = async () => {
+  const server = new Hapi.Server({ port: 8000 });
+  // include our module here ↓↓
+  await server.register(require('../lib'));
+  server.auth.strategy('jwt', 'jwt',
+  { key: 'NeverShareYourSecret', // Never Share your secret key
+    validateFunc: validate       // validate function defined above
+  });
 
-    if(err){
-      console.log(err);
-    }
+  server.auth.default('jwt');
 
-    server.auth.strategy('jwt', 'jwt',
-    { key: 'NeverShareYourSecret', // Never Share your secret key
-      validateFunc: validate       // validate function defined above
-    });
-
-    server.auth.default('jwt');
-
-    server.route([
-      {
-        method: "GET", path: "/", config: { auth: false },
-        handler: function(request, h) {
-          return {text: 'Token not required'};
-        }
-      },
-      {
-        method: 'GET', path: '/restricted', config: { auth: 'jwt' },
-        handler: function(request, h) {
-          const response = h.response({text: 'You used a Token!'});
-          response.header("Authorization", request.headers.authorization);
-          return response;
-        }
+  server.route([
+    {
+      method: "GET", path: "/", config: { auth: false },
+      handler: function(request, h) {
+        return {text: 'Token not required'};
       }
-    ]);
-});
-
-server.start(function () {
+    },
+    {
+      method: 'GET', path: '/restricted', config: { auth: 'jwt' },
+      handler: function(request, h) {
+        const response = h.response({text: 'You used a Token!'});
+        response.header("Authorization", request.headers.authorization);
+        return response;
+      }
+    }
+  ]);
+  await server.start();
+  return server;
+}
+init().then(server => {
   console.log('Server running at:', server.info.uri);
+})
+.catch(err => {
+  console.log(err);
 });

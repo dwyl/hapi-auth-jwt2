@@ -5,7 +5,7 @@ var secret = 'NeverShareYourSecret';
 
 test('Should respond with 500 series error when validateFunc errs', async function (t) {
 
-  var server = new Hapi.Server();
+  var server = new Hapi.Server({ debug: false });
   try {
     await server.register(require('../'));
   } catch(err) {
@@ -13,8 +13,11 @@ test('Should respond with 500 series error when validateFunc errs', async functi
   }
     server.auth.strategy('jwt', 'jwt', {
       key: secret,
-      validateFunc: function (decoded, request) {
-        throw new Error('ASPLODE');
+      validateFunc: function (decoded, request, h) {
+        if (decoded.id === 138) {
+          throw new Error('ASPLODE');
+        }
+        return { response:  h.redirect('https://dwyl.com') }
       },
       verifyOptions: {algorithms: ['HS256']}
     });
@@ -26,14 +29,19 @@ test('Should respond with 500 series error when validateFunc errs', async functi
       config: { auth: 'jwt' }
     });
 
-    var options = {
+    let options = {
       method: 'POST',
       url: '/privado',
       headers: {Authorization: JWT.sign({id: 138, name: 'Test'}, secret)}
     };
 
-    const response = await server.inject(options);
+    let response = await server.inject(options);
       t.equal(response.statusCode, 500, 'Server returned 500 for validateFunc error');
+    
+    options.headers.Authorization = JWT.sign({id: 200, name: 'Test'}, secret);
+    response = await server.inject(options);
+      t.equal(response.statusCode, 302, 'Server redirect status code');
+      t.equal(response.headers.location, 'https://dwyl.com', 'Server redirect header');
       t.end();
 
 });

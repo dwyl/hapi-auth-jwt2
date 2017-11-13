@@ -13,10 +13,10 @@ var db = {
 // useful/custom with the decodedToken before reply(ing)
 var validate = async function (decoded, request) {
   if (db[decoded.id].allowed) {
-    return Promise.resolve(true);
+    return {valid: true};
   }
   else {
-    return Promise.resolve(false);
+    return {valid: false};
   }
 };
 

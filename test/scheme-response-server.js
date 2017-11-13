@@ -13,10 +13,10 @@ var db = {
 // useful/custom with the decodedToken before reply(ing)
 var validate = function (decoded, request, callback) {
     if (db[decoded.id].allowed) {
-        return true;
+        return {valid: true};
     }
     else {
-        return false;
+        return {valid: false};
     }
 };
 

@@ -12,7 +12,7 @@ var db = {
 // defining our own validate function lets us do something
 // useful/custom with the decodedToken before reply(ing)
 var validate = function (decoded, request) {
-  return db[decoded.id].allowed
+  return { valid: db[decoded.id].allowed}
 };
 
 var home = function(req, reply) {

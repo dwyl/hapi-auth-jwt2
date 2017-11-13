@@ -45,9 +45,9 @@ This basic usage example should help you get started:
 
 
 ```javascript
-var Hapi = require('hapi');
+const Hapi = require('hapi');
 
-var people = { // our "users database"
+const people = { // our "users database"
     1: {
       id: 1,
       name: 'Jen Jones'
@@ -55,53 +55,55 @@ var people = { // our "users database"
 };
 
 // bring your own validation function
-var validate = function (decoded, request, callback) {
+var validate = async function (decoded, request) {
 
     // do your checks to see if the person is valid
     if (!people[decoded.id]) {
-      return callback(null, false);
+      return { valid: false };
     }
     else {
-      return callback(null, true);
+      return { valid: true };
     }
 };
 
-var server = new Hapi.Server();
-server.connection({ port: 8000 });
+const init = async () => {
+  var server = new Hapi.Server({ port: 8000 });
         // include our module here ↓↓
-server.register(require('hapi-auth-jwt2'), function (err) {
+  await server.register(require('hapi-auth-jwt2'));
 
-    if(err){
-      console.log(err);
-    }
+  server.auth.strategy('jwt', 'jwt',
+  { key: 'NeverShareYourSecret',          // Never Share your secret key
+    validateFunc: validate,            // validate function defined above
+    verifyOptions: { algorithms: [ 'HS256' ] } // pick a strong algorithm
+  });
 
-    server.auth.strategy('jwt', 'jwt',
-    { key: 'NeverShareYourSecret',          // Never Share your secret key
-      validateFunc: validate,            // validate function defined above
-      verifyOptions: { algorithms: [ 'HS256' ] } // pick a strong algorithm
-    });
+  server.auth.default('jwt');
 
-    server.auth.default('jwt');
-
-    server.route([
-      {
-        method: "GET", path: "/", config: { auth: false },
-        handler: function(request, reply) {
-          reply({text: 'Token not required'});
-        }
-      },
-      {
-        method: 'GET', path: '/restricted', config: { auth: 'jwt' },
-        handler: function(request, reply) {
-          reply({text: 'You used a Token!'})
-          .header("Authorization", request.headers.authorization);
-        }
+  server.route([
+    {
+      method: "GET", path: "/", config: { auth: false },
+      handler: function(request, reply) {
+        reply({text: 'Token not required'});
       }
-    ]);
-});
+    },
+    {
+      method: 'GET', path: '/restricted', config: { auth: 'jwt' },
+      handler: function(request, reply) {
+        reply({text: 'You used a Token!'})
+        .header("Authorization", request.headers.authorization);
+      }
+    }
+  ]);
+  await server.start();
+  return server;
+};
 
-server.start(function () {
+
+init().then(server => {
   console.log('Server running at:', server.info.uri);
+})
+.catch(error => {
+  console.log(error);
 });
 ```
 
@@ -162,21 +164,21 @@ on the **decoded** token before allowing the visitor to proceed.
 
 - `key` - (***required*** - *unless you have a `customVerify` function*) the secret key (or array of potential keys)
 used to check the signature of the token ***or*** a **key lookup function** with
-signature `function(decoded, callback)` where:
+signature `async function(decoded)` where:
     - `decoded` - the ***decoded*** but ***unverified*** JWT received from client
-    - `callback` - callback function with the signature `function(err, key, extraInfo)` where:
-        - `err` - an internal error
+    - Returns an object `{ valid, key, extraInfo }` where:
         - `key` - the secret key (or array of keys to try)
         - `extraInfo` - (***optional***) any additional information that you would like to use in
         `validateFunc` which can be accessed via `request.plugins['hapi-auth-jwt2'].extraInfo`
-- `validateFunc` - (***required***) the function which is run once the Token has been decoded with
- signature `function(decoded, request, callback)` where:
+- `validate` - (***required***) the function which is run once the Token has been decoded with
+ signature `async function(decoded, request, h)` where:
     - `decoded` - (***required***) is the decoded and verified JWT received in the request
     - `request` - (***required***) is the original ***request*** received from the client
-    - `callback` - (***required***) a callback function with the signature `function(err, isValid, credentials)` where:
-        - `err` - an internal error.
+    - `h` - (***required***) the response toolkit.
+    - Returns an object `{ valid, credentials, response }` where:
         - `valid` - `true` if the JWT was valid, otherwise `false`.
         - `credentials` - (***optional***) alternative credentials to be set instead of `decoded`.
+        - `response` - (***optional***) If provided will be used immediately as a takeover response.
 
 ### *Optional* Parameters
 
@@ -529,11 +531,10 @@ JTW was signed using the `JWT_SECRET` (*secret key*).
 If you prefer specifying your own verification logic instead of having a `validateFunc`, simply define a `verifyFunc` instead when initializing the plugin.
 
 - `verifyFunc` - (***optional***) the function which is run once the Token has been decoded
-(*instead of a `validateFunc`*) with signature `function(decoded, request, callback)` where:
+(*instead of a `validateFunc`*) with signature `async function(decoded, request)` where:
     - `decoded` - (***required***) is the decoded but ***unverified*** JWT received in the request.
     - `request` - (***required***) is the original ***request*** received from the client
-    - `callback` - (***required***) a callback function with the signature `function(err, isValid, credentials)` where:
-        - `err` - an internal error.
+    - Returns an object `{ valid, credentials }` where:
         - `valid` - `true` if the JWT was valid, otherwise `false`.
         - `credentials` - (***optional***) alternative credentials to be set instead of `decoded`.
 
@@ -551,9 +552,9 @@ because with a `verifyFunc` you can incorporate your own custom-logic.
 
 ### Compatibility
 
-`hapi-auth-jwt2` is compatible with Hapi.js versions `16.x.x`
+`hapi-auth-jwt2` version `8.x.x` is compatible with Hapi.js version `17.x.x`, while `7.x.x` is compatible with `16.x.x`
 `15.x.x` `14.x.x` `13.x.x` `12.x.x` `11.x.x` `10.x.x` `9.x.x` and `8.x.x`
-as there have been ***no changes*** to how the Hapi plugin system works for a while!
+hapi `17.x.x` is a major rewrite that's why it is version `8.x.x` of the plugin is not backward compatible!
 
 However in the interest of
  security/performance we *recommend* using the [*latest version*](https://github.com/hapijs/hapi/) of Hapi.
