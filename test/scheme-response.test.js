@@ -1,11 +1,11 @@
-var test   = require('tape');
-var JWT    = require('jsonwebtoken');
-var secret = 'NeverShareYourSecret';
+const test   = require('tape');
+const JWT    = require('jsonwebtoken');
+const secret = 'NeverShareYourSecret';
 
-var server = require('./scheme-response-server'); // test server which in turn loads our module
+const server = require('./scheme-response-server'); // test server which in turn loads our module
 
 test("Attempt to access restricted content (without auth token)", async function(t) {
-  var options = {
+  const options = {
     method: "POST",
     url: "/privado"
   };
@@ -18,7 +18,7 @@ test("Attempt to access restricted content (without auth token)", async function
 
 
 test("Attempt to access restricted content (with an INVALID Token)", async function(t) {
-  var options = {
+  const options = {
     method: "POST",
     url: "/privado",
     headers: { authorization: "Bearer fails.validation" }
@@ -33,8 +33,8 @@ test("Attempt to access restricted content (with an INVALID Token)", async funct
 
 test("Access restricted content (with VALID Token)", async function(t) {
   // use the token as the 'authorization' header in requests
-  var token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
-  var options = {
+  const token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
+  const options = {
     method: "POST",
     url: "/privado",
     headers: { authorization: "Bearer " + token }
@@ -48,7 +48,7 @@ test("Access restricted content (with VALID Token)", async function(t) {
 
 
 test("Auth mode 'required' should require authentication header", async function(t) {
-  var options = {
+  const options = {
     method: "POST",
     url: "/required"
   };
@@ -62,8 +62,8 @@ test("Auth mode 'required' should require authentication header", async function
 
 test("Auth mode 'required' should should pass with valid token", async function(t) {
   // use the token as the 'authorization' header in requests
-  var token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
-  var options = {
+  const token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
+  const options = {
     method: "POST",
     url: "/required",
     headers: { authorization: "Bearer " + token }
@@ -78,8 +78,8 @@ test("Auth mode 'required' should should pass with valid token", async function(
 
 test("Scheme should set token in request.auth.token", async function(t) {
   // use the token as the 'authorization' header in requests
-  var token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
-  var options = {
+  const token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
+  const options = {
     method: "GET",
     url: "/token",
     headers: { authorization: "Bearer " + token }
@@ -93,8 +93,8 @@ test("Scheme should set token in request.auth.token", async function(t) {
 
 test("Testing an error thrown from the scheme\'s response function", async function(t) {
   // use the token as the 'authorization' header in requests
-  var token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
-  var options = {
+  const token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
+  const options = {
     method: "GET",
     url: "/token",
     headers: {

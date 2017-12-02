@@ -1,19 +1,19 @@
-var test   = require('tape');
-var JWT    = require('jsonwebtoken');
+const test   = require('tape');
+const JWT    = require('jsonwebtoken');
 
-var server = require('./multiple_key_server'); // test server which in turn loads our module
+const server = require('./multiple_key_server'); // test server which in turn loads our module
 
 test("Access restricted content with multiple valid tokens for a valid tenant", async function(t) {
-  var testsOutstanding = 2;
-  var finishTest = function() {
+  let testsOutstanding = 2;
+  const finishTest = function() {
     testsOutstanding--;
     if (testsOutstanding <= 0) {
       t.end();
     }
   }
   // use the token as the 'authorization' header in requests
-  var token1 = JWT.sign({ id: 123, "name": "Charlie", "tenant": "dunderMifflin" }, 'michaelscott');
-  var options1 = {
+  const token1 = JWT.sign({ id: 123, "name": "Charlie", "tenant": "dunderMifflin" }, 'michaelscott');
+  const options1 = {
     method: "POST",
     url: "/privado",
     headers: { authorization: "Bearer " + token1 }
@@ -22,8 +22,8 @@ test("Access restricted content with multiple valid tokens for a valid tenant", 
     t.equal(response.statusCode, 200, "VALID Token with 1st key should succeed!");
     t.equal(response.result.data.additional, 'something extra here if needed', 'extraInfo should be passed through');
   finishTest();
-  var token2 = JWT.sign({ id: 123, "name": "Charlie", "tenant": "dunderMifflin" }, 'jimhalpert');
-  var options2 = {
+  const token2 = JWT.sign({ id: 123, "name": "Charlie", "tenant": "dunderMifflin" }, 'jimhalpert');
+  const options2 = {
     method: "POST",
     url: "/privado",
     headers: { authorization: "Bearer " + token2 }
@@ -36,8 +36,8 @@ test("Access restricted content with multiple valid tokens for a valid tenant", 
 
 test("Access restricted content with an invalid token and tenant", async function(t) {
   // use the token as the 'authorization' header in requests
-  var token = JWT.sign({ id: 123, "name": "Charlie", "tenant": "dunderMifflin" }, 'dwightschrute');
-  var options = {
+  const token = JWT.sign({ id: 123, "name": "Charlie", "tenant": "dunderMifflin" }, 'dwightschrute');
+  const options = {
     method: "POST",
     url: "/privado",
     headers: { authorization: "Bearer " + token }
@@ -51,8 +51,8 @@ test("Access restricted content with an invalid token and tenant", async functio
 
 test("Access restricted content with a valid token and tenant but user is not allowed", async function(t) {
   // use the token as the 'authorization' header in requests
-  var token = JWT.sign({ id: 321, "name": "Old Gregg", "tenant": "wernhamHogg" }, 'davidbrent');
-  var options = {
+  const token = JWT.sign({ id: 321, "name": "Old Gregg", "tenant": "wernhamHogg" }, 'davidbrent');
+  const options = {
     method: "POST",
     url: "/privado",
     headers: { authorization: "Bearer " + token }
@@ -66,8 +66,8 @@ test("Access restricted content with a valid token and tenant but user is not al
 
 test("Access restricted content without tenant specified in token", async function(t) {
   // use the token as the 'authorization' header in requests
-  var token = JWT.sign({ id: 123, "name": "Charlie" }, 'michaelscott');
-  var options = {
+  const token = JWT.sign({ id: 123, "name": "Charlie" }, 'michaelscott');
+  const options = {
     method: "POST",
     url: "/privado",
     headers: { authorization: "Bearer " + token }
@@ -81,8 +81,8 @@ test("Access restricted content without tenant specified in token", async functi
 
 test("Access restricted content with non-existent tenant specified", async function(t) {
   // use the token as the 'authorization' header in requests
-  var token = JWT.sign({ id: 123, "name": "Charlie", "tenant": "princeFamilyPaper" }, 'michaelscott');
-  var options = {
+  const token = JWT.sign({ id: 123, "name": "Charlie", "tenant": "princeFamilyPaper" }, 'michaelscott');
+  const options = {
     method: "POST",
     url: "/privado",
     headers: { authorization: "Bearer " + token }

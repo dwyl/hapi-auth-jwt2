@@ -1,11 +1,11 @@
-var test   = require('tape');
-var JWT    = require('jsonwebtoken');
-var secret = 'NeverShareYourSecret';
+const test   = require('tape');
+const JWT    = require('jsonwebtoken');
+const secret = 'NeverShareYourSecret';
 
-var server = require('./basic_server'); // test server which in turn loads our module
+const server = require('./basic_server'); // test server which in turn loads our module
 
 test("Attempt to access restricted content (without auth token)", async function(t) {
-  var options = {
+  const options = {
     method: "POST",
     url: "/privado"
   };
@@ -16,7 +16,7 @@ test("Attempt to access restricted content (without auth token)", async function
 });
 
 test("Attempt to access restricted content (with an INVALID Token)", async function(t) {
-  var options = {
+  const options = {
     method: "POST",
     url: "/privado",
     headers: { authorization: "Bearer fails.validation" }
@@ -29,9 +29,9 @@ test("Attempt to access restricted content (with an INVALID Token)", async funct
 
 test("Malformed JWT", async function(t) {
   // use the token as the 'authorization' header in requests
-  // var token = jwt.sign({ "id": 1 ,"name":"Old Greg" }, 'incorrectSecret');
+  // const token = jwt.sign({ "id": 1 ,"name":"Old Greg" }, 'incorrectSecret');
   // console.log(token);
-  var options = {
+  const options = {
     method: "POST",
     url: "/privado",
     headers: { authorization: "Bearer my.invalid.token" }
@@ -47,16 +47,16 @@ test("Malformed JWT", async function(t) {
 
 test("Try using a token with missing characters in body", async function(t) {
   // use the token as the 'authorization' header in requests
-  var token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
+  let token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
   // delete some characters in body
-  var tokenData = token.split('.');
-  var header = tokenData[0],
+  const tokenData = token.split('.');
+  const header = tokenData[0],
       body = tokenData[1],
       signature = tokenData[2];
   token = header + '.' + body.substring(0, body.length - 1) + '.' + signature;
   /*console.log(" - - - - - - token  - - - - -");
   console.log(token);*/
-  var options = {
+  const options = {
     method: "POST",
     url: "/privado",
     headers: { authorization: "Bearer " + token  }
@@ -69,10 +69,10 @@ test("Try using a token with missing characters in body", async function(t) {
 
 test("Try using an incorrect secret to sign the JWT", async function(t) {
   // use the token as the 'authorization' header in requests
-  var token = JWT.sign({ id: 123, "name": "Charlie" }, 'incorrectSecret');
+  const token = JWT.sign({ id: 123, "name": "Charlie" }, 'incorrectSecret');
   // console.log(" - - - - - - token  - - - - -")
   // console.log(token);
-  var options = {
+  const options = {
     method: "POST",
     url: "/privado",
     headers: { authorization: "Bearer " + token  }
@@ -85,10 +85,10 @@ test("Try using an incorrect secret to sign the JWT", async function(t) {
 
 test("Try using an expired token", async function(t) {
   // use the token as the 'authorization' header in requests
-  var token = JWT.sign({ id: 123, "name": "Charlie" }, secret, { expiresIn: '1s' });
+  const token = JWT.sign({ id: 123, "name": "Charlie" }, secret, { expiresIn: '1s' });
   console.log(" - - - - - - token  - - - - -")
   console.log(token);
-  var options = {
+  const options = {
     method: "POST",
     url: "/privado",
     headers: { authorization: "Bearer " + token  }
@@ -104,9 +104,9 @@ test("Try using an expired token", async function(t) {
 
 test("Token is well formed but is allowed=false so should be denied", async function(t) {
   // use the token as the 'authorization' header in requests
-  // var token = jwt.sign({ "id": 1 ,"name":"Old Greg" }, 'incorrectSecret');
-  var token = JWT.sign({ id: 321, "name": "Old Gregg" }, secret);
-  var options = {
+  // const token = jwt.sign({ "id": 1 ,"name":"Old Greg" }, 'incorrectSecret');
+  const token = JWT.sign({ id: 321, "name": "Old Gregg" }, secret);
+  const options = {
     method: "POST",
     url: "/privado",
     headers: { authorization: "Bearer " + token }
@@ -119,8 +119,8 @@ test("Token is well formed but is allowed=false so should be denied", async func
 
 test("Access restricted content (with VALID Token)", async function(t) {
   // use the token as the 'authorization' header in requests
-  var token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
-  var options = {
+  const token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
+  const options = {
     method: "POST",
     url: "/privado",
     headers: { authorization: "Bearer " + token }
@@ -135,8 +135,8 @@ test("Access restricted content (with VALID Token)", async function(t) {
 
 test("Access restricted content (with Well-formed but invalid Token)", async function(t) {
   // use the token as the 'authorization' header in requests
-  var token = JWT.sign({ id: 123, "name": "Charlie" }, 'badsecret');
-  var options = {
+  const token = JWT.sign({ id: 123, "name": "Charlie" }, 'badsecret');
+  const options = {
     method: "POST",
     url: "/privado",
     headers: { authorization: "Bearer " + token }
@@ -151,7 +151,7 @@ test("Access restricted content (with Well-formed but invalid Token)", async fun
 
 // see: https://github.com/ideaq/hapi-auth-jwt2/issues/28
 test("Request with undefined auth header should 401", async function(t) {
-  var options = {
+  const options = {
     method: "POST",
     url: "/privado",
     headers: { authorization: "Bearer " }
@@ -166,7 +166,7 @@ test("Request with undefined auth header should 401", async function(t) {
 });
 
 test("Auth mode 'required' should require authentication header", async function(t) {
-  var options = {
+  const options = {
     method: "POST",
     url: "/required"
   };
@@ -178,8 +178,8 @@ test("Auth mode 'required' should require authentication header", async function
 
 test("Auth mode 'required' should fail with invalid token", async function(t) {
   // use the token as the 'authorization' header in requests
-  var token = JWT.sign({ id: 123, "name": "Charlie" }, 'badsecret');
-  var options = {
+  const token = JWT.sign({ id: 123, "name": "Charlie" }, 'badsecret');
+  const options = {
     method: "POST",
     url: "/required",
     headers: { authorization: "Bearer " + token }
@@ -194,8 +194,8 @@ test("Auth mode 'required' should fail with invalid token", async function(t) {
 
 test("Auth mode 'required' should should pass with valid token", async function(t) {
   // use the token as the 'authorization' header in requests
-  var token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
-  var options = {
+  const token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
+  const options = {
     method: "POST",
     url: "/required",
     headers: { authorization: "Bearer " + token }
@@ -209,7 +209,7 @@ test("Auth mode 'required' should should pass with valid token", async function(
 });
 
 test("Auth mode 'optional' should pass when no auth header specified", async function(t) {
-  var options = {
+  const options = {
     method: "POST",
     url: "/optional"
   };
@@ -222,8 +222,8 @@ test("Auth mode 'optional' should pass when no auth header specified", async fun
 
 test("Auth mode 'optional' should fail with invalid token", async function(t) {
   // use the token as the 'authorization' header in requests
-  var token = JWT.sign({ id: 123, "name": "Charlie" }, 'badsecret');
-  var options = {
+  const token = JWT.sign({ id: 123, "name": "Charlie" }, 'badsecret');
+  const options = {
     method: "POST",
     url: "/optional",
     headers: { authorization: "Bearer " + token }
@@ -238,9 +238,9 @@ test("Auth mode 'optional' should fail with invalid token", async function(t) {
 
 test("Auth mode 'optional' should pass with valid token", async function(t) {
   // use the token as the 'authorization' header in requests
-  // var token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
-  var token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
-  var options = {
+  // const token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
+  const token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
+  const options = {
     method: "POST",
     url: "/optional",
     headers: { authorization: "Bearer " + token }
@@ -254,7 +254,7 @@ test("Auth mode 'optional' should pass with valid token", async function(t) {
 });
 
 test("Auth mode 'try' should pass when no auth header specified", async function(t) {
-  var options = {
+  const options = {
     method: "POST",
     url: "/try"
   };
@@ -267,8 +267,8 @@ test("Auth mode 'try' should pass when no auth header specified", async function
 
 test("Auth mode 'try' should pass with invalid token", async function(t) {
   // use the token as the 'authorization' header in requests
-  var token = JWT.sign({ id: 123, "name": "Charlie" }, 'badsecret');
-  var options = {
+  const token = JWT.sign({ id: 123, "name": "Charlie" }, 'badsecret');
+  const options = {
     method: "POST",
     url: "/try",
     headers: { authorization: "Bearer " + token }
@@ -283,8 +283,8 @@ test("Auth mode 'try' should pass with invalid token", async function(t) {
 
 test("Auth mode 'try' should pass with valid token", async function(t) {
   // use the token as the 'authorization' header in requests
-  var token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
-  var options = {
+  const token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
+  const options = {
     method: "POST",
     url: "/try",
     headers: { authorization: "Bearer " + token }
@@ -299,8 +299,8 @@ test("Auth mode 'try' should pass with valid token", async function(t) {
 
 test("Scheme should set token in request.auth.token", async function(t) {
   // use the token as the 'authorization' header in requests
-  var token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
-  var options = {
+  const token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
+  const options = {
     method: "GET",
     url: "/token",
     headers: { authorization: "Bearer " + token }

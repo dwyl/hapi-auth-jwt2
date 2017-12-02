@@ -1,32 +1,32 @@
-var Hapi   = require('hapi');
-var secret = 'NeverShareYourSecret';
+const Hapi   = require('hapi');
+const secret = 'NeverShareYourSecret';
 
 // for debug options see: http://hapijs.com/tutorials/logging
-var server = new Hapi.Server({ debug: false });
+const server = new Hapi.Server({ debug: false });
 
-var db = {
+const db = {
   "123": { allowed: true,  "name": "Charlie" },
   "321": { allowed: false, "name": "Old Gregg" }
 };
 
 // defining our own validate function lets us do something
 // useful/custom with the decodedToken before reply(ing)
-var validate = function (decoded, request) {
+const validate = function (decoded, request) {
   return { valid: db[decoded.id].allowed}
 };
 
-var home = function(req, reply) {
+const home = function(req, reply) {
   return 'Hai!';
 };
 
-var privado = function(req, reply) {
+const privado = function(req, reply) {
   return 'worked';
 };
 const init = async () => {
   await server.register(require('../'));
   server.auth.strategy('jwt', 'jwt', {
     key: secret,
-    validateFunc: validate,
+    validate,
     verifyOptions: { algorithms: [ 'HS256' ] },
     urlKey: 'customUrlKey', // This is really what we are testing here
     cookieKey: 'customCookieKey',  // idem

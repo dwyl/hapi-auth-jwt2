@@ -1,11 +1,11 @@
-var test   = require('tape');
-var JWT    = require('jsonwebtoken');
-var secret = 'NeverShareYourSecret';
+const test   = require('tape');
+const JWT    = require('jsonwebtoken');
+const secret = 'NeverShareYourSecret';
 
-var server = require('./basic_server.js');
+const server = require('./basic_server.js');
 
 test("Attempt to access restricted content (without auth token)", async function(t) {
-  var options = {
+  const options = {
     method: "POST",
     url: "/privado"
   };
@@ -16,8 +16,8 @@ test("Attempt to access restricted content (without auth token)", async function
 });
 
 test("Attempt to access restricted content (with an INVALID URL Token)", async function(t) {
-  var token = "?token=my.invalid.token";
-  var options = {
+  const token = "?token=my.invalid.token";
+  const options = {
     method: "POST",
     url: "/privado" + token
   };
@@ -29,11 +29,11 @@ test("Attempt to access restricted content (with an INVALID URL Token)", async f
 
 test("Try using an incorrect secret to sign the JWT", async function(t) {
   // use the token as the 'authorization' header in requests
-  var token = JWT.sign({ id: 123, "name": "Charlie" }, 'incorrectSecret');
+  let token = JWT.sign({ id: 123, "name": "Charlie" }, 'incorrectSecret');
   token = "?token=" + token;
   // console.log(" - - - - - - token  - - - - -")
   // console.log(token);
-  var options = {
+  const options = {
     method: "POST",
     url: "/privado" + token
   };
@@ -45,10 +45,10 @@ test("Try using an incorrect secret to sign the JWT", async function(t) {
 
 test("URL Token is well formed but is allowed=false so should be denied", async function(t) {
   // use the token as the 'authorization' header in requests
-  // var token = jwt.sign({ "id": 1 ,"name":"Old Greg" }, 'incorrectSecret');
-  var token = JWT.sign({ id: 321, "name": "Old Gregg" }, secret);
+  // const token = jwt.sign({ "id": 1 ,"name":"Old Greg" }, 'incorrectSecret');
+  let token = JWT.sign({ id: 321, "name": "Old Gregg" }, secret);
   token = "?token=" + token;
-  var options = {
+  const options = {
     method: "POST",
     url: "/privado" + token
   };
@@ -60,9 +60,9 @@ test("URL Token is well formed but is allowed=false so should be denied", async 
 
 test("Access restricted content (with VALID Token)", async function(t) {
   // use the token as the 'authorization' header in requests
-  var token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
+  let token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
   token = "?token=" + token;
-  var options = {
+  const options = {
     method: "POST",
     url: "/privado" + token
   };
@@ -74,9 +74,9 @@ test("Access restricted content (with VALID Token)", async function(t) {
 
 test("Using route with urlKey=false should be denied", async function(t) {
   // use the token as the 'authorization' header in requests
-  var token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
+  let token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
   token = "?token=" + token;
-  var options = {
+  const options = {
     method: "POST",
     url: "/privadonourl" + token
   };
@@ -88,9 +88,9 @@ test("Using route with urlKey=false should be denied", async function(t) {
 
 test("Using route with urlKey='' should be denied", async function(t) {
   // use the token as the 'authorization' header in requests
-  var token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
+  let token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
   token = "?=" + token;
-  var options = {
+  const options = {
     method: "POST",
     url: "/privadonourl2" + token
   };

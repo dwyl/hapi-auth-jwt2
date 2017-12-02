@@ -1,11 +1,11 @@
-var test   = require('tape');
-var Hapi   = require('hapi');
-var JWT    = require('jsonwebtoken');
-var secret = 'NeverShareYourSecret';
+const test   = require('tape');
+const Hapi   = require('hapi');
+const JWT    = require('jsonwebtoken');
+const secret = 'NeverShareYourSecret';
 
-var keyDict = { 5678: secret };
+const keyDict = { 5678: secret };
 
-var server = new Hapi.Server();
+const server = new Hapi.Server();
 // server.connection();
 
 
@@ -15,11 +15,11 @@ test('Full token payload (header + payload + signature) is available to key look
     await server.register(require('../'));
     server.auth.strategy('jwt', 'jwt', {
       key: function (decoded) {
-        var signatureKey = keyDict[decoded.header.x5t]; // Look dynamically for key based on JWT header field
+        const signatureKey = keyDict[decoded.header.x5t]; // Look dynamically for key based on JWT header field
         return { key: signatureKey };
       },
       complete: true,
-      validateFunc: function (decoded, request) {
+      validate: function (decoded, request) {
         return { valid: true };
       },
       verifyOptions: {algorithms: ['HS256']}
@@ -32,7 +32,7 @@ test('Full token payload (header + payload + signature) is available to key look
       config: { auth: 'jwt' }
     });
 
-    var options = {
+    const options = {
       method: 'POST',
       url: '/',
       headers: {Authorization: JWT.sign({ id: 1234 }, secret, { header: { x5t: 5678 } })} // set custom JWT header field "x5t"

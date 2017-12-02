@@ -1,25 +1,25 @@
-var Hapi   = require('hapi');
-var secret = 'NeverShareYourSecret';
+const Hapi   = require('hapi');
+const secret = 'NeverShareYourSecret';
 
 // for debug options see: http://hapijs.com/tutorials/logging
-var server = new Hapi.Server({ debug: false });
+const server = new Hapi.Server({ debug: false });
 
-var db = {
+const db = {
   "123": { allowed: true,  "name": "Charlie"   },
   "321": { allowed: false, "name": "Old Gregg" }
 };
 
-var scopesDb = {
+const scopesDb = {
   "123": ['Admin', 'Authenticated'],
   "321": ['Authenticated']
 };
 
 // defining our own validate function lets us do something
 // useful/custom with the decodedToken before reply(ing)
-var validate = function (decoded, request) {
+const validate = function (decoded, request) {
 
     if (db[decoded.id].allowed) {
-      var credentials = db[decoded.id];
+      const credentials = db[decoded.id];
       credentials.scope = scopesDb[decoded.id];
       return {valid: true, credentials};
     }
@@ -28,11 +28,11 @@ var validate = function (decoded, request) {
     }
 };
 
-var home = function(req, h) {
+const home = function(req, h) {
   return 'Hai!';
 };
 
-var privado = function(req, reply) {
+const privado = function(req, reply) {
   return 'worked';
 };
 const init = async() => {
@@ -40,7 +40,7 @@ const init = async() => {
 
   server.auth.strategy('jwt', 'jwt', {
     key: secret,
-    validateFunc: validate,
+    validate,
     verifyOptions: { algorithms: [ 'HS256' ] } // use HS256 (secure) algorithm
   });
 

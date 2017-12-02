@@ -1,23 +1,23 @@
-var Hapi   = require('hapi');
-var secret = 'NeverShareYourSecret';
+const Hapi   = require('hapi');
+const secret = 'NeverShareYourSecret';
 
 // for debug options see: http://hapijs.com/tutorials/logging
-var debug;
+let debug;
 // debug = { debug: { 'request': ['error', 'uncaught'] } };
 debug = { debug: false };
-var server = new Hapi.Server(debug);
+const server = new Hapi.Server(debug);
 
-var sendToken = function(req, h) {
+const sendToken = function(req, h) {
   return req.auth.token || null;
 };
 
-var privado = function(req, h) {
+const privado = function(req, h) {
   return req.auth.credentials || null;
 };
 
 // defining our own validate function lets us do something
 // useful/custom with the decodedToken before reply(ing)
-var customVerifyFunc = function (decoded, request) {
+const customVerify = function (decoded, request) {
   if(decoded.error) {
     throw Error('customVerify fails!');
   }
@@ -32,7 +32,7 @@ const init = async() => {
   await server.register(require('../'));
 
   server.auth.strategy('jwt', 'jwt', {
-    verifyFunc: customVerifyFunc // no validateFunc or key required.
+    verify: customVerify // no validate or key required.
   });
 
   server.route([

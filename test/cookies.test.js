@@ -1,10 +1,10 @@
-var test   = require('tape');
-var JWT    = require('jsonwebtoken');
-var secret = 'NeverShareYourSecret';
-var server = require('./basic_server.js');
-var cookie_options = '; Max-Age=31536000;'; //' Expires=Mon, 18 Jul 2016 05:29:45 GMT; Secure; HttpOnly';
+const test   = require('tape');
+const JWT    = require('jsonwebtoken');
+const secret = 'NeverShareYourSecret';
+const server = require('./basic_server.js');
+const cookie_options = '; Max-Age=31536000;'; //' Expires=Mon, 18 Jul 2016 05:29:45 GMT; Secure; HttpOnly';
 
-// var cookie_options = {
+// const cookie_options = {
 //   ttl: 365 * 30 * 7 * 24 * 60 * 60 * 1000, // in the distant future ...
 //   encoding: 'none',    // we already used JWT to encode
 //   isSecure: true,      // warm & fuzzy feelings
@@ -14,8 +14,8 @@ var cookie_options = '; Max-Age=31536000;'; //' Expires=Mon, 18 Jul 2016 05:29:4
 // }
 
 test("Attempt to access restricted content using inVALID Cookie Token", async function(t) {
-  var token = JWT.sign({ id: 123, "name": "Charlie" }, 'badsecret');
-  var options = {
+  const token = JWT.sign({ id: 123, "name": "Charlie" }, 'badsecret');
+  const options = {
     method: "POST",
     url: "/privado",
     headers: { cookie: "token=" + token }
@@ -27,8 +27,8 @@ test("Attempt to access restricted content using inVALID Cookie Token", async fu
 });
 
 test("Attempt to access restricted content with VALID Token but malformed Cookie", async function(t) {
-  var token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
-  var options = {
+  const token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
+  const options = {
     method: "POST",
     url: "/privado",
     headers: { cookie: token }
@@ -40,8 +40,8 @@ test("Attempt to access restricted content with VALID Token but malformed Cookie
 });
 
 test("Access restricted content with VALID Token Cookie", async function(t) {
-  var token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
-  var options = {
+  const token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
+  const options = {
     method: "POST",
     url: "/privado",
     headers: { cookie: "token=" + token }
@@ -53,8 +53,8 @@ test("Access restricted content with VALID Token Cookie", async function(t) {
 });
 
 test("Access restricted content with VALID Token Cookie (With Options!)", async function(t) {
-  var token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
-  var options = {
+  const token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
+  const options = {
     method: "POST",
     url: "/privado",
     headers: { cookie: "token=" + token + cookie_options }
@@ -74,8 +74,8 @@ test("Access restricted content with VALID Token Cookie (With Options!)", async 
 // supply valid Token Auth Header but invalid Cookie
 // should succeed because Auth Header is first
 test("Authorization Header should take precedence over any cookie", async function(t) {
-  var token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
-  var options = {
+  const token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
+  const options = {
     method: "POST",
     url: "/privado",
     headers: {
@@ -93,9 +93,9 @@ test("Authorization Header should take precedence over any cookie", async functi
 // valid google analytics cookie but invalid auth header token
 // see: https://github.com/dwyl/hapi-auth-jwt2/issues/65#issuecomment-124791842
 test("Valid Google Analytics cookie should be ignored", async function(t) {
-  var GA = "gwcm=%7B%22expires%22%3Anull%2C%22clabel%22%3A%22SbNVCILRtFcQwcrE6gM%22%2C%22backoff%22%3A1437241242%7D; _ga=GA1.2.1363734468.1432273334";
-  var token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
-  var options = {
+  const GA = "gwcm=%7B%22expires%22%3Anull%2C%22clabel%22%3A%22SbNVCILRtFcQwcrE6gM%22%2C%22backoff%22%3A1437241242%7D; _ga=GA1.2.1363734468.1432273334";
+  const token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
+  const options = {
     method: "POST",
     url: "/privado",
     headers: {
@@ -109,9 +109,9 @@ test("Valid Google Analytics cookie should be ignored", async function(t) {
 });
 
 test("Valid Google Analytics cookie should be ignored (BAD Header Token)", async function(t) {
-  var GA = "gwcm=%7B%22expires%22%3Anull%2C%22clabel%22%3A%22SbNVCILRtFcQwcrE6gM%22%2C%22backoff%22%3A1437241242%7D; _ga=GA1.2.1363734468.1432273334";
-  var token = JWT.sign({ id: 123, "name": "Charlie" }, 'invalid');
-  var options = {
+  const GA = "gwcm=%7B%22expires%22%3Anull%2C%22clabel%22%3A%22SbNVCILRtFcQwcrE6gM%22%2C%22backoff%22%3A1437241242%7D; _ga=GA1.2.1363734468.1432273334";
+  const token = JWT.sign({ id: 123, "name": "Charlie" }, 'invalid');
+  const options = {
     method: "POST",
     url: "/privado",
     headers: {
@@ -126,9 +126,9 @@ test("Valid Google Analytics cookie should be ignored (BAD Header Token)", async
 
 // Supply a VALID Token in Cookie A-N-D valid GA in Cookie!!
 test("Valid Google Analytics cookie should be ignored (BAD Header Token)", async function(t) {
-  var GA = "gwcm=%7B%22expires%22%3Anull%2C%22clabel%22%3A%22SbNVCILRtFcQwcrE6gM%22%2C%22backoff%22%3A1437241242%7D; _ga=GA1.2.1363734468.1432273334";
-  var token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
-  var options = {
+  const GA = "gwcm=%7B%22expires%22%3Anull%2C%22clabel%22%3A%22SbNVCILRtFcQwcrE6gM%22%2C%22backoff%22%3A1437241242%7D; _ga=GA1.2.1363734468.1432273334";
+  const token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
+  const options = {
     method: "POST",
     url: "/privado",
     headers: {
@@ -141,8 +141,8 @@ test("Valid Google Analytics cookie should be ignored (BAD Header Token)", async
 });
 
 test("Attempt to access restricted content with cookieKey=false", async function(t) {
-  var token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
-  var options = {
+  const token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
+  const options = {
     method: "POST",
     url: "/privadonocookie",
     headers: { cookie: "token=" + token }
@@ -155,8 +155,8 @@ test("Attempt to access restricted content with cookieKey=false", async function
 
 
 test("Attempt to access restricted content with cookieKey=''", async function(t) {
-  var token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
-  var options = {
+  const token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
+  const options = {
     method: "POST",
     url: "/privadonocookie2",
     headers: { cookie: "=" + token }

@@ -1,12 +1,12 @@
-var test   = require('tape');
-var Hapi   = require('hapi');
-var JWT    = require('jsonwebtoken');
-var secret = 'NeverShareYourSecret';
+const test   = require('tape');
+const Hapi   = require('hapi');
+const JWT    = require('jsonwebtoken');
+const secret = 'NeverShareYourSecret';
 
 test('Auth mode \'try\' should not set isAuthenticated to true when no token sent', async function (t) {
   t.plan(2);
 
-  var server = new Hapi.Server({ debug: {"request": ["error", "uncaught"]} });
+  const server = new Hapi.Server({ debug: {"request": ["error", "uncaught"]} });
   
   try {
     await server.register(require('../'));
@@ -17,7 +17,7 @@ test('Auth mode \'try\' should not set isAuthenticated to true when no token sen
 
     server.auth.strategy('jwt', 'jwt', {
       key: secret,
-      validateFunc: function (decoded, request) {
+      validate: function (decoded, request) {
       },
       verifyOptions: {algorithms: ['HS256']}
     });
@@ -40,7 +40,7 @@ test('Auth mode \'try\' should not set isAuthenticated to true when no token sen
       }
     });
 
-    var options = {method: 'GET', url: '/try'};
+    const options = {method: 'GET', url: '/try'};
 
     const response = await server.inject(options)
       t.equal(response.statusCode, 200, 'Server returned HTTP 200');
@@ -50,7 +50,7 @@ test('Auth mode \'try\' should not set isAuthenticated to true when no token sen
 test('Auth mode \'optional\' should not set isAuthenticated to true when no token sent', async function (t) {
   t.plan(3);
 
-  var server = new Hapi.Server();
+  const server = new Hapi.Server();
 
   try{
     server.register(require('../'))
@@ -60,7 +60,7 @@ test('Auth mode \'optional\' should not set isAuthenticated to true when no toke
   t.ifError(false, 'No error registering hapi-auth-jwt2 plugin');
     server.auth.strategy('jwt', 'jwt', {
       key: secret,
-      validateFunc: function (decoded, request) {},
+      validate: function (decoded, request) {},
       verifyOptions: {algorithms: ['HS256']}
     });
 
@@ -79,7 +79,7 @@ test('Auth mode \'optional\' should not set isAuthenticated to true when no toke
       }
     });
 
-    var options = {method: 'GET', url: '/optional'};
+    const options = {method: 'GET', url: '/optional'};
 
     const response = await server.inject(options);
       t.equal(response.statusCode, 200, 'Server returned HTTP 200');

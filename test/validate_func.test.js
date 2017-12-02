@@ -1,11 +1,11 @@
-var test   = require('tape');
-var Hapi   = require('hapi');
-var JWT    = require('jsonwebtoken');
-var secret = 'NeverShareYourSecret';
+const test   = require('tape');
+const Hapi   = require('hapi');
+const JWT    = require('jsonwebtoken');
+const secret = 'NeverShareYourSecret';
 
-test('Should respond with 500 series error when validateFunc errs', async function (t) {
+test('Should respond with 500 series error when validate errs', async function (t) {
 
-  var server = new Hapi.Server({ debug: false });
+  const server = new Hapi.Server({ debug: false });
   try {
     await server.register(require('../'));
   } catch(err) {
@@ -13,7 +13,7 @@ test('Should respond with 500 series error when validateFunc errs', async functi
   }
     server.auth.strategy('jwt', 'jwt', {
       key: secret,
-      validateFunc: function (decoded, request, h) {
+      validate: function (decoded, request, h) {
         if (decoded.id === 138) {
           throw new Error('ASPLODE');
         }
@@ -36,7 +36,7 @@ test('Should respond with 500 series error when validateFunc errs', async functi
     };
 
     let response = await server.inject(options);
-      t.equal(response.statusCode, 500, 'Server returned 500 for validateFunc error');
+      t.equal(response.statusCode, 500, 'Server returned 500 for validate error');
     
     options.headers.Authorization = JWT.sign({id: 200, name: 'Test'}, secret);
     response = await server.inject(options);
