@@ -25,7 +25,7 @@ const init = async () => {
   await server.register(require('../lib'));
   server.auth.strategy('jwt', 'jwt',
   { key: 'NeverShareYourSecret', // Never Share your secret key
-    validateFunc: validate       // validate function defined above
+    validate  // validate function defined above
   });
 
   server.auth.default('jwt');
