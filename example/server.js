@@ -38,7 +38,8 @@ const init = async() => {
   await server.register(hapiAuthJWT);
   // see: http://hapijs.com/api#serverauthschemename-scheme
   server.auth.strategy('jwt', 'jwt',
-  { key: secret, validateFunc: validate,
+  { key: secret,
+    validate,
     verifyOptions: { ignoreExpiration: true }
   });
 
