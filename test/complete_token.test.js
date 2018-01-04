@@ -20,7 +20,7 @@ test('Full token payload (header + payload + signature) is available to key look
       },
       complete: true,
       validate: function (decoded, request) {
-        return { valid: true };
+        return { isValid: true };
       },
       verifyOptions: {algorithms: ['HS256']}
     });

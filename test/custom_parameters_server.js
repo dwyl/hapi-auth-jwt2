@@ -12,7 +12,7 @@ const db = {
 // defining our own validate function lets us do something
 // useful/custom with the decodedToken before reply(ing)
 const validate = function (decoded, request) {
-  return { valid: db[decoded.id].allowed}
+  return { isValid: db[decoded.id].allowed}
 };
 
 const home = function(req, reply) {

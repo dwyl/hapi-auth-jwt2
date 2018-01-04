@@ -59,10 +59,10 @@ const validate = async function (decoded, request) {
 
     // do your checks to see if the person is valid
     if (!people[decoded.id]) {
-      return { valid: false };
+      return { isValid: false };
     }
     else {
-      return { valid: true };
+      return { isValid: true };
     }
 };
 
@@ -166,7 +166,8 @@ on the **decoded** token before allowing the visitor to proceed.
 used to check the signature of the token ***or*** a **key lookup function** with
 signature `async function(decoded)` where:
     - `decoded` - the ***decoded*** but ***unverified*** JWT received from client
-    - Returns an object `{ valid, key, extraInfo }` where:
+    - Returns an object `{ isValid, key, extraInfo }` where:
+        - `isValid` - result of validation
         - `key` - the secret key (or array of keys to try)
         - `extraInfo` - (***optional***) any additional information that you would like to use in
         `validate` which can be accessed via `request.plugins['hapi-auth-jwt2'].extraInfo`
@@ -175,8 +176,8 @@ signature `async function(decoded)` where:
     - `decoded` - (***required***) is the decoded and verified JWT received in the request
     - `request` - (***required***) is the original ***request*** received from the client
     - `h` - (***required***) the response toolkit.
-    - Returns an object `{ valid, credentials, response }` where:
-        - `valid` - `true` if the JWT was valid, otherwise `false`.
+    - Returns an object `{ isValid, credentials, response }` where:
+        - `isValid` - `true` if the JWT was valid, otherwise `false`.
         - `credentials` - (***optional***) alternative credentials to be set instead of `decoded`.
         - `response` - (***optional***) If provided will be used immediately as a takeover response.
 
@@ -534,8 +535,8 @@ If you prefer specifying your own verification logic instead of having a `valida
 (*instead of a `validate`*) with signature `async function(decoded, request)` where:
     - `decoded` - (***required***) is the decoded but ***unverified*** JWT received in the request.
     - `request` - (***required***) is the original ***request*** received from the client
-    - Returns an object `{ valid, credentials }` where:
-        - `valid` - `true` if the JWT was valid, otherwise `false`.
+    - Returns an object `{ isValid, credentials }` where:
+        - `isValid` - `true` if the JWT was valid, otherwise `false`.
         - `credentials` - (***optional***) alternative credentials to be set instead of `decoded`.
 
 The advantage of this approach is that it allows people to write a

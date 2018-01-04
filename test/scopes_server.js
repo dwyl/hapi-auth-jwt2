@@ -21,10 +21,10 @@ const validate = function (decoded, request) {
     if (db[decoded.id].allowed) {
       const credentials = db[decoded.id];
       credentials.scope = scopesDb[decoded.id];
-      return {valid: true, credentials};
+      return {isValid: true, credentials};
     }
     else {
-      return {valid:false};
+      return {isValid:false};
     }
 };
 

@@ -25,10 +25,10 @@ const customVerify = function (decoded, request) {
     throw new Error(decoded.custom_error);
   }
   else if (decoded.some_property) {
-    return { valid: true, credentials: decoded};
+    return { isValid: true, credentials: decoded};
   }
   else {
-    return { valis: false };
+    return { isValid: false };
   }
 };
 

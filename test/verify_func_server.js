@@ -22,10 +22,10 @@ const customVerify = function (decoded, request) {
     throw Error('customVerify fails!');
   }
   else if (decoded.some_property) {
-    return {valid: true, credentials: decoded};
+    return {isValid: true, credentials: decoded};
   }
   else {
-    return { valid: false };
+    return { isValid: false };
   }
 };
 const init = async() => {

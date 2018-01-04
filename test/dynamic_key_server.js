@@ -40,10 +40,10 @@ const validate = function (decoded, request) {
       credentials.extraInfo = request.plugins['hapi-auth-jwt2'].extraInfo;
     }
 
-    return {valid: true, credentials};
+    return {isValid: true, credentials};
   }
   else {
-    return {valid:false};
+    return {isValid:false};
   }
 };
 
