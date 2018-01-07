@@ -65,7 +65,7 @@ test("Access restricted content without tenant specified in token", async functi
   };
   // server.inject lets us simulate an http request
   const response = await server.inject(options);
-    console.log(" - - - - RESPONSE: ");
+    console.log(" - - - - RESPONSE1: ");
     console.log(response.result);
     t.equal(response.statusCode, 400, "No tenant specified should fail!");
 

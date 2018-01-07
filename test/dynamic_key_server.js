@@ -14,7 +14,7 @@ const db = {
   "321": { allowed: false, "name": "Old Gregg" }
 };
 
-const keyFunc = function (decoded) {
+const keyFunc = async function (decoded) {
   if (decoded.tenant) {
     const key = multiTenantSecretKeys[decoded.tenant];
 
