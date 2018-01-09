@@ -1,6 +1,6 @@
 {
   "name": "hapi-auth-jwt2",
-  "version": "8.0.0",
+  "version": "7.3.0",
   "description": "Hapi.js Authentication Plugin/Scheme using JSON Web Tokens (JWT)",
   "main": "lib/index.js",
   "repository": {
@@ -58,7 +58,7 @@
     "tape": "^4.6.3"
   },
   "engines": {
-    "node": ">=4.2.3"
+    "node": ">=6"
   },
   "scripts": {
     "quick": "./node_modules/tape/bin/tape ./test/*.test.js | node_modules/tap-spec/bin/cmd.js",
