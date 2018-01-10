@@ -14,26 +14,24 @@ var people = { // our "users database"
     },
 };
 
-var tokens = {};
-
-for ( var p in people){
-    tokens[p] = JWT.sign( people[p], secret);
-}
-
+// create JWT for each person in the people "database":
+var tokens = Object.keys(people).reduce(function (obj, person) {
+  obj[person] = JWT.sign( people[person], secret);
+  return obj;
+}, {});
 
 var content = { // our "content/payload database"
     normal: {
         id: 1,
         text: 'Lorem ipsum dolor ..',
-        permissions: 'may be edited by normal user'
+        permission: 'may be edited by normal user'
     },
     important: {
         id: 2,
         text: '.. sit amet, ..',
-        permissions: 'may not be edited by normal user, only by admin'
+        permission: 'may not be edited by normal user, only by admin'
     },
 };
-
 
 module.exports = {
     people: people,

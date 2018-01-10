@@ -28,7 +28,7 @@ internals.rolePermissions = function (roleCredentials, entity) {
 internals.payload = function (request, reply) {
 
     var hasPermission = internals.rolePermissions(request.auth.credentials.role,
-        request.payload.permissions);
+        request.payload.permission);
 
     if (hasPermission) {
 
@@ -103,7 +103,7 @@ test('POST /restricted/authDependsOnPayload granted for user', function (t) {
 
       },
       function (response) {
-        t.equal(response.statusCode, 200, "Server returned 200 for OK");
+        t.equal(response.statusCode, 200, "200 OK");
         t.end();
     });
 
@@ -121,7 +121,12 @@ test('POST /restricted/authDependsOnPayload granted for admin', function (t) {
     payload: payload_data.content['important']
 
   }, function (response) {
-    t.equal(response.statusCode, 200, "Server returned 200 for OK");
+    // test for POST request.payload github.com/dwyl/hapi-auth-jwt2/issues/219
+    var payload = JSON.parse(response.payload).payload;
+    t.deepEqual(payload, payload_data.content.important,
+      "request.payload is returned in response.payload.payload as expected");
+
+    t.equal(response.statusCode, 200, "200 OK");
     t.end();
   });
 });
@@ -139,7 +144,7 @@ test('POST /restricted/authDependsOnPayload 401 as not admin', function (t) {
 
     }, function (response) {
       t.equal(response.statusCode, 401,
-        "Unauthorized, because payload requires admin");
+        "401 Unauthorized, because payload requires admin");
       t.end();
     });
 
