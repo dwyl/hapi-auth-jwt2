@@ -1,12 +1,9 @@
 var test = require('tape');
 var Hapi = require('hapi');
 var Boom = require('boom');
-
 var JWT = require('jsonwebtoken');
-var _ = require('lodash');
 
 var secret = 'NeverShareYourSecret';
-
 
 var myvariables = require('./options_payload_validation_data');
 var internals = {};
@@ -25,7 +22,7 @@ internals.rolePermissions = function (roleCredentials, entity) {
         // admin can <edit> both content types
     };
 
-    var hasPermission = _.includes(acl[roleCredentials], entity);
+    var hasPermission = acl[roleCredentials].includes(entity);
     return hasPermission;
 };
 
