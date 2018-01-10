@@ -25,13 +25,12 @@ var content = { // our "content/payload database"
     normal: {
         id: 1,
         text: 'Lorem ipsum dolor ..',
-        type: 'may be edited by normal user'
-
+        permissions: 'may be edited by normal user'
     },
     important: {
-        id: 1,
+        id: 2,
         text: '.. sit amet, ..',
-        type: 'may not be edited by normal user, only by admin'
+        permissions: 'may not be edited by normal user, only by admin'
     },
 };
 
