@@ -73,10 +73,7 @@ const init = async () =>{
       key: secret,
       validate,
       verifyOptions: { algorithms : ['HS256'] },
-      headerless: {
-        alg: 'HS256',
-        typ: 'JWT'
-      }
+      headless: { alg: 'HS256', typ: 'JWT' }
     });
 
     server.route([
@@ -90,7 +87,7 @@ const init = async () =>{
       { method: 'POST', path: '/required', handler: privado, config: { auth: { mode: 'required', strategy: 'jwt' } } },
       { method: 'POST', path: '/optional', handler: privado, config: { auth: { mode: 'optional', strategy: 'jwt' } } },
       { method: 'POST', path: '/try', handler: privado, config: { auth: { mode: 'try', strategy: 'jwt' } } },
-      { method: 'POST', path: '/headerless', handler: privado, config: { auth:  'jwt-headless' } }
+      { method: 'POST', path: '/headless', handler: privado, config: { auth:  'jwt-headless' } }
     ]);
   } catch(e) {
     throw e;

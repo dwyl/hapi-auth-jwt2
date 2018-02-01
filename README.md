@@ -203,6 +203,7 @@ signature `async function(decoded)` where:
 - `headerKey` - (***optional***  *defaults to* `'authorization'`) - The lowercase name of an HTTP header to read the token from. To disable reading the token from a header, set this to `false` or ''.
 - `tokenType` - (***optional*** *defaults to none*) - allow custom token type, e.g. `Authorization: <tokenType> 12345678`.
 - `complete` - (***optional*** *defaults to* `false`) - set to `true` to receive the complete token (`decoded.header`, `decoded.payload` and `decoded.signature`) as `decoded` argument to key lookup and `verify` callbacks (*not `validate`*)
+- `headless` - (***optional*** *defaults to none*) - set to an `object` containing the header part of the JWT token that should be added to a headless JWT token received. Token's with headers can still be used with this option activated. e.g `{ alg: 'HS256', typ: 'JWT' }`
 
 ### Useful Features
 
