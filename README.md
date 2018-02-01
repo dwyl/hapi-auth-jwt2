@@ -45,9 +45,9 @@ This basic usage example should help you get started:
 
 
 ```javascript
-var Hapi = require('hapi');
+const Hapi = require('hapi');
 
-var people = { // our "users database"
+const people = { // our "users database"
     1: {
       id: 1,
       name: 'Jen Jones'
@@ -55,53 +55,55 @@ var people = { // our "users database"
 };
 
 // bring your own validation function
-var validate = function (decoded, request, callback) {
+const validate = async function (decoded, request) {
 
     // do your checks to see if the person is valid
     if (!people[decoded.id]) {
-      return callback(null, false);
+      return { isValid: false };
     }
     else {
-      return callback(null, true);
+      return { isValid: true };
     }
 };
 
-var server = new Hapi.Server();
-server.connection({ port: 8000 });
-        // include our module here ↓↓
-server.register(require('hapi-auth-jwt2'), function (err) {
+const init = async () => {
+  const server = new Hapi.Server({ port: 8000 });
+  // include our module here ↓↓
+  await server.register(require('hapi-auth-jwt2'));
 
-    if(err){
-      console.log(err);
-    }
+  server.auth.strategy('jwt', 'jwt',
+  { key: 'NeverShareYourSecret',          // Never Share your secret key
+    validate: validate,            // validate function defined above
+    verifyOptions: { algorithms: [ 'HS256' ] } // pick a strong algorithm
+  });
 
-    server.auth.strategy('jwt', 'jwt',
-    { key: 'NeverShareYourSecret',          // Never Share your secret key
-      validateFunc: validate,            // validate function defined above
-      verifyOptions: { algorithms: [ 'HS256' ] } // pick a strong algorithm
-    });
+  server.auth.default('jwt');
 
-    server.auth.default('jwt');
-
-    server.route([
-      {
-        method: "GET", path: "/", config: { auth: false },
-        handler: function(request, reply) {
-          reply({text: 'Token not required'});
-        }
-      },
-      {
-        method: 'GET', path: '/restricted', config: { auth: 'jwt' },
-        handler: function(request, reply) {
-          reply({text: 'You used a Token!'})
-          .header("Authorization", request.headers.authorization);
-        }
+  server.route([
+    {
+      method: "GET", path: "/", config: { auth: false },
+      handler: function(request, reply) {
+        reply({text: 'Token not required'});
       }
-    ]);
-});
+    },
+    {
+      method: 'GET', path: '/restricted', config: { auth: 'jwt' },
+      handler: function(request, reply) {
+        reply({text: 'You used a Token!'})
+        .header("Authorization", request.headers.authorization);
+      }
+    }
+  ]);
+  await server.start();
+  return server;
+};
 
-server.start(function () {
+
+init().then(server => {
   console.log('Server running at:', server.info.uri);
+})
+.catch(error => {
+  console.log(error);
 });
 ```
 
@@ -155,28 +157,29 @@ or visit this url in your browser (*passing the token in url*):
 
 That's it.
 
-Now write your own `validateFunc` with what ever checks you want to perform
+Now write your own `validate` with what ever checks you want to perform
 on the **decoded** token before allowing the visitor to proceed.
 
 ## Documentation
 
 - `key` - (***required*** - *unless you have a `customVerify` function*) the secret key (or array of potential keys)
 used to check the signature of the token ***or*** a **key lookup function** with
-signature `function(decoded, callback)` where:
+signature `async function(decoded)` where:
     - `decoded` - the ***decoded*** but ***unverified*** JWT received from client
-    - `callback` - callback function with the signature `function(err, key, extraInfo)` where:
-        - `err` - an internal error
+    - Returns an object `{ isValid, key, extraInfo }` where:
+        - `isValid` - result of validation
         - `key` - the secret key (or array of keys to try)
         - `extraInfo` - (***optional***) any additional information that you would like to use in
-        `validateFunc` which can be accessed via `request.plugins['hapi-auth-jwt2'].extraInfo`
-- `validateFunc` - (***required***) the function which is run once the Token has been decoded with
- signature `function(decoded, request, callback)` where:
+        `validate` which can be accessed via `request.plugins['hapi-auth-jwt2'].extraInfo`
+- `validate` - (***required***) the function which is run once the Token has been decoded with
+ signature `async function(decoded, request, h)` where:
     - `decoded` - (***required***) is the decoded and verified JWT received in the request
     - `request` - (***required***) is the original ***request*** received from the client
-    - `callback` - (***required***) a callback function with the signature `function(err, isValid, credentials)` where:
-        - `err` - an internal error.
-        - `valid` - `true` if the JWT was valid, otherwise `false`.
+    - `h` - (***required***) the response toolkit.
+    - Returns an object `{ isValid, credentials, response }` where:
+        - `isValid` - `true` if the JWT was valid, otherwise `false`.
         - `credentials` - (***optional***) alternative credentials to be set instead of `decoded`.
+        - `response` - (***optional***) If provided will be used immediately as a takeover response.
 
 ### *Optional* Parameters
 
@@ -199,7 +202,8 @@ signature `function(decoded, callback)` where:
 - `cookieKey` - (***optional*** *defaults to* `'token'`) - if you prefer to set your own cookie key or your project has a cookie called `'token'` for another purpose, you can set a custom key for your cookie by setting `options.cookieKey='yourkeyhere'`. To disable cookies set cookieKey to `false` or ''.
 - `headerKey` - (***optional***  *defaults to* `'authorization'`) - The lowercase name of an HTTP header to read the token from. To disable reading the token from a header, set this to `false` or ''.
 - `tokenType` - (***optional*** *defaults to none*) - allow custom token type, e.g. `Authorization: <tokenType> 12345678`.
-- `complete` - (***optional*** *defaults to* `false`) - set to `true` to receive the complete token (`decoded.header`, `decoded.payload` and `decoded.signature`) as `decoded` argument to key lookup and `verifyFunc` callbacks (*not `validateFunc`*)
+- `complete` - (***optional*** *defaults to* `false`) - set to `true` to receive the complete token (`decoded.header`, `decoded.payload` and `decoded.signature`) as `decoded` argument to key lookup and `verify` callbacks (*not `validate`*)
+- `headless` - (***optional*** *defaults to none*) - set to an `object` containing the header part of the JWT token that should be added to a headless JWT token received. Token's with headers can still be used with this option activated. e.g `{ alg: 'HS256', typ: 'JWT' }`
 
 ### Useful Features
 
@@ -223,7 +227,7 @@ example:
 ```js
 server.auth.strategy('jwt', 'jwt', true,
 { key: 'NeverShareYourSecret', // Never Share your secret key
-  validateFunc: validate,      // validate function defined above
+  validate: validate,      // validate function defined above
   verifyOptions: {
     ignoreExpiration: true,    // do not reject expired tokens
     algorithms: [ 'HS256' ]    // specify your secure algorithm
@@ -239,7 +243,7 @@ For [security reasons](https://auth0.com/blog/2015/03/31/critical-vulnerabilitie
 ```js
 server.auth.strategy('jwt', 'jwt', true,
 { key: 'YourSuperLongKeyHere', // Never Share your secret key
-  validateFunc: validate,      // validate function defined above
+  validate: validate,      // validate function defined above
   verifyOptions: { algorithms: [ 'HS256' ] }  // only allow HS256 algorithm
 });
 ```
@@ -259,7 +263,7 @@ If your key is base64 encoded, then for JWT2 to use it you need to convert it to
 ```js
 server.auth.strategy('jwt', 'jwt', true,
 { key: Buffer('<Your Base64 encoded secret key>', 'base64'), // Never Share your secret key
-  validateFunc: validate,      // validate function defined above
+  validate: validate,      // validate function defined above
   verifyOptions: { algorithms: [ 'HS256' ] }  // only allow HS256 algorithm
 });
 ```
@@ -278,14 +282,14 @@ This plugin supports [authentication modes](http://hapijs.com/api#route-options)
 
 - This option to look up a secret key was added to support "multi-tenant" environments. One use case would be companies that white label API services for their customers and cannot use a shared secret key. If the key lookup function needs to use fields from the token header (e.g. [x5t header](http://self-issued.info/docs/draft-jones-json-web-token-01.html#ReservedHeaderParameterName), set option `completeToken` to `true`.
 
-- The reason why you might want to pass back `extraInfo` in the callback is because you likely need to do a database call to get the key which also probably returns useful user data. This could save you another call in `validateFunc`.
+- The reason why you might want to pass back `extraInfo` in the callback is because you likely need to do a database call to get the key which also probably returns useful user data. This could save you another call in `validate`.
 
 - The key or value returned by the key lookup function can also be an array of keys to try.  Keys will be tried until one of them successfully verifies the signature. The request will only be unauthorized if ALL of the keys fail to verify. This is useful if you want to support multiple valid keys (like continuing to accept a deprecated key while a client switches to a new key).
 
 ```js
 server.auth.strategy('jwt', 'jwt', true,
 { key: [ 'PrimareSecretKey', 'DeprecatedKeyStillAcceptableForNow' ],
-  validateFunc: validate,
+  validate: validate,
   verifyOptions: { algorithms: [ 'HS256' ] }
 });
 ```
@@ -305,10 +309,10 @@ https://yoursite.co/path?token=your.jsonwebtoken.here
 You will need to generate/supply a valid tokens for this to work.
 
 ```js
-var JWT   = require('jsonwebtoken');
-var obj   = { id:123,"name":"Charlie" }; // object/info you want to sign
-var token = JWT.sign(obj, secret);
-var url   = "/path?token="+token;
+const JWT   = require('jsonwebtoken');
+const obj   = { id:123,"name":"Charlie" }; // object/info you want to sign
+const token = JWT.sign(obj, secret);
+const url   = "/path?token="+token;
 ```
 
 > What if I want to *disable* the ability to pass JWTs in via the URL?
@@ -358,7 +362,7 @@ a few lines to your code:
 Firstly set the options you want to apply to your cookie:
 
 ```js
-var cookie_options = {
+const cookie_options = {
   ttl: 365 * 24 * 60 * 60 * 1000, // expires a year from today
   encoding: 'none',    // we already used JWT to encode
   isSecure: true,      // warm & fuzzy feelings
@@ -403,7 +407,7 @@ node module from NPM with `npm install jsonwebtoken --save` if you want to ***si
 Even though **hapi-auth-jwt2** includes it
 as a **dependency** your app does not know where to find it in the **node_modules** tree for your project.
 Unless you include it via ***relative path*** e.g:
-`var JWT = require('./node_modules/hapi-auth-jwt2/node_modules/jsonwebtoken');`
+`const JWT = require('./node_modules/hapi-auth-jwt2/node_modules/jsonwebtoken');`
 we *recommend* including it in your **package.json** ***explicitly*** as a **dependency** for your project.
 
 ### ***Custom Verification*** ?
@@ -412,7 +416,7 @@ Can we supply a ***Custom Verification*** function instead of using the **JWT.ve
 asked by *both* [Marcus Stong](https://github.com/stongo) & [Kevin Stewart](https://github.com/kdstew)
 in [issue #120](https://github.com/dwyl/hapi-auth-jwt2/issues/120) and [issue #130](https://github.com/dwyl/hapi-auth-jwt2/issues/130) respectively.
 **Q**: Does this module support custom verification function or disabling verification?
-**A**: Yes, it *does now*! (*see: "Advanced Usage" below*) the inclusion of a `verifyFunc`
+**A**: Yes, it *does now*! (*see: "Advanced Usage" below*) the inclusion of a `verify`
 gives you *complete control* over the verification of the incoming JWT.
 
 <br />
@@ -432,7 +436,7 @@ https://github.com/dwyl/hapi-auth-jwt2/issues/151#issuecomment-218321212
 
 Asked by [@SanderElias](https://github.com/SanderElias) in [hapi-auth-jwt2/issues/126](https://github.com/dwyl/hapi-auth-jwt2/issues/126)
 
-We store our JWT-based sessions in a Redis datastore and lookup the session (`jti`) for the given JWT during the `validateFunc` (*validation function*) see: https://github.com/dwyl/hapi-auth-jwt2-example/blob/791b0d3906d4deb256daf23fcf8f5021905abe9e/index.js#L25
+We store our JWT-based sessions in a Redis datastore and lookup the session (`jti`) for the given JWT during the `validate` (*validation function*) see: https://github.com/dwyl/hapi-auth-jwt2-example/blob/791b0d3906d4deb256daf23fcf8f5021905abe9e/index.js#L25
 This means we can invalidate the session in Redis and then reject a request that uses an "old" or invalid JWT. see: https://github.com/dwyl/hapi-auth-jwt2-example/blob/791b0d3906d4deb256daf23fcf8f5021905abe9e/index.js#L25
 
 
@@ -448,7 +452,7 @@ We tend to enable `hapi-auth-jwt2` for _all_ routes by setting the `mode` parame
 // setting the 3rd argument to true means 'mode' is 'required' see: http://hapijs.com/tutorials/auth#mode
 server.auth.strategy('jwt', 'jwt', true, { // so JWT auth is required for all routes
   key: process.env.JWT_SECRET,
-  validateFunc: require('./jwt2_validate_func'),
+  validate: require('./jwt2_validate_func'),
   verifyOptions: { ignoreExpiration: true, algorithms: [ 'HS256' ] }
 });
 ```
@@ -500,7 +504,7 @@ And you want to change the user's permission to `SUPER_ADMIN`.
 
 Retrieve the initial session object added as a token to `/`  
 ```js
-var session  = request.auth.credentials;
+const session  = request.auth.credentials;
 ```
 Change the object
 ```js
@@ -508,17 +512,17 @@ session.permission = 'SUPER_ADMIN';
 ```
 Sign as a JWT token again
 ```js
-var token = JWT.sign(session, process.env.JWT_SECRET);
+const token = JWT.sign(session, process.env.JWT_SECRET);
 ```
 Reply as usual whilst re-adding the token to your original endpoint `/`
 ```js
 reply().state('token', token, { path: '/' }).redirect('/wherever');
 ```
 
-## *Advanced/Alternative* Usage => Bring Your Own `verifyFunc`
+## *Advanced/Alternative* Usage => Bring Your Own `verify`
 
 While *most* people using `hapi-auth-jwt2` will opt for the *simpler* use case
-(*using a* ***Validation Function*** *`validateFunc` - see: Basic Usage example above -
+(*using a* ***Validation Function*** *`validate` - see: Basic Usage example above -
   which validates the JWT payload after it has been verified...*)
 others may need more control over the `verify` step.
 
@@ -526,15 +530,14 @@ The [*internals*](https://github.com/dwyl/hapi-auth-jwt2/blob/eb9fff9fc384fde07e
 of `hapi-auth-jwt2` use the `jsonwebtoken.verify` method to ***verify*** if the
 JTW was signed using the `JWT_SECRET` (*secret key*).
 
-If you prefer specifying your own verification logic instead of having a `validateFunc`, simply define a `verifyFunc` instead when initializing the plugin.
+If you prefer specifying your own verification logic instead of having a `validate`, simply define a `verify` instead when initializing the plugin.
 
-- `verifyFunc` - (***optional***) the function which is run once the Token has been decoded
-(*instead of a `validateFunc`*) with signature `function(decoded, request, callback)` where:
+- `verify` - (***optional***) the function which is run once the Token has been decoded
+(*instead of a `validate`*) with signature `async function(decoded, request)` where:
     - `decoded` - (***required***) is the decoded but ***unverified*** JWT received in the request.
     - `request` - (***required***) is the original ***request*** received from the client
-    - `callback` - (***required***) a callback function with the signature `function(err, isValid, credentials)` where:
-        - `err` - an internal error.
-        - `valid` - `true` if the JWT was valid, otherwise `false`.
+    - Returns an object `{ isValid, credentials }` where:
+        - `isValid` - `true` if the JWT was valid, otherwise `false`.
         - `credentials` - (***optional***) alternative credentials to be set instead of `decoded`.
 
 The advantage of this approach is that it allows people to write a
@@ -543,17 +546,17 @@ For more detail, see: use-case discussion in https://github.com/dwyl/hapi-auth-j
 
 
 > ***Note***: *nobody has requested the ability to use* ***both*** *a*
-`validateFunc` ***and*** `verifyFunc`.
+`validate` ***and*** `verify`.
 This should not be *necessary*
-because with a `verifyFunc` you can incorporate your own custom-logic.
+because with a `verify` you can incorporate your own custom-logic.
 
 <br />
 
 ### Compatibility
 
-`hapi-auth-jwt2` is compatible with Hapi.js versions `16.x.x`
+`hapi-auth-jwt2` version `8.x.x` is compatible with Hapi.js version `17.x.x`, while `7.x.x` is compatible with `16.x.x`
 `15.x.x` `14.x.x` `13.x.x` `12.x.x` `11.x.x` `10.x.x` `9.x.x` and `8.x.x`
-as there have been ***no changes*** to how the Hapi plugin system works for a while!
+hapi `17.x.x` is a major rewrite that's why it is version `8.x.x` of the plugin is not backward compatible!
 
 However in the interest of
  security/performance we *recommend* using the [*latest version*](https://github.com/hapijs/hapi/) of Hapi.
@@ -594,9 +597,9 @@ please see: https://github.com/dwyl/time/tree/master/api/lib
 
 + **app.js** ***registering*** the **hapi-auth-jwt2 plugin**:
 [app.js#L13](https://github.com/dwyl/time/blob/0a5ec8711840528a4960c388825fb883fabddd76/app.js#L13)
-+ telling app.js where to find our **validateFunc**tion:
++ telling app.js where to find our **validate** Function:
 [app.js#L21](https://github.com/dwyl/time/blob/0a5ec8711840528a4960c388825fb883fabddd76/app.js#L21)
-+ **validateFunc**tion (how we check the JWT is still valid):
++ **validate** Function (how we check the JWT is still valid):
 [api/lib/auth_jwt_validate.js](https://github.com/dwyl/time/blob/0a5ec8711840528a4960c388825fb883fabddd76/api/lib/auth_jwt_validate.js) looks up the person's session in our ElasticSearch Database
 if the [session record is ***found*** (valid) and ***not ended***](https://github.com/dwyl/time/blob/0a5ec8711840528a4960c388825fb883fabddd76/api/lib/auth_jwt_validate.js#L12) we allow the person to see the restricted content.
 + **Signing your JWTs**: in your app you need a method to *sign* the JWTs (and put them in a database
@@ -645,7 +648,7 @@ but they were invariably ***too complicated***, poorly documented and
 had *useless* (non-real-world) "examples"!
 
 Also, none of the *existing* modules exposed the **request** object
-to the **validateFunc** which we thought might be handy.
+to the **validate** which we thought might be handy.
 
 So we decided to write our own module addressing all these issues.
 

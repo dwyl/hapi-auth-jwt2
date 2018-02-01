@@ -1,11 +1,11 @@
-var Hapi        = require('hapi');
-var hapiAuthJWT = require('../lib/');
-var JWT         = require('jsonwebtoken');  // used to sign our content
-var port        = process.env.PORT || 8000; // allow port to be set
+const Hapi        = require('hapi');
+const hapiAuthJWT = require('../lib/');
+const JWT         = require('jsonwebtoken');  // used to sign our content
+const port        = process.env.PORT || 8000; // allow port to be set
 
-var secret = 'NeverShareYourSecret'; // Never Share This! even in private GitHub repos!
+const secret = 'NeverShareYourSecret'; // Never Share This! even in private GitHub repos!
 
-var people = {
+const people = {
     1: {
       id: 1,
       name: 'Anthony Valid User'
@@ -13,10 +13,10 @@ var people = {
 };
 
 // use the token as the 'authorization' header in requests
-var token = JWT.sign(people[1], secret); // synchronous
+const token = JWT.sign(people[1], secret); // synchronous
 console.log(token);
 // bring your own validation function
-var validate = function (decoded, request, callback) {
+const validate = async function (decoded, request, h) {
   console.log(" - - - - - - - decoded token:");
   console.log(decoded);
   console.log(" - - - - - - - request info:");
@@ -26,23 +26,20 @@ var validate = function (decoded, request, callback) {
 
   // do your checks to see if the person is valid
   if (!people[decoded.id]) {
-    return callback(null, false);
+    return { isValid: false };
   }
   else {
-    return callback(null, true);
+    return { isValid : true };
   }
 };
 
-var server = new Hapi.Server();
-server.connection({ port: port });
-
-server.register(hapiAuthJWT, function (err) {
-  if(err){
-    console.log(err);
-  }
+const init = async() => {
+  const server = new Hapi.Server({ port: port });
+  await server.register(hapiAuthJWT);
   // see: http://hapijs.com/api#serverauthschemename-scheme
   server.auth.strategy('jwt', 'jwt',
-  { key: secret, validateFunc: validate,
+  { key: secret,
+    validate,
     verifyOptions: { ignoreExpiration: true }
   });
 
@@ -51,20 +48,28 @@ server.register(hapiAuthJWT, function (err) {
   server.route([
     {
       method: "GET", path: "/", config: { auth: false },
-      handler: function(request, reply) {
-        reply({text: 'Token not required'});
+      handler: function(request, h) {
+        return {text: 'Token not required'};
       }
     },
     {
       method: 'GET', path: '/restricted', config: { auth: 'jwt' },
-      handler: function(request, reply) {
-        reply({message: 'You used a Valid JWT Token to access /restricted endpoint!'})
-        .header("Authorization", request.headers.authorization);
+      handler: function(request, h) {
+        const response = h.response({message: 'You used a Valid JWT Token to access /restricted endpoint!'});
+        response.header("Authorization", request.headers.authorization);
+        return response;
       }
     }
   ]);
-});
+  await server.start();
+  return server;
+  
+  
+};
 
-server.start(function () {
+init().then(server => {
   console.log('Server running at:', server.info.uri);
+}).catch(err => {
+  console.log(err);
 });
+  
