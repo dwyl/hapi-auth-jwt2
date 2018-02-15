@@ -69,8 +69,15 @@ const init = async () =>{
       cookieKey: ''
     });
 
+    server.auth.strategy('jwt-headless', 'jwt', {
+      key: secret,
+      validate,
+      verifyOptions: { algorithms : ['HS256'] },
+      headless: { alg: 'HS256', typ: 'JWT' }
+    });
+
     server.route([
-      { method: 'GET',  path: '/', handler: home, config: { auth: false } },
+      { method: 'GET', path: '/', handler: home, config: { auth: false } },
       { method: 'GET', path: '/token', handler: sendToken, config: { auth: 'jwt' } },
       { method: 'POST', path: '/privado', handler: privado, config: { auth: 'jwt' } },
       { method: 'POST', path: '/privadonourl', handler: privado, config: { auth: 'jwt-nourl' } },
@@ -79,7 +86,8 @@ const init = async () =>{
       { method: 'POST', path: '/privadonocookie2', handler: privado, config: { auth: 'jwt-nocookie2' } },
       { method: 'POST', path: '/required', handler: privado, config: { auth: { mode: 'required', strategy: 'jwt' } } },
       { method: 'POST', path: '/optional', handler: privado, config: { auth: { mode: 'optional', strategy: 'jwt' } } },
-      { method: 'POST', path: '/try', handler: privado, config: { auth: { mode: 'try', strategy: 'jwt' } } }
+      { method: 'POST', path: '/try', handler: privado, config: { auth: { mode: 'try', strategy: 'jwt' } } },
+      { method: 'POST', path: '/headless', handler: privado, config: { auth:  'jwt-headless' } }
     ]);
   } catch(e) {
     throw e;
