@@ -1,47 +1,46 @@
-var Hapi   = require('hapi');
-var secret = 'NeverShareYourSecret';
+const Hapi   = require('hapi');
+const secret = 'NeverShareYourSecret';
 
 // for debug options see: http://hapijs.com/tutorials/logging
-var server = new Hapi.Server({ debug: false });
-server.connection();
+const server = new Hapi.Server({ debug: false });
 
-var db = {
+const db = {
   "123": { allowed: true,  "name": "Charlie"   },
   "321": { allowed: false, "name": "Old Gregg" }
 };
 
-var scopesDb = {
+const scopesDb = {
   "123": ['Admin', 'Authenticated'],
   "321": ['Authenticated']
 };
 
 // defining our own validate function lets us do something
 // useful/custom with the decodedToken before reply(ing)
-var validate = function (decoded, request, callback) {
+const validate = function (decoded, request) {
 
     if (db[decoded.id].allowed) {
-      var credentials = db[decoded.id];
+      const credentials = db[decoded.id];
       credentials.scope = scopesDb[decoded.id];
-      return callback(null, true, credentials);
+      return {isValid: true, credentials};
     }
     else {
-      return callback(null, false);
+      return {isValid:false};
     }
 };
 
-var home = function(req, reply) {
-  reply('Hai!');
+const home = function(req, h) {
+  return 'Hai!';
 };
 
-var privado = function(req, reply) {
-  reply('worked');
+const privado = function(req, reply) {
+  return 'worked';
 };
-
-server.register(require('../'), function () {
+const init = async() => {
+  await server.register(require('../'));
 
   server.auth.strategy('jwt', 'jwt', {
     key: secret,
-    validateFunc: validate,
+    validate,
     verifyOptions: { algorithms: [ 'HS256' ] } // use HS256 (secure) algorithm
   });
 
@@ -50,6 +49,8 @@ server.register(require('../'), function () {
     { method: 'POST', path: '/privado-with-scope', handler: privado, config: { auth: { strategy: 'jwt', scope: [ 'Admin' ] } } }
   ]);
 
-});
+};
+
+init();
 
 module.exports = server;
