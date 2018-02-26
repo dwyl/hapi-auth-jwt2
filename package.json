@@ -35,6 +35,10 @@
     {
       "name": "Steven Gangstead",
       "email": "@gangstead <steven@gangstead.com>"
+    },
+    {
+      "name": "Samy Al Zahrani",
+      "user": "salzhrani"
     }
   ],
   "license": "ISC",
