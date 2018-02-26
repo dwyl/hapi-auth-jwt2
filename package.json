@@ -96,7 +96,6 @@
     "report": "open coverage/lcov-report/index.html"
   },
   "pre-commit": [
-    "coverage",
-    "jshint"
+    "coverage"
   ]
 }
