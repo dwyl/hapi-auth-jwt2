@@ -94,6 +94,7 @@
     "test": "nyc tape ./test/*.test.js | tap-nyc",
     "coverage": "nyc tape ./test/*.test.js && nyc",
     "lint": "eslint lib",
+    "fixlint": "eslint lib --fix",
     "start": "node example/server.js",
     "report": "open coverage/lcov-report/index.html"
   },
