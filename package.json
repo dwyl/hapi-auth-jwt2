@@ -1,6 +1,6 @@
 {
   "name": "hapi-auth-jwt2",
-  "version": "8.0.0",
+  "version": "8.0.1",
   "description": "Hapi.js Authentication Plugin/Scheme using JSON Web Tokens (JWT)",
   "main": "lib/index.js",
   "repository": {
@@ -14,7 +14,7 @@
     "JSON Web Tokens",
     "JWT"
   ],
-  "author": "@nelsonic <contact.nelsonic@gmail.com> (https://github.com/nelsonic)",
+  "author": "@nelsonic https://github.com/nelsonic",
   "contributors": [
     {
       "name": "Kevin Wu",
@@ -38,7 +38,7 @@
     },
     {
       "name": "Samy Al Zahrani",
-      "user": "salzhrani"
+      "user": "@salzhrani"
     }
   ],
   "license": "ISC",
@@ -53,17 +53,14 @@
   },
   "devDependencies": {
     "aguid": "^2.0.0",
-    "babel-eslint": "^8.2.2",
     "eslint": "^4.12.1",
     "eslint-plugin-prettier": "^2.6.0",
     "hapi": "^17.0.1",
     "istanbul": "^0.4.5",
-    "jshint": "^2.9.4",
     "nyc": "^11.3.0",
     "pre-commit": "^1.2.2",
     "prettier": "^1.11.1",
     "tap-nyc": "^1.0.3",
-    "tap-spec": "^4.1.1",
     "tape": "^4.8.0"
   },
   "engines": {
@@ -99,6 +96,7 @@
     "report": "open coverage/lcov-report/index.html"
   },
   "pre-commit": [
+    "lint",
     "coverage"
   ]
 }
