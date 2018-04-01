@@ -189,7 +189,7 @@ signature `async function(decoded)` where:
     - `algorithms` - list of allowed algorithms
 - `responseFunc` - (***optional***) function called to decorate the response with authentication headers before the response headers or payload is written where:
     - `request` - the request object.
-    - `reply(err, response)`- is called if an error occurred
+    - `h`- the response toolkit.
 - `errorFunc` - (***optional*** *defaults to raising the error requested*) function called when an error has been raised. It provides an extension point to allow the host the ability to customise the error messages returned. Passed in object follows the following schema:
     - `errorContext.errorType` - ***required*** the `Boom` method to call (eg. unauthorized)
     - `errorContext.message` - ***required*** the `message` passed into the `Boom` method call

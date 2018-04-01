@@ -41,6 +41,15 @@ const responseFunction = function(req, h) {
     }
 }
 
+const responseAsyncFunction = async function(req, h) {
+    await new Promise(resolve => setTimeout(() => resolve(), 200));
+    if(req.headers.error === 'true') {
+        throw new Error('async failed');
+    } else {
+        req.response.header('Authorization', 'from scheme response function');
+    }
+}
+
 const init = async() => {
 
     await server.register(require('../'));
@@ -52,6 +61,15 @@ const init = async() => {
             algorithms: [ 'HS256' ]
         }, // only allow HS256 algorithm
         responseFunc: responseFunction
+    });
+
+    server.auth.strategy('asyncJwt', 'jwt', {
+        key: secret,
+        validate,
+        verifyOptions: {
+            algorithms: [ 'HS256' ]
+        }, // only allow HS256 algorithm
+        responseFunc: responseAsyncFunction
     });
 
     server.route([
@@ -89,7 +107,15 @@ const init = async() => {
                     strategy: 'jwt'
                 }
             }
-        }
+        },
+        {
+            method: 'POST',
+            path: '/async',
+            handler: sendToken,
+            config: {
+                auth: 'asyncJwt'
+            }
+        },
     ]);
 
 };
