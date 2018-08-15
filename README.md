@@ -447,10 +447,10 @@ This means we can invalidate the session in Redis and then reject a request that
 We tend to enable `hapi-auth-jwt2` for _all_ routes by setting the default strategy to 'jwt' (so its `required` for all endpoints) because _most_ of the endpoints in our app require the person/user to be authenticated e.g:
 
 ```js
-server.auth.strategy('jwt', 'jwt', { // so JWT auth is required for all routes
+server.auth.strategy('jwt', 'jwt', {
   ...
 });
-server.auth.default('jwt');
+server.auth.default('jwt'); // so JWT auth is required for all routes
 ```
 
 When you want a particular route to ***not require*** JWT auth you simply set `config: { auth: false }` e.g:
