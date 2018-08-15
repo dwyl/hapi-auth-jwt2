@@ -444,17 +444,14 @@ This means we can invalidate the session in Redis and then reject a request that
 
 [@abeninskibede](https://github.com/abeninskibede) asked how to set all routes to use JWT Auth in [hapi-auth-jwt2/issues/149](https://github.com/dwyl/hapi-auth-jwt2/issues/149)
 
-We tend to enable `hapi-auth-jwt2` for _all_ routes by setting the `mode` parameter to `true` (so its `required` for all endpoints) because _most_ of the endpoints in our app require the person/user to be authenticated e.g:
+We tend to enable `hapi-auth-jwt2` for _all_ routes by setting the default strategy to 'jwt' (so its `required` for all endpoints) because _most_ of the endpoints in our app require the person/user to be authenticated e.g:
 
 ```js
-// setting the 3rd argument to true means 'mode' is 'required' see: http://hapijs.com/tutorials/auth#mode
-server.auth.strategy('jwt', 'jwt', true, { // so JWT auth is required for all routes
-  key: process.env.JWT_SECRET,
-  validate: require('./jwt2_validate_func'),
-  verifyOptions: { ignoreExpiration: true, algorithms: [ 'HS256' ] }
+server.auth.strategy('jwt', 'jwt', { // so JWT auth is required for all routes
+  ...
 });
+server.auth.default('jwt');
 ```
-> _Detailed Practical Example_: https://github.com/dwyl/hapi-login-example-postgres/blob/245a44f0e88226d99a3ad2e3dc38cc0d1750a241/lib/server.js#L33
 
 When you want a particular route to ***not require*** JWT auth you simply set `config: { auth: false }` e.g:
 ```js
@@ -462,7 +459,7 @@ When you want a particular route to ***not require*** JWT auth you simply set `c
     method: 'GET',
     path: '/login',
     handler: login_handler,  // display login/registration form/page
-    config: { auth: false } // don't require people to be logged in to see the login page! (duh!)
+    options: { auth: false } // don't require people to be logged in to see the login page! (duh!)
   });
 ```
 
