@@ -9,6 +9,10 @@ const db = {
   "321": { allowed: false, "name": "Old Gregg"}
 };
 
+const wait = function(ms) {
+  return new Promise(resolve => setTimeout(() => resolve(), ms));
+};
+
 // defining our own validate function lets us do something
 // useful/custom with the decodedToken before reply(ing)
 const validate = async function (decoded, request) {
@@ -32,7 +36,20 @@ const sendToken = function(req, h) {
   return req.auth.token;
 };
 
-const init = async () =>{ 
+const longRunning = async function(req, h) {
+  await wait(1100);
+  try {
+    await server.auth.verify(req);
+  } catch (err) {
+    if (err.message === 'jwt expired') {
+      return 'Verification failed because token expired';
+    }
+    return 'Verification failed with unexpected error';
+  }
+  return 'Verification passed';
+};
+
+const init = async () =>{
   try {
     await server.register(require('../'));
     server.auth.strategy('jwt', 'jwt', {
@@ -87,7 +104,8 @@ const init = async () =>{
       { method: 'POST', path: '/required', handler: privado, config: { auth: { mode: 'required', strategy: 'jwt' } } },
       { method: 'POST', path: '/optional', handler: privado, config: { auth: { mode: 'optional', strategy: 'jwt' } } },
       { method: 'POST', path: '/try', handler: privado, config: { auth: { mode: 'try', strategy: 'jwt' } } },
-      { method: 'POST', path: '/headless', handler: privado, config: { auth:  'jwt-headless' } }
+      { method: 'POST', path: '/headless', handler: privado, config: { auth:  'jwt-headless' } },
+      { method: 'POST', path: '/long-running', handler: longRunning, config: { auth:  'jwt-headless' } }
     ]);
   } catch(e) {
     throw e;

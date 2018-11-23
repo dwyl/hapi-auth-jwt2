@@ -102,6 +102,36 @@ test("Try using an expired token", async function(t) {
   }, 1100);
 });
 
+test("Token expires while request is taking place", async function(t) {
+  // use the token as the 'authorization' header in requests
+  const token = JWT.sign({ id: 123, "name": "Charlie" }, secret, { expiresIn: '1s' });
+  const options = {
+    method: "POST",
+    url: "/long-running",
+    headers: { authorization: "Bearer " + token  }
+  };
+
+  const response = await server.inject(options);
+  t.equal(response.statusCode, 200);
+  t.equal(response.result, 'Verification failed because token expired');
+  t.end();
+});
+
+test("Token expires after request hass taken place", async function(t) {
+  // use the token as the 'authorization' header in requests
+  const token = JWT.sign({ id: 123, "name": "Charlie" }, secret, { expiresIn: '10s' });
+  const options = {
+    method: "POST",
+    url: "/long-running",
+    headers: { authorization: "Bearer " + token  }
+  };
+
+  const response = await server.inject(options);
+  t.equal(response.statusCode, 200);
+  t.equal(response.result, 'Verification passed');
+  t.end();
+});
+
 test("Token is well formed but is allowed=false so should be denied", async function(t) {
   // use the token as the 'authorization' header in requests
   // const token = jwt.sign({ "id": 1 ,"name":"Old Greg" }, 'incorrectSecret');
