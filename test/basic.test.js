@@ -86,8 +86,8 @@ test("Try using an incorrect secret to sign the JWT", async function(t) {
 test("Try using an expired token", async function(t) {
   // use the token as the 'authorization' header in requests
   const token = JWT.sign({ id: 123, "name": "Charlie" }, secret, { expiresIn: '1s' });
-  console.log(" - - - - - - token  - - - - -")
-  console.log(token);
+  // console.log(" - - - - - - token  - - - - -")
+  // console.log(token);
   const options = {
     method: "POST",
     url: "/privado",
@@ -233,7 +233,7 @@ test("Auth mode 'required' should should pass with valid token", async function(
   // server.inject lets us simulate an http request
   const response = await server.inject(options);
   // console.log(" - - - - RESPONSE: ")
-  console.log(response.result);
+  // console.log(response.result);
   t.equal(response.statusCode, 200, "Valid token should succeed!");
   t.end();
 });

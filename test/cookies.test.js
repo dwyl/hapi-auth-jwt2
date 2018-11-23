@@ -20,7 +20,7 @@ test("Attempt to access restricted content using inVALID Cookie Token", async fu
     url: "/privado",
     headers: { cookie: "token=" + token }
   };
-  console.log(options);
+  // console.log(options);
   const response = await server.inject(options);
   t.equal(response.statusCode, 401, "Invalid token should error!");
   t.end();
