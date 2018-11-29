@@ -13,8 +13,8 @@ test("Access restricted content with a valid token and tenant", async function(t
   };
   // server.inject lets us simulate an http request
   const response = await server.inject(options);
-    console.log(" - - - - RESPONSE: ");
-    console.log(response.result);
+    // console.log(" - - - - RESPONSE: ");
+    // console.log(response.result);
     t.equal(response.statusCode, 200, "VALID Token should succeed!");
     t.equal(response.result.data.additional, 'something extra here if needed', 'extraInfo should be passed through');
 
@@ -31,8 +31,8 @@ test("Access restricted content with an invalid token and tenant", async functio
   };
   // server.inject lets us simulate an http request
   const response = await server.inject(options);
-    console.log(" - - - - RESPONSE: ");
-    console.log(response.result);
+    // console.log(" - - - - RESPONSE: ");
+    // console.log(response.result);
     t.equal(response.statusCode, 401, "INVALID Token should fail!");
 
     t.end();
@@ -48,8 +48,8 @@ test("Access restricted content with a valid token and tenant but user is not al
   };
   // server.inject lets us simulate an http request
   const response = await server.inject(options);
-    console.log(" - - - - RESPONSE: ");
-    console.log(response.result);
+    // console.log(" - - - - RESPONSE: ");
+    // console.log(response.result);
     t.equal(response.statusCode, 401, "Not allowed user should fail!");
 
     t.end();
@@ -65,8 +65,8 @@ test("Access restricted content without tenant specified in token", async functi
   };
   // server.inject lets us simulate an http request
   const response = await server.inject(options);
-    console.log(" - - - - RESPONSE1: ");
-    console.log(response.result);
+    // console.log(" - - - - RESPONSE1: ");
+    // console.log(response.result);
     t.equal(response.statusCode, 400, "No tenant specified should fail!");
 
     t.end();
@@ -82,8 +82,8 @@ test("Access restricted content with non-existent tenant specified", async funct
   };
   // server.inject lets us simulate an http request
   const response = await server.inject(options);
-    console.log(" - - - - RESPONSE: ");
-    console.log(response.result);
+    // console.log(" - - - - RESPONSE: ");
+    // console.log(response.result);
     t.equal(response.statusCode, 401, "No tentant found should fail!");
 
     t.end();

@@ -15,7 +15,7 @@ test('When using a custom header key full token payload (header + payload + sign
   }
   server.auth.strategy('jwt', 'jwt', {
     key: function (decoded) {
-      console.log('decoded', keyDict[decoded.header.x5t]);
+      // console.log('decoded', keyDict[decoded.header.x5t]);
       return {key: keyDict[decoded.header.x5t]}; // Look dynamically for key based on JWT header field
     },
     complete: true,
@@ -24,7 +24,7 @@ test('When using a custom header key full token payload (header + payload + sign
     },
     verifyOptions: {algorithms: ['HS256']},
     headerKey: 'auths'
-    
+
   });
   server.route({
     method: 'POST',

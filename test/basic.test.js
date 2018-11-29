@@ -86,8 +86,8 @@ test("Try using an incorrect secret to sign the JWT", async function(t) {
 test("Try using an expired token", async function(t) {
   // use the token as the 'authorization' header in requests
   const token = JWT.sign({ id: 123, "name": "Charlie" }, secret, { expiresIn: '1s' });
-  console.log(" - - - - - - token  - - - - -")
-  console.log(token);
+  // console.log(" - - - - - - token  - - - - -")
+  // console.log(token);
   const options = {
     method: "POST",
     url: "/privado",
@@ -100,6 +100,36 @@ test("Try using an expired token", async function(t) {
     t.equal(response.result.message, 'Expired token', 'Message should be "Expired token"');
     t.end();
   }, 1100);
+});
+
+test("Token expires while request is taking place", async function(t) {
+  // use the token as the 'authorization' header in requests
+  const token = JWT.sign({ id: 123, "name": "Charlie" }, secret, { expiresIn: '1s' });
+  const options = {
+    method: "POST",
+    url: "/long-running",
+    headers: { authorization: "Bearer " + token  }
+  };
+
+  const response = await server.inject(options);
+  t.equal(response.statusCode, 200);
+  t.equal(response.result, 'Verification failed because token expired');
+  t.end();
+});
+
+test("Token expires after request has taken place", async function(t) {
+  // use the token as the 'authorization' header in requests
+  const token = JWT.sign({ id: 123, "name": "Charlie" }, secret, { expiresIn: '10s' });
+  const options = {
+    method: "POST",
+    url: "/long-running",
+    headers: { authorization: "Bearer " + token  }
+  };
+
+  const response = await server.inject(options);
+  t.equal(response.statusCode, 200);
+  t.equal(response.result, 'Verification passed');
+  t.end();
 });
 
 test("Token is well formed but is allowed=false so should be denied", async function(t) {
@@ -203,7 +233,7 @@ test("Auth mode 'required' should should pass with valid token", async function(
   // server.inject lets us simulate an http request
   const response = await server.inject(options);
   // console.log(" - - - - RESPONSE: ")
-  console.log(response.result);
+  // console.log(response.result);
   t.equal(response.statusCode, 200, "Valid token should succeed!");
   t.end();
 });

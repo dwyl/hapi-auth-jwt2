@@ -13,9 +13,9 @@ test("Attempt to access restricted content using inVALID Cookie Token - custom p
     url: "/privado",
     headers: { cookie: "customCookieKey=" + token }
   };
-  console.log(options);
+  // console.log(options);
   const response = await server.inject(options);
-  console.log('response', response);
+  // console.log('response', response);
     t.equal(response.statusCode, 401, "Invalid token should error!");
     t.end();
 });

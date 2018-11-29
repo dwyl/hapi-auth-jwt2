@@ -14,8 +14,8 @@ test("Access restricted content using scopes (with VALID Token and VALID scope)"
   };
   // server.inject lets us simulate an http request
   const response = await server.inject(options);
-    console.log(" - - - - RESPONSE: ");
-    console.log(response.result);
+    // console.log(" - - - - RESPONSE: ");
+    // console.log(response.result);
     t.equal(response.statusCode, 200, "VALID Token should succeed!");
 
     t.end();
@@ -31,8 +31,8 @@ test("Access restricted content using scopes (with VALID Token and INVALID scope
   };
   // server.inject lets us simulate an http request
   const response = await server.inject(options);
-    console.log(" - - - - RESPONSE: ");
-    console.log(response.result);
+    // console.log(" - - - - RESPONSE: ");
+    // console.log(response.result);
     t.equal(response.statusCode, 401, "Denied");
     t.end();
 });
