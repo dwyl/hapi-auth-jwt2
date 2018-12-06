@@ -480,7 +480,7 @@ and [hapi-auth-jwt2/issues/148](https://github.com/dwyl/hapi-auth-jwt2/issues/14
 The [`hapi-error`](https://github.com/dwyl/hapi-error) lets
 you _easily_ redirect to any url you define if the Auth check fails
 (i.e. `statusCode 401`)
-see: https://github.com/dwyl/hapi-error#redirecting-to-another-endpoint
+see: https://github.com/dwyl/hapi-error#redirectredirecting-to-another-endpoint
 (*code examples there.*)
 
 <br />
