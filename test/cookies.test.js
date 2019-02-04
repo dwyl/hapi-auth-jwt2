@@ -35,7 +35,7 @@ test("Attempt to access restricted content with VALID Token but malformed Cookie
   };
   // server.inject lets us simulate an http request
   const response = await server.inject(options);
-    t.equal(response.statusCode, 400, "Valid Token but inVALID COOKIE should fial!");
+    t.equal(response.statusCode, 400, "Valid Token but inVALID COOKIE should fail!");
     t.end();
 });
 
