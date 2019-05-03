@@ -1,5 +1,5 @@
 const test   = require('tape');
-const Hapi   = require('hapi');
+const Hapi   = require('@hapi/hapi');
 const JWT    = require('jsonwebtoken');
 const secret = 'NeverShareYourSecret';
 

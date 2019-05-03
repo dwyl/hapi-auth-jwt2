@@ -1,7 +1,7 @@
 const test = require('tape');
 const JWT = require('jsonwebtoken');
 const secret = 'NeverShareYourSecret';
-const Boom = require('boom');
+const Boom = require('@hapi/boom');
 
 const server = require('./scheme-payload-server');
 

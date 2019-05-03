@@ -1,4 +1,4 @@
-const Hapi        = require('hapi');
+const Hapi        = require('@hapi/hapi');
 const hapiAuthJWT = require('../lib/');
 const JWT         = require('jsonwebtoken');  // used to sign our content
 const port        = process.env.PORT || 8000; // allow port to be set

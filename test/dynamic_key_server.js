@@ -1,5 +1,5 @@
-const Hapi = require('hapi');
-const Boom = require('boom');
+const Hapi = require('@hapi/hapi');
+const Boom = require('@hapi/boom');
 
 // for debug options see: http://hapijs.com/tutorials/logging
 const server = new Hapi.Server({ debug: false });
