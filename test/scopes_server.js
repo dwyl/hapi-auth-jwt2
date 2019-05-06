@@ -1,4 +1,4 @@
-const Hapi   = require('hapi');
+const Hapi   = require('@hapi/hapi');
 const secret = 'NeverShareYourSecret';
 
 // for debug options see: http://hapijs.com/tutorials/logging
