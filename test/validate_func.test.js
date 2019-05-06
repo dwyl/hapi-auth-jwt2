@@ -17,6 +17,12 @@ test('Should respond with 500 series error when validate errs', async function (
         if (decoded.id === 138) {
           throw new Error('ASPLODE');
         }
+        if (decoded.id === 139) {
+          return { isValid: false }
+        }
+        if (decoded.id === 140) {
+          return { isValid: false, errorMessage: 'Bad ID' }
+        }
         return { response:  h.redirect('https://dwyl.com') }
       },
       verifyOptions: {algorithms: ['HS256']}
@@ -42,6 +48,15 @@ test('Should respond with 500 series error when validate errs', async function (
     response = await server.inject(options);
       t.equal(response.statusCode, 302, 'Server redirect status code');
       t.equal(response.headers.location, 'https://dwyl.com', 'Server redirect header');
+      
+    options.headers.Authorization = JWT.sign({id: 139, name: 'Test'}, secret);
+    response = await server.inject(options);
+      t.equal(response.statusCode, 401, 'Server errors when isValid false');
+      t.equal(response.result.message, 'Invalid credentials', 'Default error message when custom not provided');
+
+    options.headers.Authorization = JWT.sign({id: 140, name: 'Test'}, secret);
+    response = await server.inject(options);
+      t.equal(response.result.message, 'Bad ID', 'Custom error message when provided');
       t.end();
 
 });

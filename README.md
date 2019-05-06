@@ -181,6 +181,7 @@ signature `async function(decoded)` where:
         - `isValid` - `true` if the JWT was valid, otherwise `false`.
         - `credentials` - (***optional***) alternative credentials to be set instead of `decoded`.
         - `response` - (***optional***) If provided will be used immediately as a takeover response.
+        - `errorMessage` - (***optional*** *defaults to* `'Invalid credentials'`) - the error message raised to Boom if the token is invalid (passed to `errorFunc` as `errorContext.message`)
 
 ### *Optional* Parameters
 
