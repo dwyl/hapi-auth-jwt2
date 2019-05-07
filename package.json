@@ -3,6 +3,7 @@
   "version": "8.6.0",
   "description": "Hapi.js Authentication Plugin/Scheme using JSON Web Tokens (JWT)",
   "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/dwyl/hapi-auth-jwt2.git"
