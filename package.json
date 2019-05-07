@@ -53,10 +53,11 @@
     "jsonwebtoken": "^8.1.0"
   },
   "devDependencies": {
+    "@hapi/hapi": "^18.0.0",
+    "@types/hapi__hapi": "^18.2.0",
     "aguid": "^2.0.0",
     "eslint": "^5.9.0",
     "eslint-plugin-prettier": "^3.0.0",
-    "@hapi/hapi": "^18.0.0",
     "nyc": "^13.1.0",
     "pre-commit": "^1.2.2",
     "prettier": "^1.15.2",
