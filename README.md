@@ -56,26 +56,24 @@ const people = { // our "users database"
 };
 
 // bring your own validation function
-const validate = async function (decoded, request) {
+const validate = async function (decoded, request, h) {
 
     // do your checks to see if the person is valid
     if (!people[decoded.id]) {
-      return { isValid: false };
+      return { valid: false };
     }
     else {
-      return { isValid: true };
+      return { valid: true };
     }
 };
 
 const init = async () => {
   const server = new Hapi.Server({ port: 8000 });
   // include our module here ↓↓
-  await server.register(require('hapi-auth-jwt2'));
-
+  await server.register(require('../lib'));
   server.auth.strategy('jwt', 'jwt',
-  { key: 'NeverShareYourSecret',          // Never Share your secret key
-    validate: validate,            // validate function defined above
-    verifyOptions: { algorithms: [ 'HS256' ] } // pick a strong algorithm
+  { key: 'NeverShareYourSecret', // Never Share your secret key
+    validate  // validate function defined above
   });
 
   server.auth.default('jwt');
@@ -83,29 +81,29 @@ const init = async () => {
   server.route([
     {
       method: "GET", path: "/", config: { auth: false },
-      handler: function(request, reply) {
-        reply({text: 'Token not required'});
+      handler: function(request, h) {
+        return {text: 'Token not required'};
       }
     },
     {
       method: 'GET', path: '/restricted', config: { auth: 'jwt' },
-      handler: function(request, reply) {
-        reply({text: 'You used a Token!'})
-        .header("Authorization", request.headers.authorization);
+      handler: function(request, h) {
+        const response = h.response({text: 'You used a Token!'});
+        response.header("Authorization", request.headers.authorization);
+        return response;
       }
     }
   ]);
   await server.start();
   return server;
-};
-
-
+}
 init().then(server => {
   console.log('Server running at:', server.info.uri);
 })
-.catch(error => {
-  console.log(error);
+.catch(err => {
+  console.log(err);
 });
+
 ```
 
 ## *Quick Demo*
