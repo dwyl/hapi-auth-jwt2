@@ -201,9 +201,13 @@ signature `async function(decoded)` where:
 - `urlKey` - (***optional***  *defaults to* `'token'`) - if you prefer to pass your token via url, simply add a `token` url parameter to your request or use a custom parameter by setting `urlKey`. To disable the url parameter set urlKey to `false` or ''.
 - `cookieKey` - (***optional*** *defaults to* `'token'`) - if you prefer to set your own cookie key or your project has a cookie called `'token'` for another purpose, you can set a custom key for your cookie by setting `options.cookieKey='yourkeyhere'`. To disable cookies set cookieKey to `false` or ''.
 - `headerKey` - (***optional***  *defaults to* `'authorization'`) - The lowercase name of an HTTP header to read the token from. To disable reading the token from a header, set this to `false` or ''.
+- `payloadKey` - (***optional***  *defaults to* `'token'`) - The lowercase name of an HTTP POST body to read the token from. To disable reading the token from a payload, set this to `false` or ''. Please note, this will not prevent authentication falling through to the `payload` method unless `attemptToExtractTokenInPayload` is false
 - `tokenType` - (***optional*** *defaults to none*) - allow custom token type, e.g. `Authorization: <tokenType> 12345678`.
 - `complete` - (***optional*** *defaults to* `false`) - set to `true` to receive the complete token (`decoded.header`, `decoded.payload` and `decoded.signature`) as `decoded` argument to key lookup and `verify` callbacks (*not `validate`*)
 - `headless` - (***optional*** *defaults to none*) - set to an `object` containing the header part of the JWT token that should be added to a headless JWT token received. Token's with headers can still be used with this option activated. e.g `{ alg: 'HS256', typ: 'JWT' }`
+- `attemptToExtractTokenInPayload` - (***optional*** *defaults to* `false`) - set to `true` to let the `authenticate` method fall through to the `payload` method for token extraction
+- `customExtractionFunc` - (***optional***) function called to perform a custom extraction of the JWT where:
+    - `request` - the request object.
 
 ### Useful Features
 
@@ -516,6 +520,63 @@ Reply as usual whilst re-adding the token to your original endpoint `/`
 reply().state('token', token, { path: '/' }).redirect('/wherever');
 ```
 
+## *How do I support users with JS disabled*
+
+An issue can arise when supporting users with JavaScript disabled when JWTs are too large to pass on query strings.
+
+With JS disabled, tokens cannot be added to headers by using redirects from OAuth providers in to the consuming service.
+
+Cloud providers will place limitations on URI lengths
+
+OAuth services may not always sit on a sibling subdomain of the protected service negating the use of a secure cookie
+
+The only way to pass a token in this case is to use either an HTML form with the token in a hidden field and a button with instructions for users to press the button if they have JS disabled and some JS that will submit the form automatically if it is enabled
+
+To configure `hapi-auth-jwt` to support this scenario, you will need to adapt the following sample configuration
+```js
+server.auth.strategy('jwt', 'jwt', {
+      key: 'NeverShareYourSecret',
+      // defining our own validate function lets us do something
+      // useful/custom with the decodedToken before reply(ing)
+      validate: (decoded, request) => true,
+      verifyOptions: { algorithms: [ 'HS256' ] }, // only allow HS256 algorithm
+      attemptToExtractTokenInPayload: true,
+      // using yar as a session cache to store tokens, see: https://github.com/hapijs/yar
+      customExtractionFunc: request => {
+        if (request.auth && request.auth.token) {
+          request.yar.set('token', request.auth.token)
+          return request.auth.token;
+        }
+        const token = request.yar.get('token');
+        if (token) {
+          return token;
+        }
+      }
+    });
+```
+
+The configuration above will still run the normal token extraction attempts for headers, cookies, query string parameters and custom extraction. However, if there is no token successfully extracted, it will attempt to extract one from POST request bodies
+
+As the authentication phase of a HAPI request will apply scope protection before POST bodies are parsed, you will need to also define the route on which you will handle JWTs with no scope applied or the POST requests with JWT payloads will fail when you globally apply scope as part of your application
+
+```js
+server.route([
+      { 
+        method: 'POST', 
+        path: '/', 
+        handler: (request, response) => response.redirect('/home'), 
+        config: { 
+            auth: { 
+              strategies: ['jwt'], 
+              payload: 'required' 
+            } 
+          } 
+        }
+      ]); 
+````
+
+This route will, when a JWT is posted failover from the authentication phase to the payload authentication phase, extract a JWT, store it in the YAR session cache and redirect the user to the `/home` path using a standard 302 response. When the handler for `/home` is JWT protected, the `customExtractionFunc` defined in the auth strategy will read the JWT from the users session cache and use it for authentication
+ 
 ## *Advanced/Alternative* Usage => Bring Your Own `verify`
 
 While *most* people using `hapi-auth-jwt2` will opt for the *simpler* use case
