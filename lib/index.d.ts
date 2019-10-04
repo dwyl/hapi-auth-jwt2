@@ -102,6 +102,14 @@ declare namespace hapiAuthJwt2 {
         headerKey?: string | boolean;
 
         /**
+         * If you want to set a custom key for your payload token use the
+         * `payloadKey` option. To disable payload token set payloadKey to `false` or
+         * ''.
+         * @default 'token'
+         */
+        payloadKey?: string | boolean;
+
+        /**
          * Allow custom token type, e.g. `Authorization: <tokenType> 12345678`
          */
         tokenType?: string;
@@ -113,6 +121,20 @@ declare namespace hapiAuthJwt2 {
          * @default false
          */
         complete?: boolean;
+
+        /**
+         * Set to `true` to allow the `payloadFunc` to attempt to extract the token from
+         * POST bodies
+         * @default false
+         */
+        attemptToExtractTokenInPayload?: boolean;
+
+        /**
+         * Custom token extraction function used to allow consumers to pull tokens from
+         * sources not foreseen by the module, for example... YAR
+         * @default false
+         */
+        customExtractionFunc?(request: Request): string;
     }
 
     interface RegisterOptions {

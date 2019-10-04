@@ -40,6 +40,10 @@
     {
       "name": "Samy Al Zahrani",
       "user": "@salzhrani"
+    },
+    {
+      "name": "Steven Leadbeater",
+      "user": "@LedSysUK <stevenleadbeater@live.co.uk>"
     }
   ],
   "license": "ISC",
@@ -58,7 +62,7 @@
     "aguid": "^2.0.0",
     "eslint": "^5.9.0",
     "eslint-plugin-prettier": "^3.0.0",
-    "nyc": "^13.1.0",
+    "nyc": "^14.1.1",
     "pre-commit": "^1.2.2",
     "prettier": "^1.15.2",
     "tap-nyc": "^1.0.3",
