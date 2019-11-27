@@ -60,10 +60,10 @@ const validate = async function (decoded, request, h) {
 
     // do your checks to see if the person is valid
     if (!people[decoded.id]) {
-      return { valid: false };
+      return { isValid: false };
     }
     else {
-      return { valid: true };
+      return { isValid: true };
     }
 };
 
@@ -165,11 +165,12 @@ on the **decoded** token before allowing the visitor to proceed.
 used to check the signature of the token ***or*** a **key lookup function** with
 signature `async function(decoded)` where:
     - `decoded` - the ***decoded*** but ***unverified*** JWT received from client
-    - Returns an object `{ isValid, key, extraInfo }` where:
-        - `isValid` - result of validation
+    - Returns an object `{ key, extraInfo }` where:
         - `key` - the secret key (or array of keys to try)
-        - `extraInfo` - (***optional***) any additional information that you would like to use in
-        `validate` which can be accessed via `request.plugins['hapi-auth-jwt2'].extraInfo`
+        - `extraInfo` - (***optional***) any additional information that you would like to use in `validate` which can be accessed 
+        via `request.plugins['hapi-auth-jwt2'].extraInfo`
+    - Throws a Boom error when key lookup fails.  Refer to [this example implementation](https://github.com/dwyl/hapi-auth-jwt2/blob/master/test/dynamic_key_server.js) 
+    and [its associated test](https://github.com/dwyl/hapi-auth-jwt2/blob/master/test/dynamic_key.test.js) for a working example.
 - `validate` - (***required***) the function which is run once the Token has been decoded with
  signature `async function(decoded, request, h)` where:
     - `decoded` - (***required***) is the decoded and verified JWT received in the request

@@ -1,6 +1,6 @@
 {
   "name": "hapi-auth-jwt2",
-  "version": "8.7.0",
+  "version": "8.8.0",
   "description": "Hapi.js Authentication Plugin/Scheme using JSON Web Tokens (JWT)",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -58,9 +58,10 @@
   },
   "devDependencies": {
     "@hapi/hapi": "^18.4.0",
+    "@hapi/basic": "^5.1.1",
     "@types/hapi__hapi": "^18.2.5",
     "aguid": "^2.0.0",
-    "eslint": "^6.5.1",
+    "eslint": "^6.6.0",
     "eslint-plugin-prettier": "^3.1.1",
     "nyc": "^15.0.0-beta.0",
     "pre-commit": "^1.2.2",
@@ -69,7 +70,7 @@
     "tape": "^4.11.0"
   },
   "engines": {
-    "node": ">=8.9.0"
+    "node": ">=8.10.0"
   },
   "nyc": {
     "check-coverage": true,
