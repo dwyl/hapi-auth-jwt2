@@ -57,8 +57,8 @@
     "jsonwebtoken": "^8.5.1"
   },
   "devDependencies": {
+    "@hapi/basic": "^6.0.0",
     "@hapi/hapi": "^19.1.0",
-    "@hapi/basic": "^5.1.1",
     "@types/hapi__hapi": "^18.2.5",
     "aguid": "^2.0.0",
     "eslint": "^6.6.0",
