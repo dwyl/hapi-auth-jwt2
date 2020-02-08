@@ -1,6 +1,6 @@
 {
   "name": "hapi-auth-jwt2",
-  "version": "9.0.0",
+  "version": "9.0.1",
   "description": "Hapi.js Authentication Plugin/Scheme using JSON Web Tokens (JWT)",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
