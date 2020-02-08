@@ -9,7 +9,7 @@
 [![Build Status](https://img.shields.io/travis/dwyl/hapi-auth-jwt2/master.svg?style=flat-square)](https://travis-ci.org/dwyl/hapi-auth-jwt2)
 [![codecov.io](https://img.shields.io/codecov/c/github/dwyl/hapi-auth-jwt2/master.svg?style=flat-square)](http://codecov.io/github/dwyl/hapi-auth-jwt2?branch=master)
 [![Inline docs](http://inch-ci.org/github/dwyl/hapi-auth-jwt2.svg?branch=master&style=flat-square)](http://inch-ci.org/github/dwyl/hapi-auth-jwt2)
-[![HAPI 18.4.x](http://img.shields.io/badge/hapi-18.4.0-brightgreen.svg?style=flat-square "Latest Hapi.js")](http://hapijs.com)
+[![HAPI 19.1.0](http://img.shields.io/badge/hapi-19.1.0-brightgreen.svg?style=flat-square "Latest Hapi.js")](http://hapijs.com)
 [![Node.js Version](https://img.shields.io/node/v/hapi-auth-jwt2.svg?style=flat-square "Node.js 10 & 12 and io.js latest both supported")](http://nodejs.org/download/)
 [![Dependencies Status](https://david-dm.org/dwyl/hapi-auth-jwt2/status.svg?style=flat-square)](https://david-dm.org/dwyl/hapi-auth-jwt2)
 [![devDependencies Status](https://david-dm.org/dwyl/hapi-auth-jwt2/dev-status.svg?style=flat-square)](https://david-dm.org/dwyl/hapi-auth-jwt2?type=dev)
