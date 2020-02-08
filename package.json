@@ -67,7 +67,7 @@
     "pre-commit": "^1.2.2",
     "prettier": "^1.19.1",
     "tap-nyc": "^1.0.3",
-    "tape": "^5.0.0-next.4"
+    "tape": "^4.13.0"
   },
   "engines": {
     "node": ">=8.10.0"
