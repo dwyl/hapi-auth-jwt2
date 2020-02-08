@@ -11,7 +11,7 @@ test("Access a route that has no auth strategy", async function(t) {
   };
   // server.inject lets us simulate an http request
   const response = await server.inject(options);
-    t.equal(response.statusCode, 200, "GET / still works without token.");
+    t.equal(response.statusCode, 204, "GET / still works without token.");
     t.end();
 });
 
