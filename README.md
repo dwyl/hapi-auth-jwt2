@@ -167,9 +167,9 @@ signature `async function(decoded)` where:
     - `decoded` - the ***decoded*** but ***unverified*** JWT received from client
     - Returns an object `{ key, extraInfo }` where:
         - `key` - the secret key (or array of keys to try)
-        - `extraInfo` - (***optional***) any additional information that you would like to use in `validate` which can be accessed 
+        - `extraInfo` - (***optional***) any additional information that you would like to use in `validate` which can be accessed
         via `request.plugins['hapi-auth-jwt2'].extraInfo`
-    - Throws a Boom error when key lookup fails.  Refer to [this example implementation](https://github.com/dwyl/hapi-auth-jwt2/blob/master/test/dynamic_key_server.js) 
+    - Throws a Boom error when key lookup fails.  Refer to [this example implementation](https://github.com/dwyl/hapi-auth-jwt2/blob/master/test/dynamic_key_server.js)
     and [its associated test](https://github.com/dwyl/hapi-auth-jwt2/blob/master/test/dynamic_key.test.js) for a working example.
 - `validate` - (***required***) the function which is run once the Token has been decoded with
  signature `async function(decoded, request, h)` where:
@@ -613,9 +613,22 @@ because with a `verify` you can incorporate your own custom-logic.
 
 ### Compatibility
 
-`hapi-auth-jwt2` version `8.x.x` is compatible with Hapi.js version `17.x.x`, while `7.x.x` is compatible with `16.x.x`
+**`hapi-auth-jwt2`** version **`9.x.x`** is compatible with **Hapi.js `19.x.x`**
+which only supports **Node.js 12+**.
+While **`hapi-auth-jwt2`** version `9.0.0`
+does not have _any_ code changes from `v8.8.1`
+(_so there should not be any need to update your code that uses this plugin_),
+we felt it was prudent to make it clear to people that Hapi.js
+(_the core framework_) has
+[dropped support for Node.js 10](https://github.com/dwyl/hapi-auth-jwt2/issues/338#issuecomment-583716612)
+and people should treat _this_ package
+as a no longer supporting the older versions of Node. <br />
+`hapi-auth-jwt2` version `8.x.x`
+is compatible with Hapi.js version `17.x.x` - `19.x.x`
+<br />`hapi-auth-jwt2` version `7.x.x` is compatible with `16.x.x`
 `15.x.x` `14.x.x` `13.x.x` `12.x.x` `11.x.x` `10.x.x` `9.x.x` and `8.x.x`
-hapi `17.x.x` is a major rewrite that's why it is version `8.x.x` of the plugin is not backward compatible!
+Hapi `17.x.x` is a _major_ rewrite that's why it is version `8.x.x`
+of the plugin is not backward compatible!
 
 However in the interest of
  security/performance we *recommend* using the [*latest version*](https://github.com/hapijs/hapi/) of Hapi.
@@ -675,10 +688,10 @@ https://github.com/dwyl/hapi-auth-jwt2/issues
 
 ## Contributing [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dwyl/hapi-auth-jwt2/issues)
 
-If you spot an area for improvement, 
-please raise an issue: 
+If you spot an area for improvement,
+please raise an issue:
 https://github.com/dwyl/hapi-auth-jwt2/issues <br />
-*Someone* in the dwyl team is *always* online 
+*Someone* in the dwyl team is *always* online
 so we will usually answer within a few hours.
 
 
