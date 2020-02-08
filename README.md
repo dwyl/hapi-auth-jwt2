@@ -622,7 +622,7 @@ we felt it was prudent to make it clear to people that Hapi.js
 (_the core framework_) has
 [dropped support for Node.js 10](https://github.com/dwyl/hapi-auth-jwt2/issues/338#issuecomment-583716612)
 and people should treat _this_ package
-as a no longer supporting the older versions of Node. <br />
+as no longer supporting the older versions of Node. <br />
 `hapi-auth-jwt2` version `8.x.x`
 is compatible with Hapi.js version `17.x.x` - `19.x.x`
 <br />`hapi-auth-jwt2` version `7.x.x` is compatible with `16.x.x`
