@@ -627,7 +627,7 @@ as a no longer supporting the older versions of Node. <br />
 is compatible with Hapi.js version `17.x.x` - `19.x.x`
 <br />`hapi-auth-jwt2` version `7.x.x` is compatible with `16.x.x`
 `15.x.x` `14.x.x` `13.x.x` `12.x.x` `11.x.x` `10.x.x` `9.x.x` and `8.x.x`
-Hapi `17.x.x` is a _major_ rewrite that's why it is version `8.x.x`
+Hapi `17.x.x` is a _major_ rewrite that's why version `8.x.x`
 of the plugin is not backward compatible!
 
 However in the interest of
