@@ -36,6 +36,7 @@ declare namespace hapiAuthJwt2 {
         isValid: boolean;
         credentials?: any;
         response?: ResponseObject;
+        errorMessage?: string;
     }
 
     /**
