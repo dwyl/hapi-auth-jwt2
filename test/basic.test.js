@@ -343,6 +343,27 @@ test("Scheme should set token in request.auth.token", async function(t) {
   t.end();
 });
 
+test("Scheme should set artifacts in request.auth.artifacts", async function(t) {
+
+  const token = JWT.sign({ id: 123, "name": "Charlie" }, secret);
+  const options = {
+    method: "GET",
+    url: "/artifacts",
+    headers: { authorization: "Bearer " + token }
+  };
+
+  const response = await server.inject(options);
+
+  const decoded = JWT.decode(token);
+  const artifacts = {
+    token,
+    decoded,
+  }
+
+  t.same(response.result, artifacts, 'Artifacts are accesible from handler');
+  t.end();
+})
+
 test.onFinish(function () {
   server.stop(function(){});
 })
