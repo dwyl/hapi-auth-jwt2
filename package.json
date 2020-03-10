@@ -86,7 +86,7 @@
       "lib/**/*.js"
     ],
     "exclude": [
-      "test/**/*.spec.js"
+      "test/**/*.test.js"
     ],
     "reporter": [
       "lcov",
@@ -99,7 +99,7 @@
   "scripts": {
     "quick": "./node_modules/tape/bin/tape ./test/*.test.js | tap-nyc",
     "test": "nyc tape ./test/*.test.js | tap-nyc",
-    "coverage": "nyc tape ./test/*.test.js && nyc",
+    "coverage": "nyc tape ./test/*.test.js && nyc check-coverage",
     "lint": "eslint lib",
     "fixlint": "eslint lib --fix",
     "start": "node example/server.js",
