@@ -1,6 +1,6 @@
 {
   "name": "hapi-auth-jwt2",
-  "version": "9.0.1",
+  "version": "10.0.0",
   "description": "Hapi.js Authentication Plugin/Scheme using JSON Web Tokens (JWT)",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -44,6 +44,10 @@
     {
       "name": "Steven Leadbeater",
       "user": "@LedSysUK <stevenleadbeater@live.co.uk>"
+    },
+    {
+      "name": "Gaston Festari",
+      "user": "@cilindrox <cilindrox@gmail.com>"
     }
   ],
   "license": "ISC",
@@ -58,7 +62,7 @@
   },
   "devDependencies": {
     "@hapi/basic": "^6.0.0",
-    "@hapi/hapi": "^19.1.0",
+    "@hapi/hapi": "^19.1.1",
     "@types/hapi__hapi": "^19.0.1",
     "aguid": "^2.0.0",
     "eslint": "^7.0.0-alpha.0",
@@ -82,7 +86,7 @@
       "lib/**/*.js"
     ],
     "exclude": [
-      "test/**/*.spec.js"
+      "test/**/*.test.js"
     ],
     "reporter": [
       "lcov",
@@ -95,7 +99,7 @@
   "scripts": {
     "quick": "./node_modules/tape/bin/tape ./test/*.test.js | tap-nyc",
     "test": "nyc tape ./test/*.test.js | tap-nyc",
-    "coverage": "nyc tape ./test/*.test.js && nyc",
+    "coverage": "nyc tape ./test/*.test.js && nyc check-coverage",
     "lint": "eslint lib",
     "fixlint": "eslint lib --fix",
     "start": "node example/server.js",
