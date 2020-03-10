@@ -400,8 +400,7 @@ http://tools.ietf.org/html/rfc6265
 
 - - -
 
-## Frequently Asked Questions (FAQ) [![Join the chat at https://gitter.im/dwyl/chat](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/dwyl/chat/?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
+## Frequently Asked Questions (FAQ)
 
 ### Do I *need* to include `jsonwebtoken` in my project?
 
@@ -647,8 +646,7 @@ However in the interest of
  security/performance we *recommend* using the [*latest version*](https://github.com/hapijs/hapi/) of Hapi.
 
 > *If you have a question, or need help getting started* ***please post an issue/question on
-GitHub***: https://github.com/dwyl/hapi-auth-jwt2/issues *or*
-[![Join the chat at https://gitter.im/dwyl/chat](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/dwyl/chat/?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+GitHub***: https://github.com/dwyl/hapi-auth-jwt2/issues
 
 <br />
 <br />
