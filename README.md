@@ -462,12 +462,12 @@ server.auth.default('jwt'); // so JWT auth is required for all routes
 
 When you want a particular route to ***not require*** JWT auth you simply set `config: { auth: false }` e.g:
 ```js
-  server.route({
-    method: 'GET',
-    path: '/login',
-    handler: login_handler,  // display login/registration form/page
-    options: { auth: false } // don't require people to be logged in to see the login page! (duh!)
-  });
+server.route({
+  method: 'GET',
+  path: '/login',
+  handler: login_handler,  // display login/registration form/page
+  options: { auth: false } // don't require people to be logged in to see the login page! (duh!)
+});
 ```
 
 The best place to _understand_ everything about Hapi Auth is in the docs: http://hapijs.com/tutorials/auth#setting-a-default-strategy
@@ -536,29 +536,33 @@ The only way to pass a token in this case is to use either an HTML form with the
 To configure `hapi-auth-jwt` to support this scenario, you will need to adapt the following sample configuration
 ```js
 server.auth.strategy('jwt', 'jwt', {
-      key: 'NeverShareYourSecret',
-      // defining our own validate function lets us do something
-      // useful/custom with the decodedToken before reply(ing)
-      validate: (decoded, request) => true,
-      verifyOptions: { algorithms: [ 'HS256' ] }, // only allow HS256 algorithm
-      attemptToExtractTokenInPayload: true,
-      // using yar as a session cache to store tokens, see: https://github.com/hapijs/yar
-      customExtractionFunc: request => {
-        if (request.auth && request.auth.token) {
-          request.yar.set('token', request.auth.token)
-          return request.auth.token;
-        }
-        const token = request.yar.get('token');
-        if (token) {
-          return token;
-        }
-      }
-    });
+  key: 'NeverShareYourSecret',
+  // defining our own validate function lets us do something
+  // useful/custom with the decodedToken before reply(ing)
+  validate: (decoded, request) => true,
+  verifyOptions: { algorithms: [ 'HS256' ] }, // only allow HS256 algorithm
+  attemptToExtractTokenInPayload: true,
+  // using yar as a session cache to store tokens, see: https://github.com/hapijs/yar
+  customExtractionFunc: request => {
+    if (request.auth && request.auth.token) {
+      request.yar.set('token', request.auth.token)
+      return request.auth.token;
+    }
+    const token = request.yar.get('token');
+    if (token) {
+      return token;
+    }
+  }
+});
 ```
 
 The configuration above will still run the normal token extraction attempts for headers, cookies, query string parameters and custom extraction. However, if there is no token successfully extracted, it will attempt to extract one from POST request bodies
 
-As the authentication phase of a HAPI request will apply scope protection before POST bodies are parsed, you will need to also define the route on which you will handle JWTs with no scope applied or the POST requests with JWT payloads will fail when you globally apply scope as part of your application
+As the authentication phase of a HAPI request will apply scope protection
+before POST bodies are parsed, you will need to also define the route on
+which you will handle JWTs with no scope applied or the POST requests with
+JWT payloads will fail when you globally apply scope as part of your
+application
 
 ```js
 server.route([
@@ -613,6 +617,13 @@ because with a `verify` you can incorporate your own custom-logic.
 
 ### Compatibility
 
+**`hapi-auth-jwt2`** version **`10.x.x`** is an ***optional upgrade***
+that includes a ***breaking change***.
+Several users of the plugin requested that the `artifacts`
+returned on successful authentication be an `Object` instead of a `String`.
+Sadly this is a breaking change, hence the new major release.
+
+
 **`hapi-auth-jwt2`** version **`9.x.x`** is compatible with **Hapi.js `19.x.x`**
 which only supports **Node.js 12+**.
 While **`hapi-auth-jwt2`** version `9.0.0`
@@ -623,9 +634,11 @@ we felt it was prudent to make it clear to people that Hapi.js
 [dropped support for Node.js 10](https://github.com/dwyl/hapi-auth-jwt2/issues/338#issuecomment-583716612)
 and people should treat _this_ package
 as no longer supporting the older versions of Node. <br />
+
 `hapi-auth-jwt2` version `8.x.x`
-is compatible with Hapi.js version `17.x.x` - `19.x.x`
-<br />`hapi-auth-jwt2` version `7.x.x` is compatible with `16.x.x`
+is compatible with Hapi.js version `17.x.x` - `19.x.x` <br />
+
+`hapi-auth-jwt2` version `7.x.x` is compatible with `16.x.x`
 `15.x.x` `14.x.x` `13.x.x` `12.x.x` `11.x.x` `10.x.x` `9.x.x` and `8.x.x`
 Hapi `17.x.x` is a _major_ rewrite that's why version `8.x.x`
 of the plugin is not backward compatible!
