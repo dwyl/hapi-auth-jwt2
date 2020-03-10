@@ -62,7 +62,7 @@
   },
   "devDependencies": {
     "@hapi/basic": "^6.0.0",
-    "@hapi/hapi": "^19.1.0",
+    "@hapi/hapi": "^19.1.1",
     "@types/hapi__hapi": "^19.0.1",
     "aguid": "^2.0.0",
     "eslint": "^7.0.0-alpha.0",
