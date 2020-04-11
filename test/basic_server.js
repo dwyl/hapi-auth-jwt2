@@ -36,6 +36,10 @@ const sendToken = function(req, h) {
   return req.auth.token;
 };
 
+const sendArtifacts = function(req, h) {
+  return req.auth.artifacts;
+};
+
 const longRunning = async function(req, h) {
   await wait(1100);
   try {
@@ -96,6 +100,7 @@ const init = async () =>{
     server.route([
       { method: 'GET', path: '/', handler: home, config: { auth: false } },
       { method: 'GET', path: '/token', handler: sendToken, config: { auth: 'jwt' } },
+      { method: 'GET', path: '/artifacts', handler: sendArtifacts, config: { auth:  'jwt' } },
       { method: 'POST', path: '/privado', handler: privado, config: { auth: 'jwt' } },
       { method: 'POST', path: '/privadonourl', handler: privado, config: { auth: 'jwt-nourl' } },
       { method: 'POST', path: '/privadonocookie', handler: privado, config: { auth: 'jwt-nocookie' } },

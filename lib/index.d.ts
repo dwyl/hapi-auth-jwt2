@@ -46,7 +46,7 @@ declare namespace hapiAuthJwt2 {
         /**
          * The secret key used to check the signature of the token *or* a *key lookup function*
          */
-        key?: string | string[] | ((decodedToken: any) => Promise<{ key: string | string[]; extraInfo?: ExtraInfo }>);
+        key?: string | string[] | Buffer | ((decodedToken: any) => Promise<{ key: string | string[]; extraInfo?: ExtraInfo }>);
 
         /**
          * The function which is run once the Token has been decoded
