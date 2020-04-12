@@ -57,6 +57,7 @@ test("customVerify with fail condition", async function(t) {
   const response = await server.inject(options);
   t.equal(response.statusCode, 401, "GET /required with customVerify rejected");
   t.equal(response.result.message, "Invalid credentials mate", "GET /required with customVerify rejected and customised error message");
+  t.deepEqual(response.headers['set-cookie'], [ 'customError=setInCustomErrorFn; Secure; HttpOnly; SameSite=Strict' ], 'Valid request should have access to the response toolkit object');
   t.end();
 });
 
