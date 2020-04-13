@@ -32,8 +32,11 @@ const customVerify = function (decoded, request) {
   }
 };
 
-const customErrorFunc = function (errorContext) {
+const customErrorFunc = function (errorContext, req, h) {
   const result = errorContext;
+
+  h.response().state('customError', 'setInCustomErrorFn');
+
   if (errorContext.message.toString().search(/ignore/) >= 0) {
     result = null;
   } else if (errorContext.errorType === 'unauthorized') {

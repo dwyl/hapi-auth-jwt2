@@ -194,11 +194,14 @@ signature `async function(decoded)` where:
     - `request` - the request object.
     - `h`- the response toolkit.
 - `errorFunc` - (***optional*** *defaults to raising the error requested*) function called when an error has been raised. It provides an extension point to allow the host the ability to customise the error messages returned. Passed in object follows the following schema:
-    - `errorContext.errorType` - ***required*** the `Boom` method to call (eg. unauthorized)
-    - `errorContext.message` - ***required*** the `message` passed into the `Boom` method call
-    - `errorContext.schema` - the `schema` passed into the `Boom` method call
-    - `errorContext.attributes` - the `attributes` passed into the `Boom` method call
-    - The function is expected to return the modified `errorContext` with all above fields defined.
+    - `errorContext` - the request object.
+      - `errorContext.errorType` - ***required*** the `Boom` method to call (eg. unauthorized)
+      - `errorContext.message` - ***required*** the `message` passed into the `Boom` method call
+      - `errorContext.schema` - the `schema` passed into the `Boom` method call
+      - `errorContext.attributes` - the `attributes` passed into the `Boom` method call
+      - The function is expected to return the modified `errorContext` with all above fields defined.
+    - `request` - the request object.
+    - `h`- the response toolkit.
 - `urlKey` - (***optional***  *defaults to* `'token'`) - if you prefer to pass your token via url, simply add a `token` url parameter to your request or use a custom parameter by setting `urlKey`. To disable the url parameter set urlKey to `false` or ''.
 - `cookieKey` - (***optional*** *defaults to* `'token'`) - if you prefer to set your own cookie key or your project has a cookie called `'token'` for another purpose, you can set a custom key for your cookie by setting `options.cookieKey='yourkeyhere'`. To disable cookies set cookieKey to `false` or ''.
 - `headerKey` - (***optional***  *defaults to* `'authorization'`) - The lowercase name of an HTTP header to read the token from. To disable reading the token from a header, set this to `false` or ''.

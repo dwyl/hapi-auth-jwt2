@@ -73,9 +73,11 @@ declare namespace hapiAuthJwt2 {
         /**
          *
          * @param ctx called when an error has been raised.
+         * @param request the Request object.
+         * @param h the ResponseToolkit object.
          * It provides an extension point to allow the host the ability to customise the error messages returned.
          */
-        errorFunc?(ctx: ErrorContext): ErrorContext;
+        errorFunc?(ctx: ErrorContext, request: Request, h: ResponseToolkit): ErrorContext;
 
         /**
          * If you prefer to pass your token via url, simply add a token url
