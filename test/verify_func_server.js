@@ -5,7 +5,7 @@ const secret = 'NeverShareYourSecret';
 let debug;
 // debug = { debug: { 'request': ['error', 'uncaught'] } };
 debug = { debug: false };
-const server = new Hapi.Server(debug);
+const server = new Hapi.server(debug);
 
 const sendToken = function(req, h) {
   return req.auth.token || null;

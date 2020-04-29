@@ -39,7 +39,7 @@ internals.payload = function (request, reply) {
 
 };
 
-var server = new Hapi.Server();
+var server = new Hapi.server();
 server.connection();
 
 function handler (request, reply) {
