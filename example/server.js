@@ -34,7 +34,7 @@ const validate = async function (decoded, request, h) {
 };
 
 const init = async() => {
-  const server = new Hapi.Server({ port: port });
+  const server = new Hapi.server({ port: port });
   await server.register(hapiAuthJWT);
   // see: http://hapijs.com/api#serverauthschemename-scheme
   server.auth.strategy('jwt', 'jwt',

@@ -7,7 +7,7 @@ const keyDict = { 5678: secret };
 
 test('When using a custom header key full token payload (header + payload + signature) is available to key lookup function using completeToken option', async function (t) {
 
-  const server = new Hapi.Server();
+  const server = new Hapi.server();
   try {
     await server.register(require('../'));
   } catch(e) {

@@ -5,7 +5,7 @@ const secret = 'NeverShareYourSecret';
 
 const keyDict = { 5678: secret };
 
-const server = new Hapi.Server();
+const server = new Hapi.server();
 // server.connection();
 
 

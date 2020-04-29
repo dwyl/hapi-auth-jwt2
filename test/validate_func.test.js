@@ -5,7 +5,7 @@ const secret = 'NeverShareYourSecret';
 
 test('Should respond with 500 series error when validate errs', async function (t) {
 
-  const server = new Hapi.Server({ debug: false });
+  const server = new Hapi.server({ debug: false });
   try {
     await server.register(require('../'));
   } catch (err) {
