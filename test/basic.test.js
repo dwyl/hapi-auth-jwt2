@@ -41,7 +41,11 @@ test("Malformed JWT", async function(t) {
   // console.log(response.result);
   // console.log(' '); // blank line
   t.equal(response.statusCode, 401, "INVALID Token should fail");
-  // t.equal(JSON.parse(response.result).msg, 'Invalid Token', "INVALID Token should fail");
+
+  // assert on the response message, so we can ensure this case fails
+  // early (after decode()) with "Invalid token format" instead of too
+  // later (after verify) with "Invalid token"
+  t.equal(response.result.message, 'Invalid token format', 'Message should be "Invalid token format"');
   t.end();
 });
 
