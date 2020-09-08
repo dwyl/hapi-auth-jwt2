@@ -6,7 +6,7 @@ const secret = 'NeverShareYourSecret';
 test('Auth mode \'try\' should not set isAuthenticated to true when no token sent', async function (t) {
   t.plan(2);
 
-  const server = new Hapi.Server({ debug: {"request": ["error", "uncaught"]} });
+  const server = new Hapi.server({ debug: {"request": ["error", "uncaught"]} });
   
   try {
     await server.register(require('../'));
@@ -50,7 +50,7 @@ test('Auth mode \'try\' should not set isAuthenticated to true when no token sen
 test('Auth mode \'optional\' should not set isAuthenticated to true when no token sent', async function (t) {
   t.plan(3);
 
-  const server = new Hapi.Server();
+  const server = new Hapi.server();
 
   try{
     server.register(require('../'))

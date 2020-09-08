@@ -2,7 +2,7 @@ const Hapi   = require('@hapi/hapi');
 const secret = 'NeverShareYourSecret';
 
 // for debug options see: http://hapijs.com/tutorials/logging
-const server = new Hapi.Server({ debug: false });
+const server = new Hapi.server({ debug: false });
 
 const db = {
   "123": { allowed: true,  "name": "Charlie" },

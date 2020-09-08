@@ -15,6 +15,27 @@ test("Access a route that has no auth strategy", async function(t) {
     t.end();
 });
 
+test("customVerify malformed JWT", async function(t) {
+  // this test verifies the fix for
+  // https://github.com/dwyl/hapi-auth-jwt2/issues/328
+
+  const options = {
+    method: "GET",
+    url: "/required",
+    headers: { authorization: "Bearer my.invalid.token" }
+  };
+  // server.inject lets us simulate an http request
+  const response = await server.inject(options);
+  // console.log(response.result);
+  t.equal(response.statusCode, 401, "INVALID Token should fail");
+
+  // assert on the response message, so we can ensure this case fails
+  // early (after decode()) with "Invalid token format" before it ever
+  // even attempts to call our customVerify function
+  t.equal(response.result.message, 'Invalid token format', "INVALID Token should fail");
+  t.end();
+});
+
 test("customVerify simulate error condition", async function(t) {
   const payload = { id: 123, "name": "Charlie", error: true }
   const token = JWT.sign(payload, 'SecretDoesNOTGetVerified');
@@ -40,6 +61,7 @@ test("customVerify with fail condition", async function(t) {
   // server.inject lets us simulate an http request
   const response = await server.inject(options);
     t.equal(response.statusCode, 401, "GET /required with customVerify rejected");
+    t.equal(response.result.message, 'Invalid credentials', "GET /required with customVerify rejected");
     t.end();
 });
 
