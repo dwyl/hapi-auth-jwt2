@@ -336,7 +336,6 @@ The _easiest_ way is to run node's crypto hash in your terminal:
 node -e "console.log(require('crypto').randomBytes(256).toString('base64'));"
 ```
 and copy the resulting base64 key and use it as your JWT secret.
-If you are *curious* how strong that key is watch: https://youtu.be/koJQQWHI-ZA
 
 
 ## Want to access the JWT token *after* validation?
