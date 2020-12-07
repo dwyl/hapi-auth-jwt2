@@ -270,7 +270,7 @@ If your key is base64 encoded, then for JWT2 to use it you need to convert it to
 
 ```js
 server.auth.strategy('jwt', 'jwt', true,
-{ key: Buffer('<Your Base64 encoded secret key>', 'base64'), // Never Share your secret key
+{ key: Buffer.from('<Your Base64 encoded secret key>', 'base64'), // Never Share your secret key
   validate: validate,      // validate function defined above
   verifyOptions: { algorithms: [ 'HS256' ] }  // only allow HS256 algorithm
 });
