@@ -194,7 +194,7 @@ signature `async function(decoded)` where:
     - `request` - the request object.
     - `h`- the response toolkit.
 - `errorFunc` - (***optional*** *defaults to raising the error requested*) function called when an error has been raised. It provides an extension point to allow the host the ability to customise the error messages returned. Passed in object follows the following schema:
-    - `errorContext` - the request object.
+    - `errorContext` - the error object.
       - `errorContext.errorType` - ***required*** the `Boom` method to call (eg. unauthorized)
       - `errorContext.message` - ***required*** the `message` passed into the `Boom` method call
       - `errorContext.schema` - the `schema` passed into the `Boom` method call
