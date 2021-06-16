@@ -1,8 +1,3 @@
-# Hapi Auth using JSON Web Tokens (JWT)
-
-***The*** authentication scheme/plugin for
-[**Hapi.js**](http://hapijs.com/) apps using **JSON Web Tokens**
-
 ![hapi-auth-jwt2-diagram-verify](https://cloud.githubusercontent.com/assets/194400/11937081/00f9b4bc-a80a-11e5-9f71-a7e05e92f1ae.png)
 
 [![Known Vulnerabilities](https://snyk.io/test/github/dwyl/hapi-auth-jwt2/badge.svg?targetFile=package.json&style=flat-square)](https://snyk.io/test/github/dwyl/hapi-auth-jwt2?targetFile=package.json)
@@ -16,7 +11,10 @@
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat-square)](https://github.com/dwyl/hapi-auth-jwt2/issues)
 [![HitCount](http://hits.dwyl.io/dwyl/hapi-auth-jwt2.svg)](http://hits.dwyl.io/dwyl/hapi-auth-jwt2)
 [![npm package version](https://img.shields.io/npm/v/hapi-auth-jwt2.svg?style=flat-square)](https://www.npmjs.com/package/hapi-auth-jwt2)
+# Hapi Auth using JSON Web Tokens (JWT)
 
+***The*** authentication scheme/plugin for
+[**Hapi.js**](http://hapijs.com/) apps using **JSON Web Tokens**
 
 This node.js module (Hapi plugin) lets you use JSON Web Tokens (JWTs)
 for authentication in your [Hapi.js](http://hapijs.com/)
@@ -194,7 +192,7 @@ signature `async function(decoded)` where:
     - `request` - the request object.
     - `h`- the response toolkit.
 - `errorFunc` - (***optional*** *defaults to raising the error requested*) function called when an error has been raised. It provides an extension point to allow the host the ability to customise the error messages returned. Passed in object follows the following schema:
-    - `errorContext` - the request object.
+    - `errorContext` - the error object.
       - `errorContext.errorType` - ***required*** the `Boom` method to call (eg. unauthorized)
       - `errorContext.message` - ***required*** the `message` passed into the `Boom` method call
       - `errorContext.schema` - the `schema` passed into the `Boom` method call
@@ -215,7 +213,7 @@ signature `async function(decoded)` where:
 
 ### Useful Features
 
-+ The *encoded* JWT (token) is extracted from the request and
+- The *encoded* JWT (token) is extracted from the request and
 made available on the `request` object as `request.auth.token`,
 in case you need it later on in the request lifecycle.
 This feature was requested by @mcortesi in
@@ -245,7 +243,7 @@ server.auth.strategy('jwt', 'jwt', true,
 
 Read more about this at: [jsonwebtoken verify options]( https://github.com/auth0/node-jsonwebtoken#jwtverifytoken-secretorpublickey-options-callback)
 
-### Specify Signing Algorithm (_Optional but highly recommended_)
+### Specify Signing Algorithm (*Optional but highly recommended*)
 
 For [security reasons](https://auth0.com/blog/2015/03/31/critical-vulnerabilities-in-json-web-token-libraries/) it is recommended that you specify the allowed algorithms used when signing the tokens:
 ```js
@@ -266,7 +264,7 @@ This feature was requested in: [issues/29](https://github.com/dwyl/hapi-auth-jwt
 
 Some authentication services (like Auth0) provide secret keys encoded in base64, To find out if your authentication service is one of these services, please try and experiment with the base64 encoded secret options on the validator at https://jwt.io
 
-If your key is base64 encoded, then for JWT2 to use it you need to convert it to a buffer.  Following is an example of how to do this.
+If your key is base64 encoded, then for `JWT2` to use it you need to convert it to a `Buffer`.  Following is an example of how to do this.
 
 ```js
 server.auth.strategy('jwt', 'jwt', true,
@@ -284,11 +282,11 @@ This plugin supports [authentication modes](http://hapijs.com/api#route-options)
 
 - `optional` - if no JWT is provided, request will pass with `request.auth.isAuthenticated` set to `false` and `request.auth.credentials` set to null
 
-- `try` - similar to `optional`, but invalid JWT will pass with `request.auth.isAuthenticated` set to false and failed credentials provided in `request.auth.credentials`
+- `try` - similar to `optional`, but invalid JWT will pass with `request.auth.isAuthenticated` set to `false` and failed credentials provided in `request.auth.credentials`
 
 ### Additional notes on keys and key lookup functions
 
-- This option to look up a secret key was added to support "multi-tenant" environments. One use case would be companies that white label API services for their customers and cannot use a shared secret key. If the key lookup function needs to use fields from the token header (e.g. [x5t header](http://self-issued.info/docs/draft-jones-json-web-token-01.html#ReservedHeaderParameterName), set option `completeToken` to `true`.
+- This option to look up a secret key was added to support "multi-tenant" environments. One use case would be companies that white label API services for their customers and cannot use a shared secret key. If the key lookup function needs to use fields from the token header (e.g. [x5t header](http://self-issued.info/docs/draft-jones-json-web-token-01.html#ReservedHeaderParameterName)), set option `completeToken` to `true`.
 
 - The reason why you might want to pass back `extraInfo` in the callback is because you likely need to do a database call to get the key which also probably returns useful user data. This could save you another call in `validate`.
 
@@ -309,7 +307,7 @@ Several people requested the ability pass in JSNOWebTokens in the requested URL:
 
 ### Usage
 
-Setup your hapi.js server as described above (_no special setup for using JWT tokens in urls_)
+Setup your hapi.js server as described above (*no special setup for using JWT tokens in urls*)
 
 ```sh
 https://yoursite.co/path?token=your.jsonwebtoken.here
@@ -330,8 +328,8 @@ const url   = "/path?token="+token;
 
 @skota asked "***How to generate secret key***?" in: [dwyl/hapi-auth-jwt2/issues/**48**](https://github.com/dwyl/hapi-auth-jwt2/issues/48)
 
-There are _several_ options for generating secret keys.
-The _easiest_ way is to run node's crypto hash in your terminal:
+There are *several* options for generating secret keys.
+The *easiest* way is to run Node's `crypto` hash in your terminal:
 ```js
 node -e "console.log(require('crypto').randomBytes(256).toString('base64'));"
 ```
@@ -390,15 +388,18 @@ reply({text: 'You have been authenticated!'})
 ```
 
 For a *detailed* example please see:
-https://github.com/nelsonic/hapi-auth-jwt2-cookie-example
+[https://github.com/nelsonic/hapi-auth-jwt2-cookie-example](https://github.com/nelsonic/hapi-auth-jwt2-cookie-example)
 
 #### Background Reading (*Cookies*)
 
-+ Wikipedia has a good intro (general): https://en.wikipedia.org/wiki/HTTP_cookie
-+ Cookies Explained (by Nicholas C. Zakas - JavaScript über-master) http://www.nczonline.net/blog/2009/05/05/http-cookies-explained/
-+ The Unofficial Cookie FAQ: http://www.cookiecentral.com/faq/
-+  HTTP State Management Mechanism (long but complete spec):
-http://tools.ietf.org/html/rfc6265
+- Wikipedia has a good intro (general):
+[https://en.wikipedia.org/wiki/HTTP_cookie](https://en.wikipedia.org/wiki/HTTP_cookie)
+- Cookies Explained (by Nicholas C. Zakas - JavaScript über-master)
+[http://www.nczonline.net/blog/2009/05/05/http-cookies-explained/](http://www.nczonline.net/blog/2009/05/05/http-cookies-explained/)
+- The Unofficial Cookie FAQ:
+[http://www.cookiecentral.com/faq/](http://www.cookiecentral.com/faq/)
+- HTTP State Management Mechanism (long but complete spec):
+[http://tools.ietf.org/html/rfc6265](http://tools.ietf.org/html/rfc6265)
 
 - - -
 
@@ -407,7 +408,8 @@ http://tools.ietf.org/html/rfc6265
 ### Do I *need* to include `jsonwebtoken` in my project?
 
 **Q**: Must I include the **jsonwebtoken** package in my project
-[given that **hapi-auth-jwt2** plugin already includes it] ? asked in [hapi-auth-jwt2/issues/32](https://github.com/dwyl/hapi-auth-jwt2/issues/32)  
+[given that **hapi-auth-jwt2** plugin already includes it] ? asked in 
+[hapi-auth-jwt2/issues/32](https://github.com/dwyl/hapi-auth-jwt2/issues/32)  
 **A**: Yes, you need to *manually* install the **jsonwebtoken**
 node module from NPM with `npm install jsonwebtoken --save` if you want to ***sign*** JWTs in your app.
 Even though **hapi-auth-jwt2** includes it
@@ -434,7 +436,7 @@ Hapi's "Server Composer" [`glue`](https://github.com/hapijs/glue)
 
 The answer is ***Yes***! For an example of how to do this,
 see [@avanslaars](https://github.com/avanslaars) code example:
-https://github.com/dwyl/hapi-auth-jwt2/issues/151#issuecomment-218321212
+[https://github.com/dwyl/hapi-auth-jwt2/issues/151#issuecomment-218321212](https://github.com/dwyl/hapi-auth-jwt2/issues/151#issuecomment-218321212)
 
 <br />
 
@@ -442,8 +444,10 @@ https://github.com/dwyl/hapi-auth-jwt2/issues/151#issuecomment-218321212
 
 Asked by [@SanderElias](https://github.com/SanderElias) in [hapi-auth-jwt2/issues/126](https://github.com/dwyl/hapi-auth-jwt2/issues/126)
 
-We store our JWT-based sessions in a Redis datastore and lookup the session (`jti`) for the given JWT during the `validate` (*validation function*) see: https://github.com/dwyl/hapi-auth-jwt2-example/blob/791b0d3906d4deb256daf23fcf8f5021905abe9e/index.js#L25
-This means we can invalidate the session in Redis and then reject a request that uses an "old" or invalid JWT. see: https://github.com/dwyl/hapi-auth-jwt2-example/blob/791b0d3906d4deb256daf23fcf8f5021905abe9e/index.js#L25
+We store our JWT-based sessions in a Redis datastore and lookup the session (`jti`) for the given JWT during the `validate` (*validation function*) see: 
+[https://github.com/dwyl/hapi-auth-jwt2-example/blob/791b0d3906d4deb256daf23fcf8f5021905abe9e/index.js#L25](https://github.com/dwyl/hapi-auth-jwt2-example/blob/791b0d3906d4deb256daf23fcf8f5021905abe9e/index.js#L25)
+This means we can invalidate the session in Redis and then reject a request that uses an "old" or invalid JWT. see:
+[https://github.com/dwyl/hapi-auth-jwt2-example/blob/791b0d3906d4deb256daf23fcf8f5021905abe9e/index.js#L25](https://github.com/dwyl/hapi-auth-jwt2-example/blob/791b0d3906d4deb256daf23fcf8f5021905abe9e/index.js#L25)
 
 
 <br />
@@ -452,7 +456,7 @@ This means we can invalidate the session in Redis and then reject a request that
 
 [@abeninskibede](https://github.com/abeninskibede) asked how to set all routes to use JWT Auth in [hapi-auth-jwt2/issues/149](https://github.com/dwyl/hapi-auth-jwt2/issues/149)
 
-We tend to enable `hapi-auth-jwt2` for _all_ routes by setting the default strategy to 'jwt' (so its `required` for all endpoints) because _most_ of the endpoints in our app require the person/user to be authenticated e.g:
+We tend to enable `hapi-auth-jwt2` for *all* routes by setting the default strategy to 'jwt' (so its `required` for all endpoints) because *most* of the endpoints in our app require the person/user to be authenticated e.g:
 
 ```js
 server.auth.strategy('jwt', 'jwt', {
@@ -471,21 +475,24 @@ server.route({
 });
 ```
 
-The best place to _understand_ everything about Hapi Auth is in the docs: http://hapijs.com/tutorials/auth#setting-a-default-strategy
-But if you have any questions which are not answered there, feel free to [ask!](https://github.com/dwyl/hapi-auth-jwt2/issues)
 
 <br />
+The best place to *understand* everything about Hapi Auth is in the docs: 
+[http://hapijs.com/tutorials/auth#setting-a-default-strategy](http://hapijs.com/tutorials/auth#setting-a-default-strategy)
+But if you have any questions which are not answered there, feel free to 
+[ask!](https://github.com/dwyl/hapi-auth-jwt2/issues)
 
-### How to _redirect_ if a token has expired?
+### How to *redirect* if a token has expired?
 
 @traducer & @goncalvesr2 both requested how to redirect after failed Auth in
 [hapi-auth-jwt2/issues/161](https://github.com/dwyl/hapi-auth-jwt2/issues/161)
 and [hapi-auth-jwt2/issues/148](https://github.com/dwyl/hapi-auth-jwt2/issues/148) respectively
 
 The [`hapi-error`](https://github.com/dwyl/hapi-error) lets
-you _easily_ redirect to any url you define if the Auth check fails
+you *easily* redirect to any url you define if the Auth check fails
 (i.e. `statusCode 401`)
-see: https://github.com/dwyl/hapi-error#redirectredirecting-to-another-endpoint
+see:
+[https://github.com/dwyl/hapi-error#redirectredirecting-to-another-endpoint](https://github.com/dwyl/hapi-error#redirectredirecting-to-another-endpoint)
 (*code examples there.*)
 
 <br />
@@ -494,7 +501,7 @@ see: https://github.com/dwyl/hapi-error#redirectredirecting-to-another-endpoint
 
 For example:
 
-If the request.auth.credentials object initially added to your `/` endpoint initial  was:
+If the `request.auth.credentials` object initially added to your `/` endpoint initial  was:
 
 ``` js
 {
@@ -579,20 +586,19 @@ server.route([
           }
         }
       ]);
-````
+```
 
 This route will, when a JWT is posted failover from the authentication phase to the payload authentication phase, extract a JWT, store it in the YAR session cache and redirect the user to the `/home` path using a standard 302 response. When the handler for `/home` is JWT protected, the `customExtractionFunc` defined in the auth strategy will read the JWT from the users session cache and use it for authentication
 
 ## *Advanced/Alternative* Usage => Bring Your Own `verify`
 
 While *most* people using `hapi-auth-jwt2` will opt for the *simpler* use case
-(*using a* ***Validation Function*** *`validate` - see: Basic Usage example above -
-  which validates the JWT payload after it has been verified...*)
+(*using a* ***Validation Function*** *`validate` - see: Basic Usage example above - which validates the JWT payload after it has been verified...*)
 others may need more control over the `verify` step.
 
 The [*internals*](https://github.com/dwyl/hapi-auth-jwt2/blob/eb9fff9fc384fde07ec2a1d2f0da520be902da2c/l˜/index.js#L58)
 of `hapi-auth-jwt2` use the `jsonwebtoken.verify` method to ***verify*** if the
-JTW was signed using the `JWT_SECRET` (*secret key*).
+JWT was signed using the `JWT_SECRET` (*secret key*).
 
 If you prefer specifying your own verification logic instead of having a `validate`, simply define a `verify` instead when initializing the plugin.
 
@@ -606,7 +612,8 @@ If you prefer specifying your own verification logic instead of having a `valida
 
 The advantage of this approach is that it allows people to write a
 custom verification function or to bypass the `JWT.verify` *completely*.
-For more detail, see: use-case discussion in https://github.com/dwyl/hapi-auth-jwt2/issues/120
+For more detail, see: use-case discussion in 
+[https://github.com/dwyl/hapi-auth-jwt2/issues/120](https://github.com/dwyl/hapi-auth-jwt2/issues/120)
 
 
 > ***Note***: *nobody has requested the ability to use* ***both*** *a*
@@ -628,12 +635,12 @@ Sadly this is a breaking change, hence the new major release.
 **`hapi-auth-jwt2`** version **`9.x.x`** is compatible with **Hapi.js `19.x.x`**
 which only supports **Node.js 12+**.
 While **`hapi-auth-jwt2`** version `9.0.0`
-does not have _any_ code changes from `v8.8.1`
-(_so there should not be any need to update your code that uses this plugin_),
+does not have *any* code changes from `v8.8.1`
+(*so there should not be any need to update your code that uses this plugin*),
 we felt it was prudent to make it clear to people that Hapi.js
-(_the core framework_) has
+(*the core framework*) has
 [dropped support for Node.js 10](https://github.com/dwyl/hapi-auth-jwt2/issues/338#issuecomment-583716612)
-and people should treat _this_ package
+and people should treat *this* package
 as no longer supporting the older versions of Node. <br />
 
 `hapi-auth-jwt2` version `8.x.x`
@@ -641,14 +648,13 @@ is compatible with Hapi.js version `17.x.x` - `19.x.x` <br />
 
 `hapi-auth-jwt2` version `7.x.x` is compatible with `16.x.x`
 `15.x.x` `14.x.x` `13.x.x` `12.x.x` `11.x.x` `10.x.x` `9.x.x` and `8.x.x`
-Hapi `17.x.x` is a _major_ rewrite that's why version `8.x.x`
+Hapi `17.x.x` is a *major* rewrite that's why version `8.x.x`
 of the plugin is not backward compatible!
 
 However in the interest of
  security/performance we *recommend* using the [*latest version*](https://github.com/hapijs/hapi/) of Hapi.
 
-> *If you have a question, or need help getting started* ***please post an issue/question on
-GitHub***: https://github.com/dwyl/hapi-auth-jwt2/issues
+> *If you have a question, or need help getting started* ***please post an issue/question on GitHub***: https://github.com/dwyl/hapi-auth-jwt2/issues
 
 <br />
 <br />
@@ -680,14 +686,17 @@ If you would like to see a "***real world example***" of this plugin in use
 in a ***production*** web app (API)
 please see: https://github.com/dwyl/time/tree/master/api/lib
 
-+ **app.js** ***registering*** the **hapi-auth-jwt2 plugin**:
+- **app.js** ***registering*** the **hapi-auth-jwt2 plugin**:
 [app.js#L13](https://github.com/dwyl/time/blob/0a5ec8711840528a4960c388825fb883fabddd76/app.js#L13)
-+ telling app.js where to find our **validate** Function:
+
+- telling app.js where to find our **validate** Function:
 [app.js#L21](https://github.com/dwyl/time/blob/0a5ec8711840528a4960c388825fb883fabddd76/app.js#L21)
-+ **validate** Function (how we check the JWT is still valid):
+
+- **validate** Function (how we check the JWT is still valid):
 [api/lib/auth_jwt_validate.js](https://github.com/dwyl/time/blob/0a5ec8711840528a4960c388825fb883fabddd76/api/lib/auth_jwt_validate.js) looks up the person's session in our ElasticSearch Database
 if the [session record is ***found*** (valid) and ***not ended***](https://github.com/dwyl/time/blob/0a5ec8711840528a4960c388825fb883fabddd76/api/lib/auth_jwt_validate.js#L12) we allow the person to see the restricted content.
-+ **Signing your JWTs**: in your app you need a method to *sign* the JWTs (and put them in a database
+
+- **Signing your JWTs**: in your app you need a method to *sign* the JWTs (and put them in a database
   if that's how you are *verifying* your sessions) ours is:
   [api/lib/auth_jwt_sign.js](https://github.com/dwyl/time/blob/0a5ec8711840528a4960c388825fb883fabddd76/api/lib/auth_jwt_sign.js#L18)
 
@@ -706,10 +715,6 @@ please raise an issue:
 https://github.com/dwyl/hapi-auth-jwt2/issues <br />
 *Someone* in the dwyl team is *always* online
 so we will usually answer within a few hours.
-
-
-# tl;dr
-
 ## Motivation
 
 While making [***Time***](https://github.com/dwyl/time) we want to ensure
@@ -738,26 +743,28 @@ Think of our module as the "***new, simplified and actively maintained version**
 
 ## Useful Links
 
-+ For more background on jsonwebtokens (JWTs) see our detailed overview:
-https://github.com/dwyl/learn-json-web-tokens
-+ Securing Hapi Client Side Sessions:
-https://blog.liftsecurity.io/2014/11/26/securing-hapi-client-side-sessions
+- For more background on jsonwebtokens (JWTs) see our detailed overview:
+[https://github.com/dwyl/learn-json-web-tokens](https://github.com/dwyl/learn-json-web-tokens)
+
+- Securing Hapi Client Side Sessions:
+[https://blog.liftsecurity.io/2014/11/26/securing-hapi-client-side-sessions](https://blog.liftsecurity.io/2014/11/26/securing-hapi-client-side-sessions)
 
 ### Hapi.js Auth
 
 We borrowed code from the following:
 
-+ http://hapijs.com/tutorials/auth
-+ https://github.com/hapijs/hapi-auth-basic
-+ https://github.com/hapijs/hapi-auth-cookie
-+ https://github.com/hapijs/hapi-auth-hawk
-+ https://github.com/ryanfitz/hapi-auth-jwt
-(Ryan made a good *start* - however, when we tried to submit a [pull request](https://github.com/ryanfitz/hapi-auth-jwt/pull/27)
-to improve (_security_) it was *ignored* for _weeks_ ... an *authentication* plugin that [***ignores security updates***](https://github.com/ryanfitz/hapi-auth-jwt/issues/26) in [dependencies](https://david-dm.org/ryanfitz/hapi-auth-jwt)
-  is a ***no-go*** for us; **security** ***matters***!) If you spot _any_
-  issue in ***hapi-auth-jwt2*** please create an issue: https://github.com/dwyl/hapi-auth-jwt2/issues
-  so we can get it _resolved_ ASAP!
+- [http://hapijs.com/tutorials/auth](http://hapijs.com/tutorials/auth)
+- [https://github.com/hapijs/hapi-auth-basic](https://github.com/hapijs/hapi-auth-basic)
+- [https://github.com/hapijs/hapi-auth-cookie](https://github.com/hapijs/hapi-auth-cookie)
+- [https://github.com/hapijs/hapi-auth-hawk](https://github.com/hapijs/hapi-auth-hawk)
+- [https://github.com/ryanfitz/hapi-auth-jwt](https://github.com/ryanfitz/hapi-auth-jwt)
 
-_Aparently, `.some` people like it..._:
+(Ryan made a good *start* - however, when we tried to submit a [pull request](https://github.com/ryanfitz/hapi-auth-jwt/pull/27)
+to improve (*security*) it was *ignored* for *weeks* ... an *authentication* plugin that [***ignores security updates***](https://github.com/ryanfitz/hapi-auth-jwt/issues/26) in [dependencies](https://david-dm.org/ryanfitz/hapi-auth-jwt)
+is a ***no-go*** for us; **security** ***matters***!) If you spot *any*
+issue in ***hapi-auth-jwt2*** please create an issue: https://github.com/dwyl/hapi-auth-jwt2/issues
+so we can get it *resolved* ASAP!
+
+*Aparently, `.some` people like it...*:
 
 [![https://nodei.co/npm/hapi-auth-jwt2.png?downloads=true&downloadRank=true&stars=true](https://nodei.co/npm/hapi-auth-jwt2.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/hapi-auth-jwt2)
