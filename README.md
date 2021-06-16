@@ -262,7 +262,7 @@ This feature was requested in: [issues/29](https://github.com/dwyl/hapi-auth-jwt
 
 ### Using Base64 encoded secret keys
 
-Some authentication services (like Auth0) provide secret keys encoded in base64. To find out if your authentication service is one of these services, please try and experiment with the base64 encoded secret options on the validator at [http://jwt.io/](http://jwt.io/)
+Some authentication services (like Auth0) provide secret keys encoded in base64, To find out if your authentication service is one of these services, please try and experiment with the base64 encoded secret options on the validator at https://jwt.io
 
 If your key is base64 encoded, then for `JWT2` to use it you need to convert it to a `Buffer`.  Following is an example of how to do this.
 
