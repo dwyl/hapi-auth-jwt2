@@ -2,7 +2,9 @@
 {
     "plugins": ["prettier"],
     "rules": {
-      "prettier/prettier": "error",
+      "prettier/prettier": ["error", {
+        "endOfLine":"auto"
+      }],
     "array-callback-return": "warn",
     "default-case": ["warn", { "commentPattern": "^no default$" }],
     "dot-location": ["warn", "property"],
