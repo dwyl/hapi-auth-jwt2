@@ -9,7 +9,7 @@
 [![Dependencies Status](https://david-dm.org/dwyl/hapi-auth-jwt2/status.svg?style=flat-square)](https://david-dm.org/dwyl/hapi-auth-jwt2)
 [![devDependencies Status](https://david-dm.org/dwyl/hapi-auth-jwt2/dev-status.svg?style=flat-square)](https://david-dm.org/dwyl/hapi-auth-jwt2?type=dev)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat-square)](https://github.com/dwyl/hapi-auth-jwt2/issues)
-[![HitCount](http://hits.dwyl.io/dwyl/hapi-auth-jwt2.svg)](http://hits.dwyl.io/dwyl/hapi-auth-jwt2)
+[![HitCount](https://hits.dwyl.com/dwyl/hapi-auth-jwt2.svg)](https://github.com/dwyl/hapi-auth-jwt2)
 [![npm package version](https://img.shields.io/npm/v/hapi-auth-jwt2.svg?style=flat-square)](https://www.npmjs.com/package/hapi-auth-jwt2)
 # Hapi Auth using JSON Web Tokens (JWT)
 
