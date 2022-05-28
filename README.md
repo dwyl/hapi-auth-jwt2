@@ -2,10 +2,10 @@
 
 [![Known Vulnerabilities](https://snyk.io/test/github/dwyl/hapi-auth-jwt2/badge.svg?targetFile=package.json&style=flat-square)](https://snyk.io/test/github/dwyl/hapi-auth-jwt2?targetFile=package.json)
 [![Build Status](https://img.shields.io/travis/dwyl/hapi-auth-jwt2/master.svg?style=flat-square)](https://travis-ci.org/dwyl/hapi-auth-jwt2)
-[![codecov.io](https://img.shields.io/codecov/c/github/dwyl/hapi-auth-jwt2/master.svg?style=flat-square)](http://codecov.io/github/dwyl/hapi-auth-jwt2?branch=master)
-[![Inline docs](http://inch-ci.org/github/dwyl/hapi-auth-jwt2.svg?branch=master&style=flat-square)](http://inch-ci.org/github/dwyl/hapi-auth-jwt2)
-[![HAPI 19.1.0](http://img.shields.io/badge/hapi-19.1.0-brightgreen.svg?style=flat-square "Latest Hapi.js")](http://hapijs.com)
-[![Node.js Version](https://img.shields.io/node/v/hapi-auth-jwt2.svg?style=flat-square "Node.js 10 & 12 and io.js latest both supported")](http://nodejs.org/download/)
+[![codecov.io](https://img.shields.io/codecov/c/github/dwyl/hapi-auth-jwt2/master.svg?style=flat-square)](https://codecov.io/github/dwyl/hapi-auth-jwt2?branch=master)
+[![Inline docs](https://inch-ci.org/github/dwyl/hapi-auth-jwt2.svg?branch=master&style=flat-square)](https://inch-ci.org/github/dwyl/hapi-auth-jwt2)
+[![HAPI 19.1.0](https://img.shields.io/badge/hapi-19.1.0-brightgreen.svg?style=flat-square "Latest Hapi.js")](https://hapijs.com)
+[![Node.js Version](https://img.shields.io/node/v/hapi-auth-jwt2.svg?style=flat-square "Node.js 10 & 12 and io.js latest both supported")](https://nodejs.org/download/)
 [![Dependencies Status](https://david-dm.org/dwyl/hapi-auth-jwt2/status.svg?style=flat-square)](https://david-dm.org/dwyl/hapi-auth-jwt2)
 [![devDependencies Status](https://david-dm.org/dwyl/hapi-auth-jwt2/dev-status.svg?style=flat-square)](https://david-dm.org/dwyl/hapi-auth-jwt2?type=dev)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat-square)](https://github.com/dwyl/hapi-auth-jwt2/issues)
@@ -14,10 +14,10 @@
 # Hapi Auth using JSON Web Tokens (JWT)
 
 ***The*** authentication scheme/plugin for
-[**Hapi.js**](http://hapijs.com/) apps using **JSON Web Tokens**
+[**Hapi.js**](https://hapijs.com/) apps using **JSON Web Tokens**
 
 This node.js module (Hapi plugin) lets you use JSON Web Tokens (JWTs)
-for authentication in your [Hapi.js](http://hapijs.com/)
+for authentication in your [Hapi.js](https://hapijs.com/)
 web application.
 
 If you are totally new to JWTs, we wrote an introductory post explaining
@@ -185,7 +185,7 @@ signature `async function(decoded)` where:
 - `verifyOptions` - (***optional*** *defaults to none*) settings to define how tokens are verified by the
 [jsonwebtoken](https://github.com/auth0/node-jsonwebtoken#jwtverifytoken-secretorpublickey-options-callback) library
     - `ignoreExpiration` - ignore expired tokens
-    - `audience` - do not enforce token [*audience*](http://self-issued.info/docs/draft-ietf-oauth-json-web-token.html#audDef)
+    - `audience` - do not enforce token [*audience*](https://self-issued.info/docs/draft-ietf-oauth-json-web-token.html#audDef)
     - `issuer` - do not require the issuer to be valid
     - `algorithms` - list of allowed algorithms
 - `responseFunc` - (***optional***) function called to decorate the response with authentication headers before the response headers or payload is written where:
@@ -276,7 +276,7 @@ server.auth.strategy('jwt', 'jwt', true,
 
 ### Authentication Modes
 
-This plugin supports [authentication modes](http://hapijs.com/api#route-options) on routes.
+This plugin supports [authentication modes](https://hapijs.com/api#route-options) on routes.
 
 - `required` - requires JWT to be sent with every request
 
@@ -286,7 +286,7 @@ This plugin supports [authentication modes](http://hapijs.com/api#route-options)
 
 ### Additional notes on keys and key lookup functions
 
-- This option to look up a secret key was added to support "multi-tenant" environments. One use case would be companies that white label API services for their customers and cannot use a shared secret key. If the key lookup function needs to use fields from the token header (e.g. [x5t header](http://self-issued.info/docs/draft-jones-json-web-token-01.html#ReservedHeaderParameterName)), set option `completeToken` to `true`.
+- This option to look up a secret key was added to support "multi-tenant" environments. One use case would be companies that white label API services for their customers and cannot use a shared secret key. If the key lookup function needs to use fields from the token header (e.g. [x5t header](https://self-issued.info/docs/draft-jones-json-web-token-01.html#ReservedHeaderParameterName)), set option `completeToken` to `true`.
 
 - The reason why you might want to pass back `extraInfo` in the callback is because you likely need to do a database call to get the key which also probably returns useful user data. This could save you another call in `validate`.
 
@@ -395,7 +395,7 @@ For a *detailed* example please see:
 - Wikipedia has a good intro (general):
 [https://en.wikipedia.org/wiki/HTTP_cookie](https://en.wikipedia.org/wiki/HTTP_cookie)
 - Cookies Explained (by Nicholas C. Zakas - JavaScript über-master)
-[http://www.nczonline.net/blog/2009/05/05/http-cookies-explained/](http://www.nczonline.net/blog/2009/05/05/http-cookies-explained/)
+[https://www.nczonline.net/blog/2009/05/05/http-cookies-explained/](https://www.nczonline.net/blog/2009/05/05/http-cookies-explained/)
 - The Unofficial Cookie FAQ:
 [http://www.cookiecentral.com/faq/](http://www.cookiecentral.com/faq/)
 - HTTP State Management Mechanism (long but complete spec):
@@ -478,7 +478,7 @@ server.route({
 
 <br />
 The best place to *understand* everything about Hapi Auth is in the docs: 
-[http://hapijs.com/tutorials/auth#setting-a-default-strategy](http://hapijs.com/tutorials/auth#setting-a-default-strategy)
+[https://hapijs.com/tutorials/auth#setting-a-default-strategy](https://hapijs.com/tutorials/auth#setting-a-default-strategy)
 But if you have any questions which are not answered there, feel free to 
 [ask!](https://github.com/dwyl/hapi-auth-jwt2/issues)
 
@@ -723,7 +723,7 @@ This lead us to using JSON Web Tokens for ***Stateless*** Authentication.
 
 We did a *extensive* [research](https://www.npmjs.com/search?q=hapi+auth+jwt)
 into *existing* modules that *might* solve our problem; there are *many* on NPM:
-![npm search for hapi+jwt](http://i.imgur.com/xIj3Xpa.png)
+![npm search for hapi+jwt](https://i.imgur.com/xIj3Xpa.png)
 
 but they were invariably ***too complicated***, poorly documented and
 had *useless* (non-real-world) "examples"!
@@ -753,7 +753,7 @@ Think of our module as the "***new, simplified and actively maintained version**
 
 We borrowed code from the following:
 
-- [http://hapijs.com/tutorials/auth](http://hapijs.com/tutorials/auth)
+- [https://hapijs.com/tutorials/auth](https://hapijs.com/tutorials/auth)
 - [https://github.com/hapijs/hapi-auth-basic](https://github.com/hapijs/hapi-auth-basic)
 - [https://github.com/hapijs/hapi-auth-cookie](https://github.com/hapijs/hapi-auth-cookie)
 - [https://github.com/hapijs/hapi-auth-hawk](https://github.com/hapijs/hapi-auth-hawk)
