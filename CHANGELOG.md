@@ -1,6 +1,6 @@
 # Change Log
 
-This project adheres to [Semantic Versioning](http://semver.org/).  
+This project adheres to [Semantic Versioning](https://semver.org/).  
 Every release, along with the migration instructions (where necessary),
 is documented on the Github [Releases](https://github.com/dwyl/hapi-auth-jwt2/releases) page.
 

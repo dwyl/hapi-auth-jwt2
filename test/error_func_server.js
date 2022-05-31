@@ -1,7 +1,7 @@
 const Hapi   = require('@hapi/hapi');
 const secret = 'NeverShareYourSecret';
 
-// for debug options see: http://hapijs.com/tutorials/logging
+// for debug options see: https://hapijs.com/tutorials/logging
 let debug;
 // debug = { debug: { 'request': ['error', 'uncaught'] } };
 debug = { debug: false };
