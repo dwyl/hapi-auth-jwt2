@@ -14,10 +14,10 @@
 # Hapi Auth using JSON Web Tokens (JWT)
 
 ***The*** authentication scheme/plugin for
-[**Hapi.js**](https://hapijs.com/) apps using **JSON Web Tokens**
+[**Hapi.js**](https://hapi.dev/) apps using **JSON Web Tokens**
 
 This node.js module (Hapi plugin) lets you use JSON Web Tokens (JWTs)
-for authentication in your [Hapi.js](https://hapijs.com/)
+for authentication in your [Hapi.js](https://hapi.dev/)
 web application.
 
 If you are totally new to JWTs, we wrote an introductory post explaining
@@ -276,7 +276,7 @@ server.auth.strategy('jwt', 'jwt', true,
 
 ### Authentication Modes
 
-This plugin supports [authentication modes](https://hapijs.com/api#route-options) on routes.
+This plugin supports [authentication modes](https://hapi.dev/api/#route-options) on routes.
 
 - `required` - requires JWT to be sent with every request
 
@@ -478,7 +478,7 @@ server.route({
 
 <br />
 The best place to *understand* everything about Hapi Auth is in the docs: 
-[https://hapijs.com/tutorials/auth#setting-a-default-strategy](https://hapijs.com/tutorials/auth#setting-a-default-strategy)
+[https://hapi.dev/tutorials/auth/#default](https://hapi.dev/tutorials/auth/#default)
 But if you have any questions which are not answered there, feel free to 
 [ask!](https://github.com/dwyl/hapi-auth-jwt2/issues)
 
@@ -753,7 +753,7 @@ Think of our module as the "***new, simplified and actively maintained version**
 
 We borrowed code from the following:
 
-- [https://hapijs.com/tutorials/auth](https://hapijs.com/tutorials/auth)
+- [https://hapi.dev/tutorials/auth/](https://hapi.dev/tutorials/auth/)
 - [https://github.com/hapijs/hapi-auth-basic](https://github.com/hapijs/hapi-auth-basic)
 - [https://github.com/hapijs/hapi-auth-cookie](https://github.com/hapijs/hapi-auth-cookie)
 - [https://github.com/hapijs/hapi-auth-hawk](https://github.com/hapijs/hapi-auth-hawk)

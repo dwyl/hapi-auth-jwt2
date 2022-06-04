@@ -2,7 +2,7 @@ const Hapi = require('@hapi/hapi');
 const secret = 'NeverShareYourSecret';
 const Boom = require('@hapi/boom');
 
-// for debug options see: https://hapijs.com/tutorials/logging
+// for debug options see: https://hapi.dev/tutorials/logging/
 const server = new Hapi.server({ debug: false });
 
 // payload is not available to validate, so payloadFunc offers a chance use it for validation
