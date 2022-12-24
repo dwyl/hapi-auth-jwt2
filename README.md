@@ -1,5 +1,3 @@
-![hapi-auth-jwt2-diagram-verify](https://cloud.githubusercontent.com/assets/194400/11937081/00f9b4bc-a80a-11e5-9f71-a7e05e92f1ae.png)
-
 [![Known Vulnerabilities](https://snyk.io/test/github/dwyl/hapi-auth-jwt2/badge.svg?targetFile=package.json&style=flat-square)](https://snyk.io/test/github/dwyl/hapi-auth-jwt2?targetFile=package.json)
 [![Build Status](https://img.shields.io/travis/dwyl/hapi-auth-jwt2/master.svg?style=flat-square)](https://travis-ci.org/dwyl/hapi-auth-jwt2)
 [![codecov.io](https://img.shields.io/codecov/c/github/dwyl/hapi-auth-jwt2/master.svg?style=flat-square)](https://codecov.io/github/dwyl/hapi-auth-jwt2?branch=master)
@@ -16,6 +14,8 @@
 ***The*** authentication scheme/plugin for
 [**Hapi.js**](https://hapi.dev/) apps using **JSON Web Tokens**
 
+![hapi-auth-jwt2-diagram-verify](https://cloud.githubusercontent.com/assets/194400/11937081/00f9b4bc-a80a-11e5-9f71-a7e05e92f1ae.png)
+
 This node.js module (Hapi plugin) lets you use JSON Web Tokens (JWTs)
 for authentication in your [Hapi.js](https://hapi.dev/)
 web application.
@@ -26,6 +26,9 @@ the concepts & benefits: https://github.com/dwyl/learn-json-web-tokens
 If you (or anyone on your team) are unfamiliar with **Hapi.js** we have a
 quick guide for that too: https://github.com/dwyl/learn-hapi
 
+Other language documents:
+
+- [中文文档](./README-zh_CN.md)
 ## Usage
 
 We tried to make this plugin as user (developer) friendly as possible,
