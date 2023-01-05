@@ -1,20 +1,19 @@
-[![Known Vulnerabilities](https://snyk.io/test/github/dwyl/hapi-auth-jwt2/badge.svg?targetFile=package.json&style=flat-square)](https://snyk.io/test/github/dwyl/hapi-auth-jwt2?targetFile=package.json)
-[![Build Status](https://img.shields.io/travis/dwyl/hapi-auth-jwt2/master.svg?style=flat-square)](https://travis-ci.org/dwyl/hapi-auth-jwt2)
-[![codecov.io](https://img.shields.io/codecov/c/github/dwyl/hapi-auth-jwt2/master.svg?style=flat-square)](https://codecov.io/github/dwyl/hapi-auth-jwt2?branch=master)
-[![Inline docs](https://inch-ci.org/github/dwyl/hapi-auth-jwt2.svg?branch=master&style=flat-square)](https://inch-ci.org/github/dwyl/hapi-auth-jwt2)
-[![HAPI 19.1.0](https://img.shields.io/badge/hapi-19.1.0-brightgreen.svg?style=flat-square "Latest Hapi.js")](https://hapijs.com)
-[![Node.js Version](https://img.shields.io/node/v/hapi-auth-jwt2.svg?style=flat-square "Node.js 10 & 12 and io.js latest both supported")](https://nodejs.org/download/)
-[![Dependencies Status](https://david-dm.org/dwyl/hapi-auth-jwt2/status.svg?style=flat-square)](https://david-dm.org/dwyl/hapi-auth-jwt2)
-[![devDependencies Status](https://david-dm.org/dwyl/hapi-auth-jwt2/dev-status.svg?style=flat-square)](https://david-dm.org/dwyl/hapi-auth-jwt2?type=dev)
-[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat-square)](https://github.com/dwyl/hapi-auth-jwt2/issues)
-[![HitCount](https://hits.dwyl.com/dwyl/hapi-auth-jwt2.svg)](https://github.com/dwyl/hapi-auth-jwt2)
-[![npm package version](https://img.shields.io/npm/v/hapi-auth-jwt2.svg?style=flat-square)](https://www.npmjs.com/package/hapi-auth-jwt2)
 # Hapi Auth using JSON Web Tokens (JWT)
 
 ***The*** authentication scheme/plugin for
 [**Hapi.js**](https://hapi.dev/) apps using **JSON Web Tokens**
 
 ![hapi-auth-jwt2-diagram-verify](https://cloud.githubusercontent.com/assets/194400/11937081/00f9b4bc-a80a-11e5-9f71-a7e05e92f1ae.png)
+
+[![Known Vulnerabilities](https://snyk.io/test/github/dwyl/hapi-auth-jwt2/badge.svg?targetFile=package.json&style=flat-square)](https://snyk.io/test/github/dwyl/hapi-auth-jwt2?targetFile=package.json)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/dwyl/hapi-auth-jwt2/ci.yml?label=build&style=flat-square&branch=main)
+[![codecov.io](https://img.shields.io/codecov/c/github/dwyl/hapi-auth-jwt2/main.svg?style=flat-square)](http://codecov.io/github/dwyl/hapi-auth-jwt2?branch=main)
+[![Inline docs](http://inch-ci.org/github/dwyl/hapi-auth-jwt2.svg?branch=main&style=flat-square)](http://inch-ci.org/github/dwyl/hapi-auth-jwt2)
+[![HAPI 21.1.0](http://img.shields.io/badge/hapi-21.1.0-brightgreen.svg?style=flat-square "Latest Hapi.js")](http://hapijs.com)
+[![Node.js Version](https://img.shields.io/node/v/hapi-auth-jwt2.svg?style=flat-square "Node.js 14.x, 16.x & 18.x supported")](http://nodejs.org/download/)
+[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat-square)](https://github.com/dwyl/hapi-auth-jwt2/issues)
+[![HitCount](http://hits.dwyl.com/dwyl/hapi-auth-jwt2.svg)](http://hits.dwyl.com/dwyl/hapi-auth-jwt2)
+[![npm package version](https://img.shields.io/npm/v/hapi-auth-jwt2.svg?style=flat-square)](https://www.npmjs.com/package/hapi-auth-jwt2)
 
 This node.js module (Hapi plugin) lets you use JSON Web Tokens (JWTs)
 for authentication in your [Hapi.js](https://hapi.dev/)
@@ -170,8 +169,8 @@ signature `async function(decoded)` where:
         - `key` - the secret key (or array of keys to try)
         - `extraInfo` - (***optional***) any additional information that you would like to use in `validate` which can be accessed
         via `request.plugins['hapi-auth-jwt2'].extraInfo`
-    - Throws a Boom error when key lookup fails.  Refer to [this example implementation](https://github.com/dwyl/hapi-auth-jwt2/blob/master/test/dynamic_key_server.js)
-    and [its associated test](https://github.com/dwyl/hapi-auth-jwt2/blob/master/test/dynamic_key.test.js) for a working example.
+    - Throws a Boom error when key lookup fails.  Refer to [this example implementation](https://github.com/dwyl/hapi-auth-jwt2/blob/main/test/dynamic_key_server.js)
+    and [its associated test](https://github.com/dwyl/hapi-auth-jwt2/blob/main/test/dynamic_key.test.js) for a working example.
 - `validate` - (***required***) the function which is run once the Token has been decoded with
  signature `async function(decoded, request, h)` where:
     - `decoded` - (***required***) is the decoded and verified JWT received in the request
@@ -397,7 +396,7 @@ For a *detailed* example please see:
 
 - Wikipedia has a good intro (general):
 [https://en.wikipedia.org/wiki/HTTP_cookie](https://en.wikipedia.org/wiki/HTTP_cookie)
-- Cookies Explained (by Nicholas C. Zakas - JavaScript über-master)
+- Cookies Explained (by Nicholas C. Zakas - JavaScript über-main)
 [https://www.nczonline.net/blog/2009/05/05/http-cookies-explained/](https://www.nczonline.net/blog/2009/05/05/http-cookies-explained/)
 - The Unofficial Cookie FAQ:
 [http://www.cookiecentral.com/faq/](http://www.cookiecentral.com/faq/)
@@ -687,7 +686,7 @@ Having a more real-world example was *seconded* by [@manonthemat](https://github
 
 If you would like to see a "***real world example***" of this plugin in use
 in a ***production*** web app (API)
-please see: https://github.com/dwyl/time/tree/master/api/lib
+please see: https://github.com/dwyl/time/tree/main/api/lib
 
 - **app.js** ***registering*** the **hapi-auth-jwt2 plugin**:
 [app.js#L13](https://github.com/dwyl/time/blob/0a5ec8711840528a4960c388825fb883fabddd76/app.js#L13)
