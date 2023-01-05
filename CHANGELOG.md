@@ -7,6 +7,13 @@ is documented on the Github [Releases](https://github.com/dwyl/hapi-auth-jwt2/re
 If anything is unclear in the project documentation, please
 raise an issue: https://github.com/dwyl/hapi-auth-jwt2/issues (_we are here to help!_)
 
+# Version 10.3.0 - Security Update to `jsonwebtoken` Dependency
+
+Update version of `jsonwebtoken` dependency to latest
+to avoid security issues. 
+See: https://github.com/dwyl/hapi-auth-jwt2/pull/374 thanks @AntoineAA 
+More detail in: https://github.com/dwyl/hapi-auth-jwt2/pull/373 thanks Snyk. 
+
 # Version 10.0.0
 
 Version 10.0.0 introduces a ***breaking change***
