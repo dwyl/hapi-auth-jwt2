@@ -56,7 +56,7 @@
   },
   "homepage": "https://github.com/dwyl/hapi-auth-jwt2",
   "dependencies": {
-    "@hapi/boom": "^9.0.0",
+    "@hapi/boom": "^10.0.0",
     "cookie": "^0.4.0",
     "jsonwebtoken": "^9.0.0"
   },
