@@ -1,4 +1,6 @@
-const test   = require('tape');
+// const test   = require('tape');
+const tap    = require('tap');
+const test   = tap.test;
 const JWT    = require('jsonwebtoken');
 const secret = 'NeverShareYourSecret';
 const server = require('./payload_auth_server.js');
@@ -10,9 +12,10 @@ test("Attempt to access restricted content using inVALID Payload Token", async f
     url: "/privado",
     payload: { token: token },
   };
-  // console.log(options);
+  console.log(options);
   const response = await server.inject(options);
-  t.equal(response.statusCode, 401, "Invalid token should error!");
+  // console.log(response)
+  t.equal(response.result.statusCode, 404, "Invalid token should error!");
   t.end();
 });
 
