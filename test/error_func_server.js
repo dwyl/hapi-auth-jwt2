@@ -15,10 +15,16 @@ const privado = function(req, reply) {
   return req.auth.credentials;
 };
 
+let lastErrorContext = undefined;
+function getLastErrorContext() {
+  return lastErrorContext;
+}
+
 // defining our own validate function lets us do something
 // useful/custom with the decodedToken before reply(ing)
 const customVerify = function (decoded, request) {
-  if(decoded.error) {
+  lastErrorContext = undefined;
+  if (decoded.error) {
     throw new Error('customVerify fails!');
   }
   else if (decoded.custom_error) {
@@ -34,6 +40,7 @@ const customVerify = function (decoded, request) {
 
 const customErrorFunc = function (errorContext, req, h) {
   const result = errorContext;
+  lastErrorContext = errorContext;
 
   h.response().state('customError', 'setInCustomErrorFn');
 
@@ -63,4 +70,4 @@ const init = async() => {
 
 init();
 
-module.exports = server;
+module.exports = { server, getLastErrorContext };
