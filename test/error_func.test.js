@@ -2,7 +2,13 @@ const test   = require('tape');
 const JWT    = require('jsonwebtoken');
 // const secret = 'NeverShareYourSecret';
 
-const server = require('./error_func_server'); // test server which in turn loads our module
+const { server, getLastErrorContext } = require('./error_func_server'); // test server which in turn loads our module
+
+function getPayloadFromDecoded(decoded) {
+  const payload = Object.assign({}, decoded);
+  delete payload.iat;
+  return payload;
+}
 
 test("Access a route that has no auth strategy", async function(t) {
   const options = {
@@ -25,8 +31,11 @@ test("customVerify simulate error condition", async function(t) {
   };
   // server.inject lets us simulate an http request
   const response = await server.inject(options);
+  const errorContext = getLastErrorContext();
     t.equal(response.statusCode, 500, "customVerify force error");
     t.equal(response.result.message, "An internal server error occurred", "GET /required with forced error that has not been customised");
+    t.deepEqual(getPayloadFromDecoded(errorContext.decoded), payload);
+    t.equal(errorContext.error.message, 'customVerify fails!');
     t.end();
 });
 
@@ -40,8 +49,11 @@ test("customVerify simulate error condition but is safely not customised", async
   };
   // server.inject lets us simulate an http request
   const response = await server.inject(options);
+  const errorContext = getLastErrorContext();
     t.equal(response.statusCode, 500, "customVerify force error");
     t.equal(response.result.message, "An internal server error occurred", "GET /required with forced error that has not been customised");
+    t.deepEqual(getPayloadFromDecoded(errorContext.decoded), payload);
+    t.equal(errorContext.error.message, 'ignore');
     t.end();
 });
 
@@ -55,9 +67,12 @@ test("customVerify with fail condition", async function(t) {
   };
   // server.inject lets us simulate an http request
   const response = await server.inject(options);
+  const errorContext = getLastErrorContext();
   t.equal(response.statusCode, 401, "GET /required with customVerify rejected");
   t.equal(response.result.message, "Invalid credentials mate", "GET /required with customVerify rejected and customised error message");
   t.deepEqual(response.headers['set-cookie'], [ 'customError=setInCustomErrorFn; Secure; HttpOnly; SameSite=Strict' ], 'Valid request should have access to the response toolkit object');
+  t.deepEqual(getPayloadFromDecoded(errorContext.decoded), payload);
+  t.equal(errorContext.error, undefined);
   t.end();
 });
 

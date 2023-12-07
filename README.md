@@ -199,7 +199,9 @@ signature `async function(decoded)` where:
       - `errorContext.message` - ***required*** the `message` passed into the `Boom` method call
       - `errorContext.schema` - the `schema` passed into the `Boom` method call
       - `errorContext.attributes` - the `attributes` passed into the `Boom` method call
-      - The function is expected to return the modified `errorContext` with all above fields defined.
+      - `errorContext.error` - the exception thrown (optional, if available)
+      - `errorContext.token` - the JWT provided, in string form (optional, if available)
+      - The function is expected to return the modified `errorContext` with all above non-optional fields defined.
     - `request` - the request object.
     - `h`- the response toolkit.
 - `urlKey` - (***optional***  *defaults to* `'token'`) - if you prefer to pass your token via url, simply add a `token` url parameter to your request or use a custom parameter by setting `urlKey`. To disable the url parameter set urlKey to `false` or ''.
