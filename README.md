@@ -10,7 +10,7 @@
 [![codecov.io](https://img.shields.io/codecov/c/github/dwyl/hapi-auth-jwt2/main.svg?style=flat-square)](http://codecov.io/github/dwyl/hapi-auth-jwt2?branch=main)
 [![Inline docs](http://inch-ci.org/github/dwyl/hapi-auth-jwt2.svg?branch=main&style=flat-square)](http://inch-ci.org/github/dwyl/hapi-auth-jwt2)
 [![HAPI 21.1.0](http://img.shields.io/badge/hapi-21.1.0-brightgreen.svg?style=flat-square "Latest Hapi.js")](http://hapijs.com)
-[![Node.js Version](https://img.shields.io/node/v/hapi-auth-jwt2.svg?style=flat-square "Node.js 14.x, 16.x & 18.x supported")](http://nodejs.org/download/)
+[![Node.js Version](https://img.shields.io/node/v/hapi-auth-jwt2.svg?style=flat-square "Node.js 18.x, 20.x & 21.x supported")](http://nodejs.org/download/)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat-square)](https://github.com/dwyl/hapi-auth-jwt2/issues)
 [![HitCount](http://hits.dwyl.com/dwyl/hapi-auth-jwt2.svg)](http://hits.dwyl.com/dwyl/hapi-auth-jwt2)
 [![npm package version](https://img.shields.io/npm/v/hapi-auth-jwt2.svg?style=flat-square)](https://www.npmjs.com/package/hapi-auth-jwt2)
