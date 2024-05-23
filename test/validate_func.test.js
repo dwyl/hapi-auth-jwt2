@@ -13,11 +13,6 @@ test('Should respond with 500 when validate function throws an error', async fun
 
   let response = await server.inject(options);
   t.equal(response.statusCode, 500, 'Server returned 500 for validate error');
-  // t.equal(
-  //   response.result.message,
-  //   'ASPLODE',
-  //   'Error message when validation function throws an error'
-  // );
   t.end();
 });
 
@@ -72,6 +67,27 @@ test('Should respond with custom error message when validate function returns cu
     response.result.message,
     'Bad ID',
     'Custom error message for invalid credentials'
+  );
+  t.end();
+});
+
+test('Should respond with non-generic error message when validate function throws a non-server error', async function (t) {
+  let options = {
+    method: 'POST',
+    url: '/privado',
+    headers: { Authorization: JWT.sign({ id: 141, name: 'Test' }, secret) },
+  };
+
+  let response = await server.inject(options);
+  t.equal(
+    response.statusCode,
+    404,
+    'Server returned 404 for resource not found'
+  );
+  t.equal(
+    response.result.message,
+    'Resource not found',
+    'Error message for resource not found'
   );
   t.end();
 });

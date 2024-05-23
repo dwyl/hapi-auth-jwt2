@@ -1,3 +1,4 @@
+const Boom = require('@hapi/boom');
 const Hapi = require('@hapi/hapi');
 const secret = 'NeverShareYourSecret';
 
@@ -21,6 +22,9 @@ const init = async () => {
       }
       if (decoded.id === 140) {
         return { isValid: false, errorMessage: 'Bad ID' };
+      }
+      if (decoded.id === 141) {
+        throw Boom.notFound('Resource not found');
       }
       return { response: h.redirect('https://dwyl.com') };
     },
