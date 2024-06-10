@@ -67,7 +67,7 @@
     "aguid": "^2.0.0",
     "eslint": "^8.31.0",
     "eslint-plugin-prettier": "^5.0.0",
-    "nyc": "^15.0.0",
+    "nyc": "^17.0.0",
     "pre-commit": "^1.2.2",
     "prettier": "^3.2.4",
     "tap-nyc": "^1.0.3",
