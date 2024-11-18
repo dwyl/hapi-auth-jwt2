@@ -65,7 +65,7 @@
     "@hapi/hapi": "^21.1.0",
     "@types/hapi__hapi": "^21.0.0",
     "aguid": "^2.0.0",
-    "eslint": "^8.31.0",
+    "eslint": "^9.15.0",
     "eslint-plugin-prettier": "^5.0.0",
     "nyc": "^17.0.0",
     "pre-commit": "^1.2.2",
