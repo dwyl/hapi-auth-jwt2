@@ -64,7 +64,7 @@ const validate = async function (decoded, request, h) {
 const init = async () => {
   const server = new Hapi.server({ port: 8000 });
   // 在这里引入我们的包 ↓↓, 例如, require('hapi-auth-jwt2')
-  await server.register(require('../lib'));
+  await server.register(require('../lib/index.cjs'));
   server.auth.strategy('jwt', 'jwt',
   { key: 'NeverShareYourSecret', // 不要告诉别人你的secret key
     validate  // 上面定义的验证函数

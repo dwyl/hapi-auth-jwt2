@@ -1,0 +1,14 @@
+{
+  "reporter": ["lcov", "cobertura", "text", "text-summary"],
+  "include": ["**/*.ts", "**/*.cjs"],
+  "exclude": ["test/*.cjs"],
+  "check-coverage": true,
+  "sourceMap": true,
+  "instrument": true,
+  "cache": true,
+  "all": false,
+  "branches": 100,
+  "functions": 100,
+  "lines": 100,
+  "statements": 100
+}
