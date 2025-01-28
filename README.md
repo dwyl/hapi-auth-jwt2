@@ -70,7 +70,7 @@ const validate = async function (decoded, request, h) {
 const init = async () => {
   const server = new Hapi.server({ port: 8000 });
   // include our module here ↓↓, for example, require('hapi-auth-jwt2')
-  await server.register(require('../lib'));
+  await server.register(require('../lib/index.cjs'));
   server.auth.strategy('jwt', 'jwt',
   { key: 'NeverShareYourSecret', // Never Share your secret key
     validate  // validate function defined above
