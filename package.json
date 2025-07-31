@@ -61,6 +61,7 @@
     "jsonwebtoken": "^9.0.0"
   },
   "devDependencies": {
+    "@arethetypeswrong/cli": "^0.18.2",
     "@eslint/js": "^9.19.0",
     "@hapi/basic": "^7.0.0",
     "@hapi/hapi": "^21.1.0",
@@ -102,6 +103,7 @@
   "scripts": {
     "quick": "./node_modules/tape/bin/tape ./test/*.test.cjs",
     "test": "nyc tape ./test/*.test.cjs | tap-nyc",
+    "test:types": "attw --pack",
     "coverage": "nyc tape ./test/*.test.cjs && nyc check-coverage",
     "lint": "eslint lib",
     "fixlint": "eslint lib --fix",
@@ -110,6 +112,7 @@
   },
   "pre-commit": [
     "lint",
-    "coverage"
+    "coverage",
+    "test:types"
   ]
 }
