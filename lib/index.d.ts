@@ -1,5 +1,5 @@
 import { Request, ResponseObject, Plugin, ResponseToolkit } from '@hapi/hapi';
-import { Jwt, VerifyOptions } from 'jsonwebtoken';
+import { JwtPayload, VerifyOptions } from 'jsonwebtoken';
 
 declare module '@hapi/hapi' {
     interface ServerAuth {
@@ -37,7 +37,7 @@ declare namespace hapiAuthJwt2 {
         /**
          * the decoded (possibly invalid) JWT received from the client
          */
-        decoded?: Jwt;
+        decoded?: JwtPayload;
     }
 
     interface ValidationResult {
