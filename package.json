@@ -71,7 +71,7 @@
     "eslint-plugin-prettier": "^5.0.0",
     "globals": "^17.3.0",
     "nyc": "^18.0.0",
-    "pre-commit": "^1.2.2",
+    "pre-commit": "^2.0.0",
     "prettier": "^3.2.4",
     "tap-nyc": "^1.0.3",
     "tape": "^4.13.0",
