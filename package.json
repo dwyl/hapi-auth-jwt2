@@ -74,7 +74,7 @@
     "pre-commit": "^2.0.0",
     "prettier": "^3.2.4",
     "tap-nyc": "^1.0.3",
-    "tape": "^4.13.0",
+    "tape": "^5.10.2",
     "typescript-eslint": "^8.22.0"
   },
   "engines": {
