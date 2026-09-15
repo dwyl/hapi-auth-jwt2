@@ -16,13 +16,13 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [18.x, 20.x, 21.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+        node-version: [24.x, 26.x] # LTS + Latest
+        # See supported Node.js release schedule at nodejs.org/en/about/releases
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7   # github.com/actions/checkout
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v7 # github.com/actions/setup-node 
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
@@ -30,7 +30,7 @@ jobs:
     - run: npm run lint
     - run: npm test
     - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v5
+      uses: codecov/codecov-action@v7 # github.com/codecov/codecov-action
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
         verbose: true
