@@ -7,6 +7,23 @@ is documented on the Github [Releases](https://github.com/dwyl/hapi-auth-jwt2/re
 If anything is unclear in the project documentation, please
 raise an issue: https://github.com/dwyl/hapi-auth-jwt2/issues (_we are here to help!_)
 
+# Version 11.1.0 - Strip `Bearer` From Extracted Tokens
+
+[@corradodellorusso](https://github.com/dwyl/hapi-auth-jwt2/issues/613)
+identified (and fixed)
+an issue in the regular expression
+that was stripping the word "Bearer" from `JWTs`:
+
+```diff
+-  auth = auth ? auth.replace(/Bearer/gi, '').replace(/ /g, '') : null;
++  auth = auth ? auth.replace(/^\s*bearer\s*/i, '').replace(/ /g, '') : null;
+```
+
+See:
+[dwyl/hapi-auth-jwt2#613](https://github.com/dwyl/hapi-auth-jwt2/issues/613)
+and
+[dwyl/hapi-auth-jwt2#614](https://github.com/dwyl/hapi-auth-jwt2/pull/614)
+
 # Version 10.3.0 - Security Update to `jsonwebtoken` Dependency
 
 Update version of `jsonwebtoken` dependency to latest
