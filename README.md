@@ -739,7 +739,6 @@ So we decided to write our own module addressing all these issues.
 
 *Don't take our word for it, do your own homework and decide which module you prefer.*
 
-
 ## Why hapi-auth-jwt2 ?
 
 The name we wanted was taken.
@@ -747,7 +746,7 @@ Think of our module as the "***new, simplified and actively maintained version**
 
 ## Useful Links
 
-- For more background on jsonwebtokens (JWTs) see our detailed overview:
+- For more background on `jsonwebtokens` (JWTs) see our detailed overview:
 [https://github.com/dwyl/learn-json-web-tokens](https://github.com/dwyl/learn-json-web-tokens)
 
 - Securing Hapi Client Side Sessions:
